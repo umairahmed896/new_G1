@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Service Centres</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <!-- Hero Section -->
+  <section class="aw-hero py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h1 class="fw-semibold mb-3">Car Service & Maintenance Centres</h1>
+          <p class="lead">Professional car service, maintenance, and repair across Pakistan. Book appointments online and get expert care for your vehicle.</p>
+          
+          <!-- Quick Search -->
+          <div class="aw-live-search mt-4">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-search"></i>
+              </span>
+              <input type="text" class="form-control form-control-lg" id="serviceSearchInput" placeholder="Search by city, brand, or service type...">
+              <button class="btn btn-primary" type="button" id="serviceSearchBtn">
+                <i class="bi bi-search"></i> Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card aw-card">
+            <div class="card-body p-4">
+              <div class="fw-semibold fs-5">Quick Booking</div>
+              <div class="aw-muted mt-1">Book service appointment instantly.</div>
+              <button class="btn btn-success w-100 mt-3" onclick="openBookingModal()">
+                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+              </button>
+              <hr/>
+              <div class="fw-semibold">Service Hotline</div>
+              <div class="d-flex align-items-center mt-2">
+                <i class="bi bi-telephone-fill text-success me-2"></i>
+                <span>+92-300-1111111</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container my-5">
+    <!-- Service Stats -->
+    <section class="row g-4 mb-5">
+      <div class="col-md-3 col-6">
+        <div class="text-center">
+          <div class="stat-number text-primary fw-bold">15+</div>
+          <div class="stat-text">Service Centres</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="text-center">
+          <div class="stat-number text-success fw-bold">24/7</div>
+          <div class="stat-text">Emergency Support</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="text-center">
+          <div class="stat-number text-warning fw-bold">50+</div>
+          <div class="stat-text">Expert Technicians</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="text-center">
+          <div class="stat-number text-info fw-bold">98%</div>
+          <div class="stat-text">Customer Satisfaction</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="mb-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-4">
+        <div>
+          <h2 class="fw-semibold mb-1">Find Service Centre</h2>
+          <div class="aw-muted">Filter by city, brand, or service type</div>
+        </div>
+        <div class="d-flex gap-2">
+          <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-funnel-fill me-1"></i>
+              <span id="serviceFilterLabel">All Cities</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('all')">All Cities</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('Lahore')">Lahore</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('Karachi')">Karachi</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('Islamabad')">Islamabad</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('Peshawar')">Peshawar</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('Multan')">Multan</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterServiceCentres('Rawalpindi')">Rawalpindi</a></li>
+            </ul>
+          </div>
+          <a class="btn btn-outline-primary" href="dealers.html">View Dealers</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Centres Grid -->
+    <div class="row g-4 mt-2" id="serviceGrid"></div>
+
+    <!-- Service Packages Section -->
+    <section class="my-5 py-5 bg-light rounded-3">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-semibold mb-3">Service Packages</h2>
+          <p class="aw-muted">Choose from our comprehensive service packages</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card aw-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-droplet-half display-4 text-primary mb-3"></i>
+                <h5 class="fw-semibold">Basic Service</h5>
+                <div class="text-success fw-bold fs-4 mb-3">PKR 3,500</div>
+                <ul class="list-unstyled text-start">
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Oil Change</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Filter Replacement</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Basic Inspection</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Fluid Check</li>
+                </ul>
+                <button class="btn btn-outline-primary w-100" onclick="bookServicePackage('basic')">Book Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card aw-card h-100 border-primary">
+              <div class="card-body text-center">
+                <div class="badge bg-primary text-white mb-2">Most Popular</div>
+                <i class="bi bi-tools display-4 text-primary mb-3"></i>
+                <h5 class="fw-semibold">Standard Service</h5>
+                <div class="text-success fw-bold fs-4 mb-3">PKR 8,500</div>
+                <ul class="list-unstyled text-start">
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Everything in Basic</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Brake Inspection</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Tire Rotation</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Battery Check</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Engine Diagnostics</li>
+                </ul>
+                <button class="btn btn-primary w-100" onclick="bookServicePackage('standard')">Book Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card aw-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-shield-check display-4 text-primary mb-3"></i>
+                <h5 class="fw-semibold">Premium Service</h5>
+                <div class="text-success fw-bold fs-4 mb-3">PKR 15,000</div>
+                <ul class="list-unstyled text-start">
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Everything in Standard</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Full Engine Service</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>AC Service</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Transmission Check</li>
+                  <li><i class="bi bi-check-circle text-success me-2"></i>Interior Cleaning</li>
+                </ul>
+                <button class="btn btn-outline-primary w-100" onclick="bookServicePackage('premium')">Book Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Services -->
+    <section class="my-5">
+      <div class="card aw-card border-danger">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-danger display-4 me-3"></i>
+                <div>
+                  <h5 class="fw-semibold mb-1">Emergency Roadside Assistance</h5>
+                  <p class="mb-0">24/7 emergency support for breakdowns, towing, and roadside repairs</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-end">
+              <a href="tel:+92-300-1111111" class="btn btn-danger btn-lg">
+                <i class="bi bi-telephone-fill me-2"></i>Call Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Booking Modal -->
+  <div class="modal fade" id="bookingModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-semibold">Book Service Appointment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="serviceBookingForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" name="name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" name="phone" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Car Brand</label>
+                <select class="form-select" name="brand" required>
+                  <option value="">Select Brand</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Toyota">Toyota</option>
+                  <option value="Suzuki">Suzuki</option>
+                  <option value="Hyundai">Hyundai</option>
+                  <option value="Kia">Kia</option>
+                  <option value="Daihatsu">Daihatsu</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Car Model</label>
+                <input type="text" class="form-control" name="model" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Service Type</label>
+                <select class="form-select" name="serviceType" required>
+                  <option value="">Select Service</option>
+                  <option value="basic">Basic Service - PKR 3,500</option>
+                  <option value="standard">Standard Service - PKR 8,500</option>
+                  <option value="premium">Premium Service - PKR 15,000</option>
+                  <option value="repair">General Repair</option>
+                  <option value="inspection">Inspection</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Preferred Date</label>
+                <input type="date" class="form-control" name="date" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Preferred Time</label>
+                <select class="form-select" name="time" required>
+                  <option value="">Select Time</option>
+                  <option value="09:00">09:00 AM</option>
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="12:00">12:00 PM</option>
+                  <option value="14:00">02:00 PM</option>
+                  <option value="15:00">03:00 PM</option>
+                  <option value="16:00">04:00 PM</option>
+                  <option value="17:00">05:00 PM</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Preferred Service Centre</label>
+                <select class="form-select" name="centre" id="preferredCentre">
+                  <option value="">Select Centre</option>
+                </select>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Describe the Issue/Service Needed</label>
+                <textarea class="form-control" name="description" rows="3" placeholder="Please describe what service you need or any issues with your vehicle"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="submitServiceBooking()">Book Appointment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/whatsapp.js"></script>
+  <script src="assets/js/sticky-header.js"></script>
+  <script src="assets/js/service-centres.js"></script>
+  <script>
+    let currentFilter = 'all';
+    let bookingModal = null;
+
+    function initializeServicePage() {
+      bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+      setupSearchFunctionality();
+      populateServiceCentres();
+      setMinDate();
+    }
+
+    function setupSearchFunctionality() {
+      const searchInput = document.getElementById('serviceSearchInput');
+      const searchBtn = document.getElementById('serviceSearchBtn');
+
+      if (searchInput && searchBtn) {
+        searchBtn.addEventListener('click', performServiceSearch);
+        searchInput.addEventListener('input', debounce(performServiceSearch, 300));
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            performServiceSearch();
+          }
+        });
+      }
+    }
+
+    function performServiceSearch() {
+      const query = document.getElementById('serviceSearchInput').value.toLowerCase().trim();
+      const centres = window.AutoWorldData.serviceCentres || [];
+      
+      let filteredCentres = centres;
+      
+      if (query.length >= 2) {
+        filteredCentres = centres.filter(centre => 
+          centre.name.toLowerCase().includes(query) ||
+          centre.city.toLowerCase().includes(query) ||
+          centre.address.toLowerCase().includes(query) ||
+          (centre.brands || []).some(brand => brand.toLowerCase().includes(query))
+        );
+      }
+      
+      renderFilteredCentres(filteredCentres);
+    }
+
+    function filterServiceCentres(city) {
+      currentFilter = city;
+      const filterLabel = document.getElementById('serviceFilterLabel');
+      const centres = window.AutoWorldData.serviceCentres || [];
+      
+      let filteredCentres = centres;
+      
+      if (city !== 'all') {
+        filteredCentres = centres.filter(centre => centre.city === city);
+        filterLabel.textContent = city;
+      } else {
+        filterLabel.textContent = 'All Cities';
+      }
+      
+      renderFilteredCentres(filteredCentres);
+    }
+
+    function renderFilteredCentres(centres) {
+      const grid = document.getElementById('serviceGrid');
+      if (!grid) return;
+      
+      if (centres.length === 0) {
+        grid.innerHTML = '<div class="col-12"><div class="alert alert-info text-center">No service centres found matching your criteria.</div></div>';
+      } else {
+        grid.innerHTML = centres.map(centre => window.AutoWorldServiceCentres.card(centre)).join('');
+      }
+      
+      // Re-initialize animations
+      if(window.AutoWorldReveal && window.AutoWorldReveal.revealAll){
+        setTimeout(function(){
+          window.AutoWorldReveal.revealAll();
+        }, 100);
+      }
+    }
+
+    function openBookingModal() {
+      if (bookingModal) {
+        bookingModal.show();
+      }
+    }
+
+    function bookServicePackage(packageType) {
+      openBookingModal();
+      // Pre-select the service type
+      const serviceTypeSelect = document.querySelector('select[name="serviceType"]');
+      if (serviceTypeSelect) {
+        serviceTypeSelect.value = packageType;
+      }
+    }
+
+    function populateServiceCentres() {
+      const centreSelect = document.getElementById('preferredCentre');
+      if (!centreSelect) return;
+      
+      const centres = window.AutoWorldData.serviceCentres || [];
+      centreSelect.innerHTML = '<option value="">Select Centre</option>' +
+        centres.map(centre => `<option value="${centre.name}">${centre.name} - ${centre.city}</option>`).join('');
+    }
+
+    function setMinDate() {
+      const dateInput = document.querySelector('input[name="date"]');
+      if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+      }
+    }
+
+    function submitServiceBooking() {
+      const form = document.getElementById('serviceBookingForm');
+      const formData = new FormData(form);
+      
+      // Validate form
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      
+      // Create booking object
+      const booking = {
+        id: 'SRV-' + Date.now().toString(36).toUpperCase(),
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        brand: formData.get('brand'),
+        model: formData.get('model'),
+        serviceType: formData.get('serviceType'),
+        date: formData.get('date'),
+        time: formData.get('time'),
+        centre: formData.get('centre'),
+        description: formData.get('description'),
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
+      
+      // Store booking
+      const bookings = JSON.parse(localStorage.getItem('autoworld_service_bookings') || '[]');
+      bookings.unshift(booking);
+      localStorage.setItem('autoworld_service_bookings', JSON.stringify(bookings));
+      
+      // Show success message
+      showBookingSuccess(booking);
+      
+      // Reset form and close modal
+      form.reset();
+      bookingModal.hide();
+    }
+
+    function showBookingSuccess(booking) {
+      const successAlert = document.createElement('div');
+      successAlert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
+      successAlert.style.zIndex = '9999';
+      successAlert.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          <div>
+            <strong>Booking Confirmed!</strong><br>
+            <small>Booking ID: ${booking.id} | We'll contact you soon.</small>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(successAlert);
+      
+      setTimeout(() => {
+        successAlert.remove();
+      }, 5000);
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = function() {
+          timeout = null;
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('service');
+      window.AutoWorldServiceCentres.render();
+      initializeServicePage();
+      
+      // Form validation for service booking form
+      const serviceBookingForm = document.getElementById('serviceBookingForm');
+      const nameInput = serviceBookingForm.querySelector('input[name="name"]');
+      const emailInput = serviceBookingForm.querySelector('input[name="email"]');
+
+      function validateName() {
+        const name = nameInput.value.trim();
+        const nameRegex = /^[A-Za-z\s]+$/;
+        
+        if (name === '') {
+          nameInput.classList.add('is-invalid');
+          if (!nameInput.nextElementSibling || !nameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Name is required';
+            nameInput.parentNode.appendChild(feedback);
+          } else {
+            nameInput.nextElementSibling.textContent = 'Name is required';
+          }
+          return false;
+        } else if (!nameRegex.test(name)) {
+          nameInput.classList.add('is-invalid');
+          if (!nameInput.nextElementSibling || !nameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Name should contain only letters';
+            nameInput.parentNode.appendChild(feedback);
+          } else {
+            nameInput.nextElementSibling.textContent = 'Name should contain only letters';
+          }
+          return false;
+        } else if (name.length < 2) {
+          nameInput.classList.add('is-invalid');
+          if (!nameInput.nextElementSibling || !nameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Name must be at least 2 characters long';
+            nameInput.parentNode.appendChild(feedback);
+          } else {
+            nameInput.nextElementSibling.textContent = 'Name must be at least 2 characters long';
+          }
+          return false;
+        } else {
+          nameInput.classList.remove('is-invalid');
+          return true;
+        }
+      }
+
+      function validateEmail() {
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (email === '') {
+          emailInput.classList.add('is-invalid');
+          if (!emailInput.nextElementSibling || !emailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Email is required';
+            emailInput.parentNode.appendChild(feedback);
+          } else {
+            emailInput.nextElementSibling.textContent = 'Email is required';
+          }
+          return false;
+        } else if (!emailRegex.test(email)) {
+          emailInput.classList.add('is-invalid');
+          if (!emailInput.nextElementSibling || !emailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Please enter a valid email address';
+            emailInput.parentNode.appendChild(feedback);
+          } else {
+            emailInput.nextElementSibling.textContent = 'Please enter a valid email address';
+          }
+          return false;
+        } else {
+          emailInput.classList.remove('is-invalid');
+          return true;
+        }
+      }
+
+      // Real-time validation
+      nameInput.addEventListener('blur', validateName);
+      emailInput.addEventListener('blur', validateEmail);
+
+      // Remove validation on input
+      nameInput.addEventListener('input', function() {
+        if (this.classList.contains('is-invalid')) {
+          this.classList.remove('is-invalid');
+        }
+      });
+
+      emailInput.addEventListener('input', function() {
+        if (this.classList.contains('is-invalid')) {
+          this.classList.remove('is-invalid');
+        }
+      });
+
+      // Form submission validation
+      serviceBookingForm.addEventListener('submit', function(e) {
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        
+        if (!isNameValid || !isEmailValid) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

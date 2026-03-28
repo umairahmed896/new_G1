@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Shopping Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <style>
+    .cart-item-card {
+      transition: all 0.3s ease;
+      border: 1px solid #e9ecef;
+    }
+    .cart-item-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+    }
+    .quantity-btn {
+      transition: all 0.2s ease;
+    }
+    .quantity-btn:hover:not(:disabled) {
+      background-color: var(--aw-primary);
+      border-color: var(--aw-primary);
+      color: white;
+    }
+    .quantity-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .remove-btn:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: white;
+    }
+    .cart-stats {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+    }
+    .promo-badge {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .promo-badge:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+    .hover-lift {
+      transition: all 0.3s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <main class="container my-5">
+    <!-- Cart Header with Stats -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card cart-stats p-4 text-white">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h1 class="fw-semibold mb-3">
+                <i class="bi bi-cart3 me-2"></i>Shopping Cart
+              </h1>
+              <div class="row g-3">
+                <div class="col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-box-seam fs-4 me-2"></i>
+                    <div>
+                      <small class="d-block opacity-75">Total Items</small>
+                      <strong class="fs-5" id="totalItems">0</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-tag fs-4 me-2"></i>
+                    <div>
+                      <small class="d-block opacity-75">Subtotal</small>
+                      <strong class="fs-5" id="subtotalDisplay">PKR 0</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-piggy-bank fs-4 me-2"></i>
+                    <div>
+                      <small class="d-block opacity-75">Your Savings</small>
+                      <strong class="fs-5 text-warning" id="savingsDisplay">PKR 0</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-check-circle fs-4 me-2"></i>
+                    <div>
+                      <small class="d-block opacity-75">Status</small>
+                      <strong class="fs-5">Active</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+              <div class="d-flex gap-2 justify-content-md-end">
+                <button class="btn btn-light" onclick="shareCart()">
+                  <i class="bi bi-share"></i> Share
+                </button>
+                <button class="btn btn-warning" onclick="window.AutoWorldCart.clearCart()">
+                  <i class="bi bi-trash"></i> Clear Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- Empty Cart Message -->
+        <div id="cartEmpty" class="alert alert-info text-center py-5" style="display: none;">
+          <i class="bi bi-cart-x display-1 text-muted"></i>
+          <h4 class="mt-3">Your cart is empty</h4>
+          <p class="text-muted">Browse our catalogue to add amazing cars to your cart</p>
+          <div class="d-flex gap-2 justify-content-center mt-3">
+            <a href="catalogue.html" class="btn btn-primary">
+              <i class="bi bi-arrow-left"></i> Browse Catalogue
+            </a>
+            <button class="btn btn-outline-primary" onclick="viewRecommendations()">
+              <i class="bi bi-stars"></i> View Recommendations
+            </button>
+          </div>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cartItems">
+          <!-- Cart items will be rendered here -->
+        </div>
+        
+        <!-- Quick Actions Bar -->
+        <div id="quickActions" class="card mt-3" style="display: none;">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h6 class="mb-0">Quick Actions</h6>
+                <small class="text-muted">Save your cart or continue shopping</small>
+              </div>
+              <div class="col-md-4 text-end">
+                <div class="btn-group" role="group">
+                  <button class="btn btn-outline-primary btn-sm" onclick="saveCartForLater()">
+                    <i class="bi bi-bookmark"></i> Save for Later
+                  </button>
+                  <button class="btn btn-outline-success btn-sm" onclick="emailCart()">
+                    <i class="bi bi-envelope"></i> Email Cart
+                  </button>
+                  <button class="btn btn-outline-info btn-sm" onclick="printCart()">
+                    <i class="bi bi-printer"></i> Print
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <!-- Promo Code Section -->
+        <div class="card aw-card mb-3 hover-lift">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">
+              <i class="bi bi-ticket-perforated me-2 text-primary"></i>Promo Code
+            </h6>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" id="promoCodeInput" placeholder="Enter promo code">
+              <button class="btn btn-primary" type="button" onclick="applyPromoCode()">
+                Apply
+              </button>
+            </div>
+            <div id="promoMessage" class="small" style="display: none;"></div>
+            
+            <!-- Available Promo Codes -->
+            <div class="mt-3">
+              <small class="text-muted d-block mb-2">Available Promo Codes:</small>
+              <div class="d-flex flex-wrap gap-1">
+                <span class="badge bg-success promo-badge" onclick="applyPromoCodeDirect('WELCOME10')" title="10% OFF - First-time customer">WELCOME10</span>
+                <span class="badge bg-warning promo-badge" onclick="applyPromoCodeDirect('SPECIAL20')" title="20% OFF - Selected models">SPECIAL20</span>
+                <span class="badge bg-primary promo-badge" onclick="applyPromoCodeDirect('STUDENT15')" title="15% OFF - Students only">STUDENT15</span>
+                <span class="badge bg-danger promo-badge" onclick="applyPromoCodeDirect('FLASH25')" title="25% OFF - Today only">FLASH25</span>
+                <span class="badge bg-info promo-badge" onclick="applyPromoCodeDirect('LOYALTY5')" title="5% OFF - Returning customers">LOYALTY5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="card aw-card mb-3 hover-lift">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">
+              <i class="bi bi-receipt me-2"></i>Order Summary
+            </h5>
+            <hr>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Subtotal:</span>
+              <strong id="cartTotal">PKR 0</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-2" id="discountRow" style="display: none;">
+              <span class="text-success">Discount:</span>
+              <span class="text-success" id="discountAmount">-PKR 0</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Tax (17%):</span>
+              <span id="taxAmount">PKR 0</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span><strong>Total:</strong></span>
+              <strong class="text-primary fs-5" id="finalTotal">PKR 0</strong>
+            </div>
+            <button class="btn btn-success w-100 mb-2 btn-lg" onclick="proceedToCheckout()">
+              <i class="bi bi-credit-card"></i> Proceed to Checkout
+            </button>
+            <a href="catalogue.html" class="btn btn-outline-primary w-100">
+              <i class="bi bi-arrow-left"></i> Continue Shopping
+            </a>
+          </div>
+        </div>
+
+        <!-- Customer Support -->
+        <div class="card aw-card">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">
+              <i class="bi bi-headset me-2"></i>Need Help?
+            </h6>
+            <p class="small text-muted mb-3">Our customer support team is here to help you with your purchase.</p>
+            <div class="d-grid gap-2">
+              <button class="btn btn-outline-primary btn-sm" onclick="startLiveChat()">
+                <i class="bi bi-chat-dots"></i> Live Chat
+              </button>
+              <button class="btn btn-outline-success btn-sm" onclick="callSupport()">
+                <i class="bi bi-telephone"></i> Call Support
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script>
+    // Promo codes configuration
+    const promoCodes = {
+      'WELCOME10': { discount: 10, description: '10% OFF - First-time customer' },
+      'SPECIAL20': { discount: 20, description: '20% OFF - Selected models' },
+      'STUDENT15': { discount: 15, description: '15% OFF - Students only' },
+      'FLASH25': { discount: 25, description: '25% OFF - Today only' },
+      'LOYALTY5': { discount: 5, description: '5% OFF - Returning customers' }
+    };
+
+    let currentDiscount = 0;
+    let appliedPromoCode = null;
+
+    function applyPromoCode() {
+      const input = document.getElementById('promoCodeInput');
+      const code = input.value.trim().toUpperCase();
+      const messageDiv = document.getElementById('promoMessage');
+      
+      if (!code) {
+        showPromoMessage('Please enter a promo code', 'danger');
+        return;
+      }
+      
+      if (promoCodes[code]) {
+        appliedPromoCode = code;
+        currentDiscount = promoCodes[code].discount;
+        showPromoMessage(`Promo code applied! ${promoCodes[code].description}`, 'success');
+        input.value = code;
+        input.disabled = true;
+        updateSummary();
+      } else {
+        showPromoMessage('Invalid promo code', 'danger');
+      }
+    }
+
+    function applyPromoCodeDirect(code) {
+      const input = document.getElementById('promoCodeInput');
+      input.value = code;
+      applyPromoCode();
+    }
+
+    function showPromoMessage(message, type) {
+      const messageDiv = document.getElementById('promoMessage');
+      messageDiv.className = `small alert alert-${type} py-1 px-2`;
+      messageDiv.textContent = message;
+      messageDiv.style.display = 'block';
+      
+      if (type === 'success') {
+        setTimeout(() => {
+          messageDiv.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    function proceedToCheckout() {
+      const items = window.AutoWorldCart.getCartItems();
+      if (items.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      
+      // Store checkout data and redirect to checkout page
+      const checkoutData = {
+        items: items,
+        subtotal: window.AutoWorldCart.getCartTotal(),
+        discount: currentDiscount,
+        discountAmount: calculateDiscount(),
+        appliedPromoCode: appliedPromoCode,
+        timestamp: new Date().toISOString()
+      };
+      
+      localStorage.setItem('autoworld_checkout', JSON.stringify(checkoutData));
+      
+      // Show success message
+      const notification = document.createElement('div');
+      notification.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
+      notification.style.zIndex = '9999';
+      notification.innerHTML = `
+        <i class="bi bi-check-circle"></i> Redirecting to checkout...
+      `;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        window.location.href = 'checkout.html';
+      }, 1500);
+    }
+
+    function calculateDiscount() {
+      const subtotal = window.AutoWorldCart.getCartTotal();
+      return subtotal * (currentDiscount / 100);
+    }
+
+    function updateSummary() {
+      const summary = window.AutoWorldCart.getCartSummary();
+      const discount = calculateDiscount();
+      const discountedSubtotal = summary.discountedTotal - discount;
+      const taxRate = 0.17; // 17% tax
+      const tax = discountedSubtotal * taxRate;
+      const total = discountedSubtotal + tax;
+      
+      // Update header stats
+      document.getElementById('totalItems').textContent = summary.itemCount;
+      document.getElementById('subtotalDisplay').textContent = window.AutoWorldData ? window.AutoWorldData.formatPKR(summary.subtotal) : 'PKR ' + summary.subtotal.toLocaleString();
+      document.getElementById('savingsDisplay').textContent = window.AutoWorldData ? window.AutoWorldData.formatPKR(summary.totalSavings) : 'PKR ' + summary.totalSavings.toLocaleString();
+      
+      // Update order summary
+      document.getElementById('cartTotal').textContent = window.AutoWorldData ? window.AutoWorldData.formatPKR(summary.subtotal) : 'PKR ' + summary.subtotal.toLocaleString();
+      
+      // Show/hide discount row
+      const discountRow = document.getElementById('discountRow');
+      if (currentDiscount > 0) {
+        discountRow.style.display = 'flex';
+        document.getElementById('discountAmount').textContent = '-' + (window.AutoWorldData ? window.AutoWorldData.formatPKR(discount) : 'PKR ' + discount.toLocaleString());
+      } else {
+        discountRow.style.display = 'none';
+      }
+      
+      document.getElementById('taxAmount').textContent = window.AutoWorldData ? window.AutoWorldData.formatPKR(tax) : 'PKR ' + tax.toLocaleString();
+      document.getElementById('finalTotal').textContent = window.AutoWorldData ? window.AutoWorldData.formatPKR(total) : 'PKR ' + total.toLocaleString();
+      
+      // Show/hide quick actions
+      const quickActions = document.getElementById('quickActions');
+      const cartEmpty = document.getElementById('cartEmpty');
+      if (summary.itemCount > 0) {
+        quickActions.style.display = 'block';
+        cartEmpty.style.display = 'none';
+      } else {
+        quickActions.style.display = 'none';
+      }
+    }
+    
+    function shareCart() {
+      const items = window.AutoWorldCart.getCartItems();
+      if (items.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      
+      const shareText = `Check out my cart on AutoWorld! ${items.length} items worth ${window.AutoWorldData ? window.AutoWorldData.formatPKR(window.AutoWorldCart.getCartTotal()) : 'PKR ' + window.AutoWorldCart.getCartTotal().toLocaleString()}`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'AutoWorld Shopping Cart',
+          text: shareText,
+          url: window.location.href
+        });
+      } else {
+        // Fallback - copy to clipboard
+        navigator.clipboard.writeText(shareText + '\n' + window.location.href);
+        alert('Cart link copied to clipboard!');
+      }
+    }
+    
+    function saveCartForLater() {
+      const cartData = {
+        items: window.AutoWorldCart.getCartItems(),
+        timestamp: new Date().toISOString(),
+        savedAt: new Date().toLocaleString()
+      };
+      
+      let savedCarts = JSON.parse(localStorage.getItem('autoworld_saved_carts') || '[]');
+      savedCarts.push(cartData);
+      localStorage.setItem('autoworld_saved_carts', JSON.stringify(savedCarts));
+      
+      window.AutoWorldCart.showNotification('Cart saved for later!');
+    }
+    
+    function emailCart() {
+      const items = window.AutoWorldCart.getCartItems();
+      if (items.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      
+      const subject = 'My AutoWorld Shopping Cart';
+      const body = `Check out my shopping cart:\n\n${items.map(item => 
+        `${item.name} - ${window.AutoWorldData ? window.AutoWorldData.formatPKR(item.price) : 'PKR ' + item.price.toLocaleString()} x ${item.quantity}`
+      ).join('\n')}\n\nTotal: ${window.AutoWorldData ? window.AutoWorldData.formatPKR(window.AutoWorldCart.getCartTotal()) : 'PKR ' + window.AutoWorldCart.getCartTotal().toLocaleString()}`;
+      
+      window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+    
+    function printCart() {
+      window.print();
+    }
+    
+    function viewRecommendations() {
+      // Redirect to catalogue with recommendations flag
+      window.location.href = 'catalogue.html?recommendations=true';
+    }
+    
+    function startLiveChat() {
+      alert('Live chat feature coming soon! Please call our support team for immediate assistance.');
+    }
+    
+    function callSupport() {
+      alert('Support Hotline: +92-300-1234567\nAvailable: Mon-Sat, 9AM-6PM');
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('cart');
+      window.AutoWorldCart.renderCart();
+      updateSummary();
+      
+      // Update summary when cart changes
+      const originalRenderCart = window.AutoWorldCart.renderCart;
+      window.AutoWorldCart.renderCart = function() {
+        originalRenderCart.call(this);
+        updateSummary();
+      };
+    });
+  </script>
+</body>
+</html>

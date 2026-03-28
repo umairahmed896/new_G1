@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <header class="aw-hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2">
+            <div>
+              <h1 class="fw-semibold mb-1">Find cars, compare models, and check finance options</h1>
+              <p class="lead mt-3">Latest models, features, warranty, dealer locations and simple loan calculation (60% of car price).</p>
+              
+              <!-- Live Search Bar -->
+              <div class="aw-live-search mt-4">
+                <div class="aw-search-filters mb-3">
+                  <div class="row g-2">
+                    <div class="col-md-4">
+                      <select class="form-select" id="brandFilter">
+                        <option value="">All Brands</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-select" id="minPriceFilter">
+                        <option value="">Min Price</option>
+                        <option value="0">Any</option>
+                        <option value="1000000">PKR 10 Lakhs</option>
+                        <option value="2000000">PKR 20 Lakhs</option>
+                        <option value="3000000">PKR 30 Lakhs</option>
+                        <option value="5000000">PKR 50 Lakhs</option>
+                        <option value="7000000">PKR 70 Lakhs</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-select" id="maxPriceFilter">
+                        <option value="">Max Price</option>
+                        <option value="999999999">Any</option>
+                        <option value="3000000">PKR 30 Lakhs</option>
+                        <option value="5000000">PKR 50 Lakhs</option>
+                        <option value="7000000">PKR 70 Lakhs</option>
+                        <option value="10000000">PKR 1 Crore</option>
+                        <option value="20000000">PKR 2 Crores</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                  </span>
+                  <input type="text" class="form-control form-control-lg" id="liveSearchInput" placeholder="Search for cars, brands, or models...">
+                  <button class="btn btn-primary" type="button" id="searchBtn">
+                    <i class="bi bi-arrow-right-circle"></i> Search
+                  </button>
+                </div>
+                <div id="searchResults" class="aw-search-results"></div>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <a class="btn btn-outline-primary" href="catalogue.html">View Full Catalogue</a>
+              <a class="btn btn-success" href="contact.html">
+                <i class="bi bi-telephone-fill me-1"></i>
+                Quick Contact
+              </a>
+              <a class="btn btn-success" href="https://wa.me/923001234567" target="_blank">
+                <i class="bi bi-whatsapp me-1"></i>
+                WhatsApp Chat
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card aw-card">
+            <div class="card-body p-4">
+              <div class="fw-semibold fs-5">Quick Search</div>
+              <div class="aw-muted mt-1">Search by brand and price range.</div>
+              <a class="btn btn-outline-primary w-100 mt-3" href="search.html">Open Search Page</a>
+              <hr/>
+              <div class="fw-semibold">Popular</div>
+              <div class="d-flex flex-wrap gap-2 mt-2">
+                <a class="btn btn-sm btn-light" href="cars/civic.html">Honda Civic</a>
+                <a class="btn btn-sm btn-light" href="cars/corolla.html">Toyota Corolla</a>
+                <a class="btn btn-sm btn-light" href="cars/wagonr.html">Wagon R</a>
+                <a class="btn btn-sm btn-light" href="cars/accord.html">Honda Accord</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4" id="homeCarouselRoot"></div>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card aw-card h-100">
+          <div class="card-body p-4">
+            <div class="fw-semibold">Catalogue</div>
+            <div class="aw-muted mt-2">View cars with images and open detail pages.</div>
+            <a class="btn btn-link px-0 mt-2" href="catalogue.html">View Catalogue</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card aw-card h-100">
+          <div class="card-body p-4">
+            <div class="fw-semibold">Dealers</div>
+            <div class="aw-muted mt-2">Brand-wise dealer list and locations.</div>
+            <a class="btn btn-link px-0 mt-2" href="dealers.html">View Dealers</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card aw-card h-100">
+          <div class="card-body p-4">
+            <div class="fw-semibold">Warranty</div>
+            <div class="aw-muted mt-2">Simple warranty schemes by brand.</div>
+            <a class="btn btn-link px-0 mt-2" href="warranty.html">View Warranty</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card aw-card h-100">
+          <div class="card-body p-4">
+            <div class="fw-semibold">Service Centres</div>
+            <div class="aw-muted mt-2">Find service centres for maintenance and support.</div>
+            <a class="btn btn-link px-0 mt-2" href="service-centres.html">View Service Centres</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card aw-card h-100">
+          <div class="card-body p-4">
+            <div class="fw-semibold">Car Parts</div>
+            <div class="aw-muted mt-2">Browse parts and accessories (demo).</div>
+            <a class="btn btn-link px-0 mt-2" href="car-parts.html">View Car Parts</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mt-5">
+      <div>
+        <h2 class="fw-semibold mb-1">Featured Cars</h2>
+        <div class="aw-muted">Popular cars with images. Click Book Now to place a demo booking.</div>
+      </div>
+      <a class="btn btn-outline-primary" href="catalogue.html">View Full Catalogue</a>
+    </div>
+
+    <div class="row g-4 mt-2" id="homeFeaturedCars"></div>
+
+    <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mt-5">
+      <div>
+        <h2 class="fw-semibold mb-1">Car Gallery</h2>
+        <div class="aw-muted">20+ car images (scroll to see animations).</div>
+      </div>
+      <a class="btn btn-outline-primary" href="catalogue.html">Open Catalogue</a>
+    </div>
+
+    <div class="row g-3 mt-2" id="homeGalleryGrid"></div>
+
+    
+    <!-- Customer Reviews Section -->
+    <section class="my-5 py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-semibold mb-3">Customer Reviews & Transformations</h2>
+          <p class="aw-muted">Real feedback from satisfied customers and stunning car modifications</p>
+        </div>
+
+        <!-- Before/After Transformations -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <h3 class="fw-semibold mb-4">
+              <i class="bi bi-stars text-warning me-2"></i>
+              Before / After Transformations
+            </h3>
+          </div>
+          
+          <!-- Transformation 1 -->
+          <div class="col-lg-6 mb-4">
+            <div class="transformation-card bg-white rounded-3 shadow-sm overflow-hidden">
+              <div class="row g-0">
+                <div class="col-6">
+                  <div class="transformation-image before">
+                    <img src="images/Honda Accord old.jfif" alt="Before modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">Before</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="transformation-image after">
+                    <img src="images/Honda Accord Luxury.jfif" alt="After modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">After</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h5 class="fw-semibold mb-1">Honda Civic Transformation</h5>
+                <p class="text-muted small mb-2">Full body kit + custom paint + alloy wheels</p>
+                <div class="d-flex align-items-center">
+                  <span class="text-warning small me-2">★★★★★</span>
+                  <span class="small text-muted">Ahmed R. - Lahore</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transformation 2 -->
+          <div class="col-lg-6 mb-4">
+            <div class="transformation-card bg-white rounded-3 shadow-sm overflow-hidden">
+              <div class="row g-0">
+                <div class="col-6">
+                  <div class="transformation-image before">
+                    <img src="images/mira old.jfif" alt="Before modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">Before</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="transformation-image after">
+                    <img src="images/Daihatsu Mira ES.jfif" alt="After modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">After</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h5 class="fw-semibold mb-1">Daihatsu Mira ES Upgrade</h5>
+                <p class="text-muted small mb-2">LED headlights + body wrapping + performance exhaust</p>
+                <div class="d-flex align-items-center">
+                  <span class="text-warning small me-2">★★★★★</span>
+                  <span class="small text-muted">Sarah K. - Karachi</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transformation 3 -->
+          <div class="col-lg-6 mb-4">
+            <div class="transformation-card bg-white rounded-3 shadow-sm overflow-hidden">
+              <div class="row g-0">
+                <div class="col-6">
+                  <div class="transformation-image before">
+                    <img src="images/Suzuki Swift Sport old.jfif" alt="Before modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">Before</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="transformation-image after">
+                    <img src="images/Suzuki Swift Sport.jfif" alt="After modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">After</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h5 class="fw-semibold mb-1">Suzuki Swift Sport</h5>
+                <p class="text-muted small mb-2">Sport suspension + body kit + custom rims</p>
+                <div class="d-flex align-items-center">
+                  <span class="text-warning small me-2">★★★★★</span>
+                  <span class="small text-muted">Usman M. - Islamabad</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transformation 4 -->
+          <div class="col-lg-6 mb-4">
+            <div class="transformation-card bg-white rounded-3 shadow-sm overflow-hidden">
+              <div class="row g-0">
+                <div class="col-6">
+                  <div class="transformation-image before">
+                    <img src="images/ford mustang.jpg" alt="Before modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">Before</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="transformation-image after">
+                    <img src="images/Ford Ranger.jfif" alt="After modification" class="img-fluid h-100 object-fit-cover"/>
+                    <div class="transformation-label">After</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3">
+                <h5 class="fw-semibold mb-1">ford mustang Luxury</h5>
+                <p class="text-muted small mb-2">Premium interior + custom paint + chrome accessories</p>
+                <div class="d-flex align-items-center">
+                  <span class="text-warning small me-2">★★★★★</span>
+                  <span class="small text-muted">Fatima A. - Peshawar</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Reviews -->
+        <div class="row">
+          <div class="col-12">
+            <h3 class="fw-semibold mb-4">
+              <i class="bi bi-chat-quote-fill text-primary me-2"></i>
+              What Our Customers Say
+            </h3>
+          </div>
+          
+          <!-- Review 1 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="review-card bg-white rounded-3 shadow-sm p-4 h-100">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-circle bg-primary text-white me-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-0">Muhammad Ali</h6>
+                  <div class="text-warning small">★★★★★</div>
+                </div>
+              </div>
+              <p class="mb-2">"Exceptional service! AutoWorld transformed my Civic into a head-turner. The team's attention to detail is unmatched."</p>
+              <div class="text-muted small">
+                <i class="bi bi-geo-alt me-1"></i> Lahore • 2 days ago
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="review-card bg-white rounded-3 shadow-sm p-4 h-100">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-circle bg-success text-white me-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-0">Ayesha Khan</h6>
+                  <div class="text-warning small">★★★★★</div>
+                </div>
+              </div>
+              <p class="mb-2">"Best car modification experience in Pakistan! They delivered exactly what I wanted within my budget. Highly recommended!"</p>
+              <div class="text-muted small">
+                <i class="bi bi-geo-alt me-1"></i> Karachi • 1 week ago
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="review-card bg-white rounded-3 shadow-sm p-4 h-100">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-circle bg-warning text-white me-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-0">Bilal Ahmed</h6>
+                  <div class="text-warning small">★★★★★</div>
+                </div>
+              </div>
+              <p class="mb-2">"Professional team, quality work, and amazing results. My Corolla looks better than new. Thank you AutoWorld!"</p>
+              <div class="text-muted small">
+                <i class="bi bi-geo-alt me-1"></i> Islamabad • 2 weeks ago
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 4 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="review-card bg-white rounded-3 shadow-sm p-4 h-100">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-circle bg-info text-white me-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-0">Sara Tariq</h6>
+                  <div class="text-warning small">★★★★★</div>
+                </div>
+              </div>
+              <p class="mb-2">"Amazing transformation of my Swift! The team understood my vision perfectly. Best modification service in Pakistan!"</p>
+              <div class="text-muted small">
+                <i class="bi bi-geo-alt me-1"></i> Faisalabad • 3 weeks ago
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 5 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="review-card bg-white rounded-3 shadow-sm p-4 h-100">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-circle bg-danger text-white me-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-0">Omer Sheikh</h6>
+                  <div class="text-warning small">★★★★★</div>
+                </div>
+              </div>
+              <p class="mb-2">"Outstanding quality and service! They turned my Accord into a luxury masterpiece. Worth every penny!"</p>
+              <div class="text-muted small">
+                <i class="bi bi-geo-alt me-1"></i> Rawalpindi • 1 month ago
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 6 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="review-card bg-white rounded-3 shadow-sm p-4 h-100">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-circle bg-secondary text-white me-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-0">Zainab Malik</h6>
+                  <div class="text-warning small">★★★★★</div>
+                </div>
+              </div>
+              <p class="mb-2">"Professional, reliable, and creative! AutoWorld exceeded my expectations. My car looks absolutely stunning!"</p>
+              <div class="text-muted small">
+                <i class="bi bi-geo-alt me-1"></i> Multan • 1 month ago
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="row mt-5 pt-5 border-top">
+          <div class="col-md-3 col-6 text-center mb-4">
+            <div class="stat-item">
+              <div class="stat-number text-primary fw-bold">500+</div>
+              <div class="stat-text">Happy Customers</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6 text-center mb-4">
+            <div class="stat-item">
+              <div class="stat-number text-success fw-bold">4.9/5</div>
+              <div class="stat-text">Average Rating</div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="text-center text-lg-end">
+              <div class="aw-hero-stats mt-4">
+                <div class="row g-3">
+                  <div class="col-6">
+                    <div class="aw-stat-card">
+                      <div class="aw-stat-number">500+</div>
+                      <div class="aw-stat-label">Cars Sold</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="aw-stat-card">
+                      <div class="aw-stat-number">50+</div>
+                      <div class="aw-stat-label">Models</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/home.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script>
+    // Live Search Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('liveSearchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const searchResults = document.getElementById('searchResults');
+      const brandFilter = document.getElementById('brandFilter');
+      const minPriceFilter = document.getElementById('minPriceFilter');
+      const maxPriceFilter = document.getElementById('maxPriceFilter');
+      
+      // Populate brand filter
+      populateBrandFilter();
+      
+      if (searchInput && searchBtn && searchResults) {
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('input', debounce(performSearch, 300));
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            performSearch();
+          }
+        });
+        
+        // Add event listeners for filters
+        brandFilter.addEventListener('change', performSearch);
+        minPriceFilter.addEventListener('change', performSearch);
+        maxPriceFilter.addEventListener('change', performSearch);
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!searchResults.contains(e.target) && e.target !== searchInput && e.target !== searchBtn) {
+            searchResults.style.display = 'none';
+          }
+        });
+      }
+    });
+    
+    function populateBrandFilter() {
+      const brandFilter = document.getElementById('brandFilter');
+      const cars = window.AutoWorldData.cars || [];
+      
+      // Get unique brands
+      const brands = [...new Set(cars.map(car => car.brand))].sort();
+      
+      // Populate brand filter
+      brands.forEach(brand => {
+        const option = document.createElement('option');
+        option.value = brand;
+        option.textContent = brand;
+        brandFilter.appendChild(option);
+      });
+    }
+    
+    function performSearch() {
+      const query = document.getElementById('liveSearchInput').value.toLowerCase().trim();
+      const searchResults = document.getElementById('searchResults');
+      const brandFilter = document.getElementById('brandFilter').value;
+      const minPrice = parseInt(document.getElementById('minPriceFilter').value) || 0;
+      const maxPrice = parseInt(document.getElementById('maxPriceFilter').value) || 999999999;
+      
+      // Check if any search criteria is applied
+      const hasSearchCriteria = query.length >= 2 || brandFilter || minPrice > 0 || maxPrice < 999999999;
+      
+      if (!hasSearchCriteria) {
+        searchResults.style.display = 'none';
+        return;
+      }
+      
+      // Search and filter cars data
+      const cars = window.AutoWorldData.cars || [];
+      const results = cars.filter(car => {
+        // Text search
+        const matchesText = query.length < 2 || 
+          car.name.toLowerCase().includes(query) ||
+          car.brand.toLowerCase().includes(query) ||
+          car.id.toLowerCase().includes(query) ||
+          (car.features && car.features.some(feature => feature.toLowerCase().includes(query)));
+        
+        // Brand filter
+        const matchesBrand = !brandFilter || car.brand === brandFilter;
+        
+        // Price range filter
+        const matchesPrice = car.price >= minPrice && car.price <= maxPrice;
+        
+        return matchesText && matchesBrand && matchesPrice;
+      }).slice(0, 8); // Limit to 8 results
+      
+      if (results.length > 0) {
+        searchResults.innerHTML = results.map(car => {
+          // Get gallery images for this car (using galleryImages as demo)
+          const galleryImages = window.AutoWorldData.galleryImages || [];
+          const carImages = galleryImages.slice(0, 3); // Show 3 images per car
+          
+          return `
+            <div class="aw-search-result-item" onclick="window.location.href='cars/${car.id}.html'">
+              <div class="aw-search-result-main">
+                <div class="aw-search-result-image">
+                  <img src="${car.image}" alt="${escapeHtml(car.name)}" loading="lazy">
+                </div>
+                <div class="aw-search-result-content">
+                  <div class="aw-search-result-header">
+                    <div class="aw-search-result-title">${escapeHtml(car.name)}</div>
+                    <div class="aw-search-result-price">${window.AutoWorldData.formatPKR(car.price)}</div>
+                  </div>
+                  <div class="aw-search-result-details">
+                    <span class="aw-search-result-brand">${escapeHtml(car.brand)}</span>
+                    <span class="aw-search-result-features">${(car.features || []).slice(0, 2).map(f => escapeHtml(f)).join(' • ')}</span>
+                  </div>
+                  <div class="aw-search-result-actions">
+                    <button class="btn btn-sm btn-success" onclick="event.stopPropagation(); window.AutoWorldCart.addToCart('${car.id}')"><i class="bi bi-cart-plus"></i> Add to Cart</button>
+                    <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); window.location.href='booking.html?car=${encodeURIComponent(car.id)}'">Book</button>
+                  </div>
+                </div>
+              </div>
+              <div class="aw-search-result-gallery">
+                <div class="aw-gallery-label">More Images:</div>
+                <div class="aw-gallery-images">
+                  ${carImages.map((img, index) => `
+                    <div class="aw-gallery-image">
+                      <img src="${img}" alt="${escapeHtml(car.name)} - Image ${index + 1}" loading="lazy">
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+        searchResults.style.display = 'block';
+      } else {
+        searchResults.innerHTML = '<div class="aw-search-result-item aw-search-no-results"><div class="text-muted">No cars found matching your criteria</div><div class="small">Try adjusting your filters or search terms</div></div>';
+        searchResults.style.display = 'block';
+      }
+    }
+    
+    function escapeHtml(s) {
+      return String(s)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+    
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = function() {
+          timeout = null;
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    window.AutoWorldLayout.render('home');
+    window.AutoWorldHome.renderFeatured();
+    window.AutoWorldHome.renderGallery();
+    window.AutoWorldHome.renderCarousel();
+    if(window.AutoWorldReveal && window.AutoWorldReveal.revealAll){
+      setTimeout(function(){
+        window.AutoWorldReveal.revealAll();
+      },200);
+    }
+    
+    // Test cart functionality
+    setTimeout(function() {
+      console.log('Testing cart functionality...');
+      if (window.testCart && window.testCart()) {
+        console.log('✅ Cart system is working!');
+      } else {
+        console.error('❌ Cart system is not working!');
+      }
+    }, 1000);
+  </script>
+
+  <script>
+    // Form validation for home contact form
+    document.addEventListener('DOMContentLoaded', function() {
+      const homeContactForm = document.getElementById('homeContactForm');
+      const homeFeedbackForm = document.getElementById('homeFeedbackForm');
+      
+      // Contact form validation
+      if (homeContactForm) {
+        const contactNameInput = homeContactForm.querySelector('input[name="name"]');
+        const contactEmailInput = homeContactForm.querySelector('input[name="email"]');
+
+        function validateContactName() {
+          const name = contactNameInput.value.trim();
+          const nameRegex = /^[A-Za-z\s]+$/;
+          
+          if (name === '') {
+            contactNameInput.classList.add('is-invalid');
+            if (!contactNameInput.nextElementSibling || !contactNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Name is required';
+              contactNameInput.parentNode.appendChild(feedback);
+            } else {
+              contactNameInput.nextElementSibling.textContent = 'Name is required';
+            }
+            return false;
+          } else if (!nameRegex.test(name)) {
+            contactNameInput.classList.add('is-invalid');
+            if (!contactNameInput.nextElementSibling || !contactNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Name should contain only letters';
+              contactNameInput.parentNode.appendChild(feedback);
+            } else {
+              contactNameInput.nextElementSibling.textContent = 'Name should contain only letters';
+            }
+            return false;
+          } else if (name.length < 2) {
+            contactNameInput.classList.add('is-invalid');
+            if (!contactNameInput.nextElementSibling || !contactNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Name must be at least 2 characters long';
+              contactNameInput.parentNode.appendChild(feedback);
+            } else {
+              contactNameInput.nextElementSibling.textContent = 'Name must be at least 2 characters long';
+            }
+            return false;
+          } else {
+            contactNameInput.classList.remove('is-invalid');
+            return true;
+          }
+        }
+
+        function validateContactEmail() {
+          const email = contactEmailInput.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          
+          if (email === '') {
+            contactEmailInput.classList.add('is-invalid');
+            if (!contactEmailInput.nextElementSibling || !contactEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Email is required';
+              contactEmailInput.parentNode.appendChild(feedback);
+            } else {
+              contactEmailInput.nextElementSibling.textContent = 'Email is required';
+            }
+            return false;
+          } else if (!emailRegex.test(email)) {
+            contactEmailInput.classList.add('is-invalid');
+            if (!contactEmailInput.nextElementSibling || !contactEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Please enter a valid email address';
+              contactEmailInput.parentNode.appendChild(feedback);
+            } else {
+              contactEmailInput.nextElementSibling.textContent = 'Please enter a valid email address';
+            }
+            return false;
+          } else {
+            contactEmailInput.classList.remove('is-invalid');
+            return true;
+          }
+        }
+
+        // Real-time validation for contact form
+        contactNameInput.addEventListener('blur', validateContactName);
+        contactEmailInput.addEventListener('blur', validateContactEmail);
+
+        // Remove validation on input
+        contactNameInput.addEventListener('input', function() {
+          if (this.classList.contains('is-invalid')) {
+            this.classList.remove('is-invalid');
+          }
+        });
+
+        contactEmailInput.addEventListener('input', function() {
+          if (this.classList.contains('is-invalid')) {
+            this.classList.remove('is-invalid');
+          }
+        });
+      }
+
+      // Feedback form validation
+      if (homeFeedbackForm) {
+        const feedbackNameInput = homeFeedbackForm.querySelector('input[name="name"]');
+        const feedbackEmailInput = homeFeedbackForm.querySelector('input[name="email"]');
+
+        function validateFeedbackName() {
+          const name = feedbackNameInput.value.trim();
+          const nameRegex = /^[A-Za-z\s]+$/;
+          
+          if (name === '') {
+            feedbackNameInput.classList.add('is-invalid');
+            if (!feedbackNameInput.nextElementSibling || !feedbackNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Name is required';
+              feedbackNameInput.parentNode.appendChild(feedback);
+            } else {
+              feedbackNameInput.nextElementSibling.textContent = 'Name is required';
+            }
+            return false;
+          } else if (!nameRegex.test(name)) {
+            feedbackNameInput.classList.add('is-invalid');
+            if (!feedbackNameInput.nextElementSibling || !feedbackNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Name should contain only letters';
+              feedbackNameInput.parentNode.appendChild(feedback);
+            } else {
+              feedbackNameInput.nextElementSibling.textContent = 'Name should contain only letters';
+            }
+            return false;
+          } else if (name.length < 2) {
+            feedbackNameInput.classList.add('is-invalid');
+            if (!feedbackNameInput.nextElementSibling || !feedbackNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Name must be at least 2 characters long';
+              feedbackNameInput.parentNode.appendChild(feedback);
+            } else {
+              feedbackNameInput.nextElementSibling.textContent = 'Name must be at least 2 characters long';
+            }
+            return false;
+          } else {
+            feedbackNameInput.classList.remove('is-invalid');
+            return true;
+          }
+        }
+
+        function validateFeedbackEmail() {
+          const email = feedbackEmailInput.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          
+          if (email === '') {
+            feedbackEmailInput.classList.add('is-invalid');
+            if (!feedbackEmailInput.nextElementSibling || !feedbackEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Email is required';
+              feedbackEmailInput.parentNode.appendChild(feedback);
+            } else {
+              feedbackEmailInput.nextElementSibling.textContent = 'Email is required';
+            }
+            return false;
+          } else if (!emailRegex.test(email)) {
+            feedbackEmailInput.classList.add('is-invalid');
+            if (!feedbackEmailInput.nextElementSibling || !feedbackEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+              const feedback = document.createElement('div');
+              feedback.className = 'invalid-feedback';
+              feedback.textContent = 'Please enter a valid email address';
+              feedbackEmailInput.parentNode.appendChild(feedback);
+            } else {
+              feedbackEmailInput.nextElementSibling.textContent = 'Please enter a valid email address';
+            }
+            return false;
+          } else {
+            feedbackEmailInput.classList.remove('is-invalid');
+            return true;
+          }
+        }
+
+        // Real-time validation for feedback form
+        feedbackNameInput.addEventListener('blur', validateFeedbackName);
+        feedbackEmailInput.addEventListener('blur', validateFeedbackEmail);
+
+        // Remove validation on input
+        feedbackNameInput.addEventListener('input', function() {
+          if (this.classList.contains('is-invalid')) {
+            this.classList.remove('is-invalid');
+          }
+        });
+
+        feedbackEmailInput.addEventListener('input', function() {
+          if (this.classList.contains('is-invalid')) {
+            this.classList.remove('is-invalid');
+          }
+        });
+      }
+    });
+
+    document.getElementById('homeContactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      
+      // Validate before submission
+      const contactNameInput = this.querySelector('input[name="name"]');
+      const contactEmailInput = this.querySelector('input[name="email"]');
+      const nameRegex = /^[A-Za-z\s]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      const name = contactNameInput.value.trim();
+      const email = contactEmailInput.value.trim();
+      
+      let isValid = true;
+      
+      // Validate name
+      if (name === '') {
+        contactNameInput.classList.add('is-invalid');
+        if (!contactNameInput.nextElementSibling || !contactNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Name is required';
+          contactNameInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      } else if (!nameRegex.test(name)) {
+        contactNameInput.classList.add('is-invalid');
+        if (!contactNameInput.nextElementSibling || !contactNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Name should contain only letters';
+          contactNameInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      }
+      
+      // Validate email
+      if (email === '') {
+        contactEmailInput.classList.add('is-invalid');
+        if (!contactEmailInput.nextElementSibling || !contactEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Email is required';
+          contactEmailInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      } else if (!emailRegex.test(email)) {
+        contactEmailInput.classList.add('is-invalid');
+        if (!contactEmailInput.nextElementSibling || !contactEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Please enter a valid email address';
+          contactEmailInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        return;
+      }
+      
+      var form=e.target;
+      var data=new FormData(form);
+      var obj={};
+      data.forEach(function(val,key){obj[key]=val;});
+      // Demo: store in localStorage
+      var msgs=JSON.parse(localStorage.getItem('autoworld_contact_messages')||'[]');
+      obj.id='MSG-'+Date.now().toString(36).toUpperCase();
+      obj.createdAt=new Date().toISOString();
+      msgs.unshift(obj);
+      localStorage.setItem('autoworld_contact_messages',JSON.stringify(msgs));
+      // Show success
+      document.getElementById('homeContactSuccess').classList.remove('d-none');
+      form.reset();
+      setTimeout(function(){
+        document.getElementById('homeContactSuccess').classList.add('d-none');
+      },5000);
+    });
+
+    // Home feedback form handler (demo)
+    document.getElementById('homeFeedbackForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      
+      // Validate before submission
+      const feedbackNameInput = this.querySelector('input[name="name"]');
+      const feedbackEmailInput = this.querySelector('input[name="email"]');
+      const nameRegex = /^[A-Za-z\s]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      const name = feedbackNameInput.value.trim();
+      const email = feedbackEmailInput.value.trim();
+      
+      let isValid = true;
+      
+      // Validate name
+      if (name === '') {
+        feedbackNameInput.classList.add('is-invalid');
+        if (!feedbackNameInput.nextElementSibling || !feedbackNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Name is required';
+          feedbackNameInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      } else if (!nameRegex.test(name)) {
+        feedbackNameInput.classList.add('is-invalid');
+        if (!feedbackNameInput.nextElementSibling || !feedbackNameInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Name should contain only letters';
+          feedbackNameInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      }
+      
+      // Validate email
+      if (email === '') {
+        feedbackEmailInput.classList.add('is-invalid');
+        if (!feedbackEmailInput.nextElementSibling || !feedbackEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Email is required';
+          feedbackEmailInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      } else if (!emailRegex.test(email)) {
+        feedbackEmailInput.classList.add('is-invalid');
+        if (!feedbackEmailInput.nextElementSibling || !feedbackEmailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'invalid-feedback';
+          feedback.textContent = 'Please enter a valid email address';
+          feedbackEmailInput.parentNode.appendChild(feedback);
+        }
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        return;
+      }
+      
+      var form=e.target;
+      var data=new FormData(form);
+      var obj={};
+      data.forEach(function(val,key){obj[key]=val;});
+      // Demo: store in localStorage
+      var fbs=JSON.parse(localStorage.getItem('autoworld_feedback')||'[]');
+      obj.id='FB-'+Date.now().toString(36).toUpperCase();
+      obj.createdAt=new Date().toISOString();
+      fbs.unshift(obj);
+      localStorage.setItem('autoworld_feedback',JSON.stringify(fbs));
+      // Show success
+      document.getElementById('homeFeedbackSuccess').classList.remove('d-none');
+      form.reset();
+      setTimeout(function(){
+        document.getElementById('homeFeedbackSuccess').classList.add('d-none');
+      },5000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Booking Tracking</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .tracking-timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    .tracking-timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #28a745 0%, #007bff 50%, #dee2e6 100%);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+      padding-left: 20px;
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover {
+      transform: translateX(5px);
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -29px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #dee2e6;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px #dee2e6;
+      transition: all 0.3s ease;
+    }
+    .timeline-item.completed::before {
+      background: #28a745;
+      box-shadow: 0 0 0 2px #28a745;
+    }
+    .timeline-item.active::before {
+      background: #007bff;
+      box-shadow: 0 0 0 2px #007bff;
+      animation: pulse 2s infinite;
+    }
+    .timeline-item.pending::before {
+      background: #ffc107;
+      box-shadow: 0 0 0 2px #ffc107;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-processing { background: #cce5ff; color: #004085; }
+    .status-shipped { background: #d1ecf1; color: #0c5460; }
+    .status-delivered { background: #d4edda; color: #155724; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+    
+    .tracking-card {
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+      border-radius: 15px;
+    }
+    .tracking-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    .live-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #28a745;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: blink 2s infinite;
+      box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.3; }
+    }
+    
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.8s ease;
+    }
+    
+    .map-placeholder {
+      height: 300px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .feature-card {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .feature-card:hover {
+      border-color: #007bff;
+      transform: translateY(-2px);
+    }
+    
+    .notification-bell {
+      animation: ring 4s ease-in-out infinite;
+    }
+    @keyframes ring {
+      0%, 90%, 100% { transform: rotate(0deg); }
+      10%, 30%, 50%, 70% { transform: rotate(-10deg); }
+      20%, 40%, 60%, 80% { transform: rotate(10deg); }
+    }
+    
+    .stats-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+    .stats-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .recent-booking-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .recent-booking-card:hover {
+      background: #f8f9fa;
+      border-color: #007bff;
+    }
+    
+    .floating-action-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .floating-action-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .tracking-timeline {
+        padding-left: 30px;
+      }
+      .timeline-item::before {
+        left: -24px;
+        width: 10px;
+        height: 10px;
+      }
+      .map-placeholder {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <section class="aw-pagebar py-4">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-2">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="booking.html">Booking</a></li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Tracking</li>
+        </ol>
+      </nav>
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2">
+        <div>
+          <h1 class="fw-semibold mb-1">Track Your Booking</h1>
+          <div class="opacity-75">Real-time tracking of your car booking with live updates</div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-outline-light" href="booking.html">
+            <i class="bi bi-plus-circle me-2"></i>New Booking
+          </a>
+          <a class="btn btn-outline-light" href="contact.html">
+            <i class="bi bi-headset me-2"></i>Support
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container my-5">
+    <!-- Statistics Dashboard -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-box-seam fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1" id="totalBookings">0</h3>
+            <p class="mb-0 opacity-75">Total Bookings</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-truck fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1" id="inTransit">0</h3>
+            <p class="mb-0 opacity-75">In Transit</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-check-circle fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1" id="delivered">0</h3>
+            <p class="mb-0 opacity-75">Delivered</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-clock-history fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1" id="avgDelivery">0d</h3>
+            <p class="mb-0 opacity-75">Avg. Delivery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tracking Search Section -->
+    <div class="card tracking-card mb-4">
+      <div class="card-body p-4">
+        <div class="row g-4 align-items-center">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">
+              <i class="bi bi-search text-primary me-2"></i>
+              Enter Booking ID
+            </label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-receipt"></i>
+              </span>
+              <input type="text" class="form-control border-start-0" id="bookingId" name="bookingId" placeholder="e.g. AW-1A2B3C" required data-validation-rules="required">
+              <button class="btn btn-primary" type="button" id="trackBtn">
+                <i class="bi bi-search me-1"></i>Track
+              </button>
+            </div>
+            <div class="form-text mt-2">
+              <i class="bi bi-info-circle me-1"></i>
+              Tip: Copy booking ID from your confirmation email or booking summary
+            </div>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Quick</label>
+            <button class="btn btn-outline-primary w-100" id="loadLatestBtn">
+              <i class="bi bi-clock-history me-2"></i>Latest
+            </button>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">History</label>
+            <button class="btn btn-outline-secondary w-100" id="viewAllBtn">
+              <i class="bi bi-list-ul me-2"></i>All
+            </button>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Alerts</label>
+            <button class="btn btn-outline-danger w-100 position-relative" id="alertsBtn">
+              <i class="bi bi-bell notification-bell me-2"></i>Alerts
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="alertBadge">0</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="alert alert-danger mt-3 d-none" role="alert" id="notFound">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          <strong>Booking not found:</strong> Please check the booking ID and try again. If you continue to have issues, contact our support team.
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Bookings (Initially Hidden) -->
+    <div class="card tracking-card mb-4 d-none" id="recentBookingsCard">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-semibold mb-0">
+            <i class="bi bi-clock-history text-primary me-2"></i>
+            Your Recent Bookings
+          </h5>
+          <button class="btn btn-sm btn-outline-secondary" id="closeRecentBtn">
+            <i class="bi bi-x"></i> Close
+          </button>
+        </div>
+        <div class="row g-3" id="recentBookingsList">
+          <!-- Recent bookings will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Alerts Panel (Initially Hidden) -->
+    <div class="card tracking-card mb-4 d-none" id="alertsPanel">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-semibold mb-0">
+            <i class="bi bi-bell text-danger me-2"></i>
+            Delivery Alerts & Notifications
+          </h5>
+          <button class="btn btn-sm btn-outline-secondary" id="closeAlertsBtn">
+            <i class="bi bi-x"></i> Close
+          </button>
+        </div>
+        <div id="alertsList">
+          <!-- Alerts will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Tracking Results -->
+    <div class="card tracking-card d-none" id="resultCard">
+      <div class="card-body p-4">
+        <!-- Header Section -->
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <h5 class="fw-semibold mb-0">Booking Details</h5>
+              <span class="live-indicator"></span>
+              <span class="small text-success">Live Tracking</span>
+            </div>
+            <div class="text-muted" id="resultSubtitle">Booking ID: —</div>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-outline-primary" type="button" id="printBtn">
+              <i class="bi bi-printer me-2"></i>Print Receipt
+            </button>
+            <button class="btn btn-outline-success" type="button" id="shareBtn">
+              <i class="bi bi-share me-2"></i>Share
+            </button>
+            <button class="btn btn-outline-info" type="button" id="downloadBtn">
+              <i class="bi bi-download me-2"></i>Download
+            </button>
+            <button class="btn btn-outline-warning" type="button" id="notifyBtn">
+              <i class="bi bi-bell me-2"></i>Notify Me
+            </button>
+            <a class="btn btn-primary" id="bookAgainBtn" href="booking.html">
+              <i class="bi bi-plus-circle me-2"></i>Book Again
+            </a>
+          </div>
+        </div>
+
+        <!-- Status Overview -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-8">
+            <div class="card bg-light">
+              <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h6 class="fw-semibold mb-0">
+                    <i class="bi bi-truck text-primary me-2"></i>
+                    Delivery Status
+                  </h6>
+                  <span class="status-badge status-processing" id="currentStatus">Processing</span>
+                </div>
+                
+                <!-- Progress Timeline -->
+                <div class="tracking-timeline" id="trackingTimeline">
+                  <!-- Timeline items will be generated here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-primary text-white">
+              <div class="card-body p-4 text-center">
+                <svg width="120" height="120" class="progress-ring mb-3">
+                  <circle class="progress-ring-circle" stroke="#ffffff" stroke-width="4" fill="transparent" r="52" cx="60" cy="60" stroke-dasharray="326.73" stroke-dashoffset="163.36"></circle>
+                </svg>
+                <h5 class="fw-semibold mb-2" id="progressPercent">50%</h5>
+                <p class="mb-0 opacity-75">Delivery Progress</p>
+                <small class="d-block mt-2" id="estimatedDelivery">Est. 3-5 days</small>
+                <div class="mt-3">
+                  <button class="btn btn-light btn-sm" id="refreshBtn">
+                    <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map and Live Tracking -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body p-0">
+                <div class="map-placeholder">
+                  <div class="text-center">
+                    <i class="bi bi-geo-alt display-1 mb-2"></i>
+                    <h5 class="fw-semibold">Live Location Tracking</h5>
+                    <p class="mb-0 opacity-75">Your car is currently in transit</p>
+                    <div class="mt-3">
+                      <button class="btn btn-light btn-sm" id="trackLiveBtn">
+                        <i class="bi bi-crosshair me-1"></i>Track Live
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body p-4">
+                <h6 class="fw-semibold mb-3">
+                  <i class="bi bi-info-circle text-primary me-2"></i>
+                  Quick Info
+                </h6>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <small class="text-muted d-block">Tracking ID</small>
+                    <strong id="trackingId">TRK-123456</strong>
+                  </div>
+                  <div class="col-6">
+                    <small class="text-muted d-block">Est. Arrival</small>
+                    <strong id="estArrival">Dec 25</strong>
+                  </div>
+                  <div class="col-6">
+                    <small class="text-muted d-block">Distance</small>
+                    <strong id="distance">245 km</strong>
+                  </div>
+                  <div class="col-6">
+                    <small class="text-muted d-block">Speed</small>
+                    <strong id="speed">60 km/h</strong>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-outline-primary btn-sm" id="contactDriverBtn">
+                    <i class="bi bi-telephone me-1"></i>Contact Driver
+                  </button>
+                  <button class="btn btn-outline-success btn-sm" id="routeBtn">
+                    <i class="bi bi-map me-1"></i>View Route
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Information -->
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="card feature-card">
+              <div class="card-body p-4">
+                <h6 class="fw-semibold mb-3">
+                  <i class="bi bi-person text-primary me-2"></i>
+                  Customer Information
+                </h6>
+                <div id="customerInfo">
+                  <!-- Customer details will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card feature-card">
+              <div class="card-body p-4">
+                <h6 class="fw-semibold mb-3">
+                  <i class="bi bi-car-front text-primary me-2"></i>
+                  Vehicle Details
+                </h6>
+                <div id="vehicleInfo">
+                  <!-- Vehicle details will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card feature-card">
+              <div class="card-body p-4">
+                <h6 class="fw-semibold mb-3">
+                  <i class="bi bi-credit-card text-primary me-2"></i>
+                  Payment Information
+                </h6>
+                <div id="paymentInfo">
+                  <!-- Payment details will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card feature-card">
+              <div class="card-body p-4">
+                <h6 class="fw-semibold mb-3">
+                  <i class="bi bi-calendar-check text-primary me-2"></i>
+                  Delivery Information
+                </h6>
+                <div id="deliveryInfo">
+                  <!-- Delivery details will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="card mt-4">
+          <div class="card-body p-4">
+            <h6 class="fw-semibold mb-3">
+              <i class="bi bi-chat-text text-primary me-2"></i>
+              Special Requirements & Notes
+            </h6>
+            <div id="notesInfo">
+              <!-- Notes will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="alert alert-info mt-4" role="alert">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-headset me-3 fs-4"></i>
+            <div>
+              <strong>Need Help?</strong> Our customer support team is available 24/7 to assist you with your booking.
+              <div class="mt-2">
+                <a href="tel:+92-300-1234567" class="btn btn-sm btn-outline-primary me-2">
+                  <i class="bi bi-telephone me-1"></i>Call Now
+                </a>
+                <a href="contact.html" class="btn btn-sm btn-primary">
+                  <i class="bi bi-envelope me-1"></i>Contact Support
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/tracking.js"></script>
+  <script>
+    // Enhanced tracking functionality
+    function showRecentBookings() {
+      const bookings = loadBookings();
+      const recentCard = document.getElementById('recentBookingsCard');
+      const recentList = document.getElementById('recentBookingsList');
+      
+      if (bookings.length === 0) {
+        recentCard.classList.add('d-none');
+        return;
+      }
+      
+      recentCard.classList.remove('d-none');
+      
+      const recentHTML = bookings.slice(0, 6).map(booking => `
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 cursor-pointer" onclick="trackBooking('${booking.id}')">
+            <div class="card-body p-3">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <div class="small fw-semibold">${booking.id}</div>
+                  <div class="small text-muted">${booking.car.name}</div>
+                </div>
+                <span class="status-badge status-processing">Active</span>
+              </div>
+              <div class="small text-muted">
+                <i class="bi bi-calendar me-1"></i>${new Date(booking.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      recentList.innerHTML = recentHTML;
+    }
+
+    function trackBooking(bookingId) {
+      document.getElementById('bookingId').value = bookingId;
+      document.getElementById('trackBtn').click();
+    }
+
+    function generateTrackingTimeline(status) {
+      const timelineSteps = [
+        { status: 'confirmed', title: 'Booking Confirmed', description: 'Your booking has been received and confirmed', completed: true },
+        { status: 'processing', title: 'Processing', description: 'Your order is being prepared', completed: true, active: status === 'processing' },
+        { status: 'shipped', title: 'Shipped', description: 'Your car is on the way', completed: status === 'shipped' || status === 'delivered', active: status === 'shipped' },
+        { status: 'delivered', title: 'Delivered', description: 'Your car has been delivered', completed: status === 'delivered', active: status === 'delivered' }
+      ];
+
+      const timelineHTML = timelineSteps.map((step, index) => {
+        let itemClass = 'timeline-item';
+        if (step.completed) itemClass += ' completed';
+        if (step.active) itemClass += ' active';
+        if (!step.completed && !step.active) itemClass += ' pending';
+
+        return `
+          <div class="${itemClass}">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="fw-semibold">${step.title}</div>
+                <div class="small text-muted">${step.description}</div>
+              </div>
+              ${step.completed ? '<i class="bi bi-check-circle-fill text-success"></i>' : 
+                step.active ? '<i class="bi bi-arrow-repeat text-primary"></i>' : 
+                '<i class="bi bi-clock text-muted"></i>'}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('trackingTimeline').innerHTML = timelineHTML;
+    }
+
+    function updateProgressCircle(percentage) {
+      const circle = document.querySelector('.progress-ring-circle');
+      const radius = 52;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (percentage / 100) * circumference;
+      
+      circle.style.strokeDasharray = `${circumference}`;
+      circle.style.strokeDashoffset = offset;
+      
+      document.getElementById('progressPercent').textContent = `${percentage}%`;
+    }
+
+    function shareBooking(bookingId) {
+      const url = `${window.location.origin}${window.location.pathname}?id=${bookingId}`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'AutoWorld Booking Tracking',
+          text: `Track my booking: ${bookingId}`,
+          url: url
+        });
+      } else {
+        navigator.clipboard.writeText(url);
+        alert('Tracking link copied to clipboard!');
+      }
+    }
+
+    // Initialize enhanced features
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('tracking');
+      window.AutoWorldTracking.init();
+
+      // View all bookings button
+      document.getElementById('viewAllBtn').addEventListener('click', function() {
+        showRecentBookings();
+      });
+
+      // Share button
+      document.getElementById('shareBtn')?.addEventListener('click', function() {
+        const bookingId = document.getElementById('resultSubtitle').textContent.replace('Booking ID: ', '');
+        shareBooking(bookingId);
+      });
+
+      // Enhanced track button
+      document.getElementById('trackBtn').addEventListener('click', function() {
+        const form = document.getElementById('trackForm');
+        const event = new Event('submit', { cancelable: true });
+        form.dispatchEvent(event);
+      });
+
+      // Auto-refresh tracking every 30 seconds
+      setInterval(function() {
+        const bookingId = document.getElementById('resultSubtitle').textContent.replace('Booking ID: ', '');
+        if (bookingId && bookingId !== '—') {
+          // In real implementation, this would fetch fresh data from server
+          console.log('Refreshing tracking data for:', bookingId);
+        }
+      }, 30000);
+    });
+
+    // Override the renderBooking function to add enhanced features
+    const originalRenderBooking = window.AutoWorldTracking.renderBooking;
+    window.AutoWorldTracking.renderBooking = function(b) {
+      // Call original function
+      originalRenderBooking.call(this, b);
+      
+      // Add enhanced features
+      setTimeout(function() {
+        // Generate timeline
+        const currentStatus = 'processing'; // This would come from the booking data
+        generateTrackingTimeline(currentStatus);
+        
+        // Update progress circle
+        updateProgressCircle(50); // This would be calculated based on status
+        
+        // Populate detailed information sections
+        document.getElementById('customerInfo').innerHTML = `
+          <div class="mb-2"><strong>Name:</strong> ${b.customer.name}</div>
+          <div class="mb-2"><strong>Phone:</strong> ${b.customer.phone}</div>
+          <div class="mb-2"><strong>Email:</strong> ${b.customer.email}</div>
+          <div class="mb-2"><strong>City:</strong> ${b.customer.city}</div>
+          ${b.customer.address ? `<div><strong>Address:</strong> ${b.customer.address}</div>` : ''}
+        `;
+        
+        document.getElementById('vehicleInfo').innerHTML = `
+          <div class="mb-2"><strong>Vehicle:</strong> ${b.car.name} (${b.car.brand})</div>
+          <div class="mb-2"><strong>Price:</strong> ${window.AutoWorldData.formatPKR(b.car.price)}</div>
+          <div class="mb-2"><strong>Preferred Date:</strong> ${b.preferredDate}</div>
+          <div><strong>Features:</strong> ${b.car.features ? b.car.features.join(', ') : 'Standard'}</div>
+        `;
+        
+        document.getElementById('paymentInfo').innerHTML = `
+          <div class="mb-2"><strong>Method:</strong> <span class="text-capitalize">${b.payment.method}</span></div>
+          ${b.payment.bankName ? `<div class="mb-2"><strong>Bank:</strong> ${b.payment.bankName}</div>` : ''}
+          ${b.payment.bankRef ? `<div class="mb-2"><strong>Reference:</strong> ${b.payment.bankRef}</div>` : ''}
+          ${b.payment.cardHolder ? `<div class="mb-2"><strong>Card Holder:</strong> ${b.payment.cardHolder}</div>` : ''}
+          <div><strong>Status:</strong> <span class="badge bg-success">Paid</span></div>
+        `;
+        
+        document.getElementById('deliveryInfo').innerHTML = `
+          <div class="mb-2"><strong>Delivery Date:</strong> ${b.preferredDate}</div>
+          <div class="mb-2"><strong>Estimated Delivery:</strong> 3-5 business days</div>
+          <div class="mb-2"><strong>Delivery Address:</strong> ${b.customer.address || 'To be confirmed'}</div>
+          <div><strong>Contact Person:</strong> ${b.customer.name} (${b.customer.phone})</div>
+        `;
+        
+        document.getElementById('notesInfo').innerHTML = `
+          <div>${b.notes || 'No special requirements specified.'}</div>
+        `;
+        
+        // Update status badge
+        const statusElement = document.getElementById('currentStatus');
+        if (statusElement) {
+          statusElement.textContent = 'In Transit';
+          statusElement.className = 'status-badge status-processing';
+        }
+      }, 100);
+    };
+  </script>
+</body>
+</html>

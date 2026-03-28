@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input.error {
+            border-color: #e74c3c;
+        }
+
+        input.success {
+            border-color: #27ae60;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registration Form</h1>
+        
+        <form id="validationForm" novalidate>
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+                <div class="error-message" id="nameError">Name is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="passwordError">Password must be at least 8 characters long</div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            Form submitted successfully!
+        </div>
+    </div>
+
+    <script>
+        // Form validation script
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('validationForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const successMessage = document.getElementById('successMessage');
+
+            // Validation functions
+            function validateName() {
+                const name = nameInput.value.trim();
+                const nameRegex = /^[A-Za-z\s]+$/;
+                
+                if (name === '') {
+                    showError(nameInput, nameError, 'Name is required');
+                    return false;
+                } else if (!nameRegex.test(name)) {
+                    showError(nameInput, nameError, 'Name should contain only letters');
+                    return false;
+                } else if (name.length < 2) {
+                    showError(nameInput, nameError, 'Name must be at least 2 characters long');
+                    return false;
+                } else {
+                    showSuccess(nameInput, nameError);
+                    return true;
+                }
+            }
+
+            function validateEmail() {
+                const email = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (email === '') {
+                    showError(emailInput, emailError, 'Email is required');
+                    return false;
+                } else if (!emailRegex.test(email)) {
+                    showError(emailInput, emailError, 'Please enter a valid email address');
+                    return false;
+                } else {
+                    showSuccess(emailInput, emailError);
+                    return true;
+                }
+            }
+
+            function validatePassword() {
+                const password = passwordInput.value;
+                
+                if (password === '') {
+                    showError(passwordInput, passwordError, 'Password is required');
+                    return false;
+                } else if (password.length < 8) {
+                    showError(passwordInput, passwordError, 'Password must be at least 8 characters long');
+                    return false;
+                } else {
+                    showSuccess(passwordInput, passwordError);
+                    return true;
+                }
+            }
+
+            function showError(input, errorElement, message) {
+                input.classList.remove('success');
+                input.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+
+            function showSuccess(input, errorElement) {
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorElement.classList.remove('show');
+            }
+
+            function validateForm() {
+                const isNameValid = validateName();
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                
+                return isNameValid && isEmailValid && isPasswordValid;
+            }
+
+            // Real-time validation
+            nameInput.addEventListener('blur', validateName);
+            nameInput.addEventListener('input', function() {
+                if (nameInput.classList.contains('error')) {
+                    validateName();
+                }
+            });
+
+            emailInput.addEventListener('blur', validateEmail);
+            emailInput.addEventListener('input', function() {
+                if (emailInput.classList.contains('error')) {
+                    validateEmail();
+                }
+            });
+
+            passwordInput.addEventListener('blur', validatePassword);
+            passwordInput.addEventListener('input', function() {
+                if (passwordInput.classList.contains('error')) {
+                    validatePassword();
+                }
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Hide success message
+                successMessage.classList.remove('show');
+                
+                // Validate all fields
+                if (validateForm()) {
+                    // Form is valid, show success message
+                    successMessage.classList.add('show');
+                    
+                    // Log form data (in real application, you would send to server)
+                    const formData = {
+                        name: nameInput.value.trim(),
+                        email: emailInput.value.trim(),
+                        password: passwordInput.value
+                    };
+                    
+                    console.log('Form submitted with data:', formData);
+                    
+                    // Optionally reset form after successful submission
+                    setTimeout(() => {
+                        form.reset();
+                        nameInput.classList.remove('success', 'error');
+                        emailInput.classList.remove('success', 'error');
+                        passwordInput.classList.remove('success', 'error');
+                        successMessage.classList.remove('show');
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

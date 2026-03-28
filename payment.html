@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Payment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <main class="container my-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2 class="fw-semibold mb-4">Payment Method</h2>
+        
+        <!-- Order Summary -->
+        <div class="card aw-card mb-4">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">Order Summary</h5>
+            <div id="paymentOrderItems">
+              <!-- Order items will be rendered here -->
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Subtotal:</span>
+              <strong id="paymentSubtotal">PKR 0</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Tax (17%):</span>
+              <span id="paymentTax">PKR 0</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span><strong>Total:</strong></span>
+              <strong class="text-success" id="paymentTotal">PKR 0</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="card aw-card mb-4">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Select Payment Method</h5>
+            
+            <div class="list-group">
+              <!-- Credit/Debit Card -->
+              <label class="list-group-item list-group-item-action">
+                <input class="form-check-input me-3" type="radio" name="paymentMethod" value="card" checked>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-credit-card me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Credit/Debit Card</div>
+                    <small class="text-muted">Visa, Mastercard, UnionPay</small>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Bank Transfer -->
+              <label class="list-group-item list-group-item-action">
+                <input class="form-check-input me-3" type="radio" name="paymentMethod" value="bank">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-bank me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Bank Transfer</div>
+                    <small class="text-muted">Direct bank deposit</small>
+                  </div>
+                </div>
+              </label>
+
+              <!-- JazzCash -->
+              <label class="list-group-item list-group-item-action">
+                <input class="form-check-input me-3" type="radio" name="paymentMethod" value="jazzcash">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-phone me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">JazzCash</div>
+                    <small class="text-muted">Mobile wallet payment</small>
+                  </div>
+                </div>
+              </label>
+
+              <!-- EasyPaisa -->
+              <label class="list-group-item list-group-item-action">
+                <input class="form-check-input me-3" type="radio" name="paymentMethod" value="easypaisa">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-wallet2 me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">EasyPaisa</div>
+                    <small class="text-muted">Mobile wallet payment</small>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Cash on Delivery -->
+              <label class="list-group-item list-group-item-action">
+                <input class="form-check-input me-3" type="radio" name="paymentMethod" value="cod">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-cash me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Cash on Delivery</div>
+                    <small class="text-muted">Pay when you receive</small>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Parts on Card -->
+              <label class="list-group-item list-group-item-action">
+                <input class="form-check-input me-3" type="radio" name="paymentMethod" value="parts-card">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-credit-card-2-front me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Parts on Card</div>
+                    <small class="text-muted">Specialized parts payment card</small>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Forms -->
+        <!-- Credit Card Form -->
+        <div id="cardForm" class="card aw-card mb-4">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Card Details</h5>
+            <form id="creditCardForm">
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Card Number</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    <span class="input-group-text">
+                      <i class="bi bi-credit-card"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Cardholder Name</label>
+                  <input type="text" class="form-control" id="cardName" placeholder="John Doe" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Expiry Date</label>
+                  <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">CVV</label>
+                  <input type="text" class="form-control" id="cardCVV" placeholder="123" maxlength="3" required>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Bank Transfer Form -->
+        <div id="bankForm" class="card aw-card mb-4" style="display: none;">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Bank Transfer Details</h5>
+            <div class="alert alert-info">
+              <h6><i class="bi bi-info-circle"></i> Bank Transfer Instructions</h6>
+              <p class="mb-2">Please transfer the total amount to:</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Bank:</strong> Habib Bank Limited (HBL)<br>
+                  <strong>Account Title:</strong> AutoWorld Pakistan<br>
+                  <strong>Account Number:</strong> 1234-5678901-2
+                </div>
+                <div class="col-md-6">
+                  <strong>Branch Code:</strong> 1234<br>
+                  <strong>IBAN:</strong> PK45HBL000000123456789012<br>
+                  <strong>SWIFT:</strong> HBLPKKA
+                </div>
+              </div>
+              <hr>
+              <p class="mb-0"><small>After making the transfer, please upload the receipt below.</small></p>
+            </div>
+            <form id="bankTransferForm">
+              <div class="mb-3">
+                <label class="form-label">Transaction ID</label>
+                <input type="text" class="form-control" id="transactionId" placeholder="Enter transaction ID" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Upload Receipt</label>
+                <input type="file" class="form-control" id="receiptFile" accept="image/*,.pdf" required>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Mobile Wallet Form -->
+        <div id="walletForm" class="card aw-card mb-4" style="display: none;">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Mobile Wallet Details</h5>
+            <form id="walletForm">
+              <div class="mb-3">
+                <label class="form-label">Mobile Number</label>
+                <div class="input-group">
+                  <span class="input-group-text">+92</span>
+                  <input type="tel" class="form-control" id="walletNumber" placeholder="3001234567" maxlength="10" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Wallet Account</label>
+                <select class="form-select" id="walletType" required>
+                  <option value="">Select wallet type</option>
+                  <option value="jazzcash">JazzCash</option>
+                  <option value="easypaisa">EasyPaisa</option>
+                </select>
+              </div>
+              <div class="alert alert-info">
+                <small><i class="bi bi-info-circle"></i> You will receive a payment request on your mobile number. Please approve it to complete the payment.</small>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Cash on Delivery Form -->
+        <div id="codForm" class="card aw-card mb-4" style="display: none;">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Cash on Delivery</h5>
+            <div class="alert alert-success">
+              <h6><i class="bi bi-check-circle"></i> Cash on Delivery Selected</h6>
+              <p class="mb-0">Please pay the total amount in cash when your order is delivered. Our representative will contact you to confirm delivery details.</p>
+            </div>
+            <form id="codForm">
+              <div class="mb-3">
+                <label class="form-label">Delivery Address</label>
+                <textarea class="form-control" id="deliveryAddress" rows="3" placeholder="Enter your complete delivery address" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Preferred Delivery Time</label>
+                <select class="form-select" id="deliveryTime" required>
+                  <option value="">Select preferred time</option>
+                  <option value="morning">Morning (9 AM - 12 PM)</option>
+                  <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
+                  <option value="evening">Evening (5 PM - 8 PM)</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Parts on Card Form -->
+        <div id="partsCardForm" class="card aw-card mb-4" style="display: none;">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Parts Card Details</h5>
+            <div class="alert alert-info">
+              <h6><i class="bi bi-info-circle"></i> Parts Card Payment</h6>
+              <p class="mb-2">Use your specialized AutoWorld Parts Card for exclusive discounts and benefits on car parts and accessories.</p>
+              <small><strong>Benefits:</strong> 5% instant discount + 0% installment plans available</small>
+            </div>
+            <form id="partsCardPaymentForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Parts Card Number</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="partsCardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    <span class="input-group-text">
+                      <i class="bi bi-credit-card-2-front"></i>
+                    </span>
+                  </div>
+                  <small class="text-muted">16-digit card number found on your Parts Card</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Cardholder Name</label>
+                  <input type="text" class="form-control" id="partsCardName" placeholder="John Doe" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Expiry Date</label>
+                  <input type="text" class="form-control" id="partsCardExpiry" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">CVV</label>
+                  <input type="text" class="form-control" id="partsCardCVV" placeholder="123" maxlength="3" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">PIN</label>
+                  <input type="password" class="form-control" id="partsCardPIN" placeholder="Enter 4-digit PIN" maxlength="4" required>
+                  <small class="text-muted">Your Parts Card PIN</small>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Available Balance</label>
+                  <div class="input-group">
+                    <span class="input-group-text">PKR</span>
+                    <input type="text" class="form-control" id="partsCardBalance" placeholder="Check balance" readonly>
+                    <button class="btn btn-outline-secondary" type="button" onclick="checkPartsCardBalance()">
+                      <i class="bi bi-search"></i> Check
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Membership Tier</label>
+                  <select class="form-select" id="partsCardTier" required>
+                    <option value="">Select Tier</option>
+                    <option value="bronze">Bronze - 2% discount</option>
+                    <option value="silver">Silver - 3% discount</option>
+                    <option value="gold">Gold - 5% discount</option>
+                    <option value="platinum">Platinum - 7% discount</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="alert alert-success mt-3">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-gift-fill me-2"></i>
+                  <div>
+                    <strong>Special Offer:</strong> Use Parts Card and get additional 5% off on all car parts + free delivery on orders above PKR 10,000
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-3">
+          <button class="btn btn-outline-secondary" onclick="goBack()">
+            <i class="bi bi-arrow-left"></i> Back to Cart
+          </button>
+          <button class="btn btn-success btn-lg flex-fill" onclick="processPayment()">
+            <i class="bi bi-shield-check"></i> Complete Payment
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <!-- Customer Information -->
+        <div class="card aw-card mb-4">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">Customer Information</h5>
+            <form id="customerInfoForm">
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="customerName" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="customerEmail" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="customerPhone" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" id="customerAddress" rows="2" required></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="card aw-card">
+          <div class="card-body text-center">
+            <i class="bi bi-shield-check display-4 text-success mb-3"></i>
+            <h6 class="fw-semibold">Secure Payment</h6>
+            <p class="small text-muted mb-0">Your payment information is encrypted and secure. We never store your card details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script>
+    let checkoutData = null;
+
+    function initializePayment() {
+      // Get checkout data from localStorage
+      const storedCheckout = localStorage.getItem('autoworld_checkout');
+      if (!storedCheckout) {
+        alert('No checkout data found. Please add items to cart first.');
+        window.location.href = 'cart.html';
+        return;
+      }
+
+      checkoutData = JSON.parse(storedCheckout);
+      renderOrderSummary();
+      setupPaymentMethodListeners();
+      setupFormValidation();
+    }
+
+    function renderOrderSummary() {
+      const itemsContainer = document.getElementById('paymentOrderItems');
+      const subtotalElement = document.getElementById('paymentSubtotal');
+      const taxElement = document.getElementById('paymentTax');
+      const totalElement = document.getElementById('paymentTotal');
+
+      if (!checkoutData || !checkoutData.items) return;
+
+      // Render order items
+      itemsContainer.innerHTML = checkoutData.items.map(item => `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <div class="fw-semibold">${item.car.name}</div>
+            <small class="text-muted">Qty: ${item.quantity} × ${window.AutoWorldData.formatPKR(item.car.price)}</small>
+          </div>
+          <strong>${window.AutoWorldData.formatPKR(item.car.price * item.quantity)}</strong>
+        </div>
+      `).join('');
+
+      // Calculate totals
+      const subtotal = checkoutData.subtotal || 0;
+      const tax = subtotal * 0.17;
+      const total = subtotal + tax;
+
+      subtotalElement.textContent = window.AutoWorldData.formatPKR(subtotal);
+      taxElement.textContent = window.AutoWorldData.formatPKR(tax);
+      totalElement.textContent = window.AutoWorldData.formatPKR(total);
+    }
+
+    function setupPaymentMethodListeners() {
+      const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+      const paymentMethodInfo = {
+        card: { name: 'Credit/Debit Card', icon: 'bi-credit-card', status: 'Processed' },
+        bank: { name: 'Bank Transfer', icon: 'bi-bank', status: 'Pending Verification' },
+        jazzcash: { name: 'JazzCash', icon: 'bi-phone', status: 'Processed' },
+        easypaisa: { name: 'EasyPaisa', icon: 'bi-wallet2', status: 'Processed' },
+        cod: { name: 'Cash on Delivery', icon: 'bi-cash', status: 'Payment on Delivery' },
+        'parts-card': { name: 'Parts Card', icon: 'bi-credit-card-2-front', status: 'Processed' }
+      };
+      const forms = {
+        card: document.getElementById('cardForm'),
+        bank: document.getElementById('bankForm'),
+        jazzcash: document.getElementById('walletForm'),
+        easypaisa: document.getElementById('walletForm'),
+        cod: document.getElementById('codForm'),
+        'parts-card': document.getElementById('partsCardForm')
+      };
+
+      paymentMethods.forEach(method => {
+        method.addEventListener('change', function() {
+          console.log('Payment method changed to:', this.value);
+          
+          // Hide all forms
+          Object.values(forms).forEach(form => {
+            if (form) form.style.display = 'none';
+          });
+
+          // Show selected form
+          const selectedForm = forms[this.value];
+          if (selectedForm) {
+            selectedForm.style.display = 'block';
+            console.log('Showing form for payment method:', this.value);
+            
+            // Update wallet form title based on selection
+            if (this.value === 'jazzcash' || this.value === 'easypaisa') {
+              const walletType = document.getElementById('walletType');
+              if (walletType) {
+                walletType.value = this.value;
+              }
+            }
+          } else {
+            console.warn('No form found for payment method:', this.value);
+          }
+        });
+      });
+    }
+
+    function setupFormValidation() {
+      // Card number formatting
+      const cardNumber = document.getElementById('cardNumber');
+      if (cardNumber) {
+        cardNumber.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\s/g, '');
+          let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+          e.target.value = formattedValue;
+        });
+      }
+
+      // Expiry date formatting
+      const cardExpiry = document.getElementById('cardExpiry');
+      if (cardExpiry) {
+        cardExpiry.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\D/g, '');
+          if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4);
+          }
+          e.target.value = value;
+        });
+      }
+
+      // CVV validation
+      const cardCVV = document.getElementById('cardCVV');
+      if (cardCVV) {
+        cardCVV.addEventListener('input', function(e) {
+          e.target.value = e.target.value.replace(/\D/g, '');
+        });
+      }
+
+      // Parts Card formatting
+      const partsCardNumber = document.getElementById('partsCardNumber');
+      if (partsCardNumber) {
+        partsCardNumber.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\s/g, '');
+          let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+          e.target.value = formattedValue;
+        });
+      }
+
+      const partsCardExpiry = document.getElementById('partsCardExpiry');
+      if (partsCardExpiry) {
+        partsCardExpiry.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\D/g, '');
+          if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4);
+          }
+          e.target.value = value;
+        });
+      }
+
+      const partsCardCVV = document.getElementById('partsCardCVV');
+      if (partsCardCVV) {
+        partsCardCVV.addEventListener('input', function(e) {
+          e.target.value = e.target.value.replace(/\D/g, '');
+        });
+      }
+
+      const partsCardPIN = document.getElementById('partsCardPIN');
+      if (partsCardPIN) {
+        partsCardPIN.addEventListener('input', function(e) {
+          e.target.value = e.target.value.replace(/\D/g, '');
+        });
+      }
+
+      // Phone number validation
+      const walletNumber = document.getElementById('walletNumber');
+      if (walletNumber) {
+        walletNumber.addEventListener('input', function(e) {
+          e.target.value = e.target.value.replace(/\D/g, '');
+        });
+      }
+    }
+
+    function validatePaymentForm() {
+      try {
+        const paymentMethodElement = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!paymentMethodElement) {
+          alert('Please select a payment method.');
+          return false;
+        }
+        const paymentMethod = paymentMethodElement.value;
+        
+        // Get customer info with error handling
+        const nameElement = document.getElementById('customerName');
+        const emailElement = document.getElementById('customerEmail');
+        const phoneElement = document.getElementById('customerPhone');
+        const addressElement = document.getElementById('customerAddress');
+        
+        if (!nameElement || !emailElement || !phoneElement || !addressElement) {
+          alert('Customer information form fields are missing. Please refresh the page.');
+          return false;
+        }
+        
+        const customerInfo = {
+          name: nameElement.value,
+          email: emailElement.value,
+          phone: phoneElement.value,
+          address: addressElement.value
+        };
+
+      // Validate customer information
+      if (!customerInfo.name || !customerInfo.email || !customerInfo.phone || !customerInfo.address) {
+        alert('Please fill in all customer information fields.');
+        return false;
+      }
+
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(customerInfo.email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      // Validate payment method specific fields
+      switch (paymentMethod) {
+        case 'card':
+          const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+          const cardName = document.getElementById('cardName').value;
+          const cardExpiry = document.getElementById('cardExpiry').value;
+          const cardCVV = document.getElementById('cardCVV').value;
+
+          if (!cardNumber || !cardName || !cardExpiry || !cardCVV) {
+            alert('Please fill in all card details.');
+            return false;
+          }
+
+          if (cardNumber.length < 13 || cardNumber.length > 19) {
+            alert('Please enter a valid card number.');
+            return false;
+          }
+
+          if (cardCVV.length !== 3) {
+            alert('Please enter a valid CVV.');
+            return false;
+          }
+          break;
+
+        case 'bank':
+          const transactionId = document.getElementById('transactionId').value;
+          const receiptFile = document.getElementById('receiptFile').files.length;
+
+          if (!transactionId || !receiptFile) {
+            alert('Please provide transaction ID and upload receipt.');
+            return false;
+          }
+          break;
+
+        case 'jazzcash':
+        case 'easypaisa':
+          const walletNumber = document.getElementById('walletNumber').value;
+          const walletType = document.getElementById('walletType').value;
+
+          if (!walletNumber || !walletType) {
+            alert('Please provide mobile number and select wallet type.');
+            return false;
+          }
+
+          if (walletNumber.length !== 10) {
+            alert('Please enter a valid 10-digit mobile number.');
+            return false;
+          }
+          break;
+
+        case 'cod':
+          const deliveryAddress = document.getElementById('deliveryAddress').value;
+          const deliveryTime = document.getElementById('deliveryTime').value;
+
+          if (!deliveryAddress || !deliveryTime) {
+            alert('Please provide delivery address and preferred time.');
+            return false;
+          }
+          break;
+
+        case 'parts-card':
+          const partsCardNumber = document.getElementById('partsCardNumber').value.replace(/\s/g, '');
+          const partsCardName = document.getElementById('partsCardName').value;
+          const partsCardExpiry = document.getElementById('partsCardExpiry').value;
+          const partsCardCVV = document.getElementById('partsCardCVV').value;
+          const partsCardPIN = document.getElementById('partsCardPIN').value;
+          const partsCardTier = document.getElementById('partsCardTier').value;
+
+          if (!partsCardNumber || !partsCardName || !partsCardExpiry || !partsCardCVV || !partsCardPIN || !partsCardTier) {
+            alert('Please fill in all Parts Card details.');
+            return false;
+          }
+
+          if (partsCardNumber.length < 16) {
+            alert('Please enter a valid 16-digit Parts Card number.');
+            return false;
+          }
+
+          if (partsCardCVV.length !== 3) {
+            alert('Please enter a valid 3-digit CVV.');
+            return false;
+          }
+
+          if (partsCardPIN.length !== 4) {
+            alert('Please enter a valid 4-digit PIN.');
+            return false;
+          }
+          break;
+      }
+
+      return true;
+      } catch (error) {
+        console.error('Payment form validation error:', error);
+        alert('There was an error validating the payment form. Please refresh the page and try again.');
+        return false;
+      }
+    }
+
+    function processPayment() {
+      try {
+        if (!validatePaymentForm()) {
+          return;
+        }
+
+        const paymentMethodElement = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!paymentMethodElement) {
+          alert('Please select a payment method.');
+          return;
+        }
+        const paymentMethod = paymentMethodElement.value;
+        
+        // Get customer info with error handling
+        const nameElement = document.getElementById('customerName');
+        const emailElement = document.getElementById('customerEmail');
+        const phoneElement = document.getElementById('customerPhone');
+        const addressElement = document.getElementById('customerAddress');
+        
+        if (!nameElement || !emailElement || !phoneElement || !addressElement) {
+          alert('Customer information form fields are missing. Please refresh the page.');
+          return;
+        }
+        
+        const customerInfo = {
+          name: nameElement.value,
+          email: emailElement.value,
+          phone: phoneElement.value,
+          address: addressElement.value
+        };
+
+      // Create order object
+      const order = {
+        id: 'ORD-' + Date.now().toString(36).toUpperCase(),
+        customer: customerInfo,
+        items: checkoutData.items,
+        subtotal: checkoutData.subtotal,
+        tax: checkoutData.subtotal * 0.17,
+        total: checkoutData.subtotal + (checkoutData.subtotal * 0.17),
+        paymentMethod: paymentMethod,
+        status: 'confirmed',
+        createdAt: new Date().toISOString()
+      };
+
+      // Store order in localStorage
+      const orders = JSON.parse(localStorage.getItem('autoworld_orders') || '[]');
+      orders.unshift(order);
+      localStorage.setItem('autoworld_orders', JSON.stringify(orders));
+
+      // Clear cart and checkout data
+      localStorage.removeItem('autoworld_checkout');
+      window.AutoWorldCart.clearCart();
+
+      // Show success message and redirect
+      showSuccessMessage();
+      } catch (error) {
+        console.error('Payment processing error:', error);
+        alert('There was an error processing your payment. Please try again or contact support.');
+      }
+    }
+
+    function showSuccessMessage() {
+      const successModal = document.createElement('div');
+      successModal.className = 'modal fade';
+      successModal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body text-center py-5">
+              <i class="bi bi-check-circle display-1 text-success mb-3"></i>
+              <h4 class="fw-semibold">Payment Successful!</h4>
+              <p class="text-muted">Your order has been confirmed. You will receive a confirmation email shortly.</p>
+              <button class="btn btn-success" onclick="viewOrder()">View Order</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(successModal);
+      const modal = new bootstrap.Modal(successModal);
+      modal.show();
+
+      // Redirect after modal closes
+      successModal.addEventListener('hidden.bs.modal', function() {
+        window.location.href = 'order-confirmation.html';
+      });
+    }
+
+    function viewOrder() {
+      window.location.href = 'order-confirmation.html';
+    }
+
+    function goBack() {
+      window.location.href = 'cart.html';
+    }
+
+    function checkPartsCardBalance() {
+      const cardNumber = document.getElementById('partsCardNumber').value.replace(/\s/g, '');
+      const balanceInput = document.getElementById('partsCardBalance');
+      
+      if (cardNumber.length < 16) {
+        alert('Please enter a valid 16-digit Parts Card number.');
+        return;
+      }
+      
+      // Simulate balance check
+      balanceInput.value = 'Checking...';
+      
+      setTimeout(() => {
+        // Demo: Generate random balance
+        const randomBalance = Math.floor(Math.random() * 50000) + 10000;
+        balanceInput.value = randomBalance.toLocaleString();
+        
+        // Show balance notification
+        const notification = document.createElement('div');
+        notification.className = 'alert alert-info position-fixed top-0 start-50 translate-middle-x mt-3';
+        notification.style.zIndex = '9999';
+        notification.innerHTML = `
+          <i class="bi bi-info-circle me-2"></i>
+          Available Balance: PKR ${randomBalance.toLocaleString()}
+        `;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }, 1500);
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        window.AutoWorldLayout.render('payment');
+        initializePayment();
+      } catch (error) {
+        console.error('Payment page initialization error:', error);
+        alert('There was an error initializing the payment page. Please try refreshing the page.');
+      }
+    });
+  </script>
+</body>
+</html>

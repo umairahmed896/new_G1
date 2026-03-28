@@ -1,0 +1,1383 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Warranty & Protection Plans</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .warranty-card {
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+      height: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .warranty-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .brand-header {
+      padding: 25px;
+      border-radius: 15px 15px 0 0;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    .honda-header { background: linear-gradient(135deg, #007bff, #0056b3); }
+    .toyota-header { background: linear-gradient(135deg, #dc3545, #c82333); }
+    .suzuki-header { background: linear-gradient(135deg, #28a745, #1e7e34); }
+    .hyundai-header { background: linear-gradient(135deg, #17a2b8, #138496); }
+    .kia-header { background: linear-gradient(135deg, #ffc107, #e0a800); color: #212529; }
+    .ford-header { background: linear-gradient(135deg, #6c757d, #5a6268); }
+    .daihatsu-header { background: linear-gradient(135deg, #343a40, #23272b); }
+    
+    .coverage-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .coverage-item:hover {
+      background: #f8f9fa;
+      transform: translateX(5px);
+    }
+    .coverage-item i {
+      width: 20px;
+      text-align: center;
+      margin-right: 12px;
+      font-size: 1.1rem;
+    }
+    .coverage-included { color: #28a745; }
+    .coverage-partial { color: #ffc107; }
+    .coverage-excluded { color: #dc3545; }
+    
+    .warranty-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 2px;
+      transition: all 0.3s ease;
+    }
+    .warranty-badge:hover {
+      transform: scale(1.05);
+    }
+    .badge-basic { background: #e3f2fd; color: #1976d2; }
+    .badge-extended { background: #f3e5f5; color: #7b1fa2; }
+    .badge-premium { background: #e8f5e8; color: #388e3c; }
+    
+    .comparison-table {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .comparison-table th {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 18px;
+      font-weight: 600;
+    }
+    .comparison-table td {
+      padding: 15px 18px;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f3f5;
+    }
+    .comparison-table tbody tr:hover {
+      background: #f8f9fa;
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .feature-icon:hover {
+      transform: scale(1.1);
+    }
+    
+    .timeline {
+      position: relative;
+      padding-left: 35px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, #007bff 0%, #28a745 100%);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 25px;
+      padding-left: 25px;
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover {
+      transform: translateX(5px);
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #007bff;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px #007bff;
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover::before {
+      transform: scale(1.2);
+    }
+    
+    .stats-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .plan-card {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .plan-card:hover {
+      border-color: #007bff;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,123,255,0.15);
+    }
+    
+    .floating-action-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .floating-action-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+    }
+    
+    .filter-btn {
+      transition: all 0.3s ease;
+    }
+    .filter-btn.active {
+      background: #007bff;
+      color: white;
+    }
+    
+    .search-box {
+      position: relative;
+    }
+    .search-box input {
+      padding-left: 45px;
+    }
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+    
+    @media (max-width: 768px) {
+      .timeline {
+        padding-left: 25px;
+      }
+      .timeline-item::before {
+        left: -20px;
+        width: 10px;
+        height: 10px;
+      }
+      .comparison-table {
+        font-size: 0.9rem;
+      }
+      .comparison-table th,
+      .comparison-table td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <section class="aw-pagebar py-4">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-2">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Warranty</li>
+        </ol>
+      </nav>
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2">
+        <div>
+          <h1 class="fw-semibold mb-1">Warranty & Protection Plans</h1>
+          <div class="opacity-75">Comprehensive warranty coverage for complete peace of mind</div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-outline-light" href="service-centres.html">
+            <i class="bi bi-tools me-2"></i>Service Centres
+          </a>
+          <a class="btn btn-outline-light" href="contact.html">
+            <i class="bi bi-headset me-2"></i>Support
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container my-5">
+    <!-- Statistics Dashboard -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-shield-check fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1">7+</h3>
+            <p class="mb-0 opacity-75">Years Max Coverage</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-building fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1">15+</h3>
+            <p class="mb-0 opacity-75">Service Centers</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-people fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1">50K+</h3>
+            <p class="mb-0 opacity-75">Happy Customers</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stats-card">
+          <div class="card-body p-4 text-center">
+            <i class="bi bi-award fs-2 mb-2"></i>
+            <h3 class="fw-bold mb-1">100%</h3>
+            <p class="mb-0 opacity-75">Satisfaction Rate</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="card mb-5">
+      <div class="card-body p-4">
+        <div class="row g-4 align-items-center">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">
+              <i class="bi bi-search text-primary me-2"></i>
+              Search Warranty Plans
+            </label>
+            <div class="search-box">
+              <i class="bi bi-search"></i>
+              <input type="text" class="form-control" id="warrantySearch" placeholder="Search by brand, coverage, or features...">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">
+              <i class="bi bi-funnel text-primary me-2"></i>
+              Filter by Coverage
+            </label>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-outline-primary filter-btn active" data-filter="all">All Plans</button>
+              <button class="btn btn-outline-primary filter-btn" data-filter="premium">Premium</button>
+              <button class="btn btn-outline-primary filter-btn" data-filter="extended">Extended</button>
+              <button class="btn btn-outline-primary filter-btn" data-filter="basic">Basic</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="row g-4 mb-5">
+      <div class="col-lg-8">
+        <div class="card bg-gradient-primary text-white">
+          <div class="card-body p-5">
+            <h2 class="fw-semibold mb-3">
+              <i class="bi bi-shield-check me-2"></i>
+              Complete Protection for Your Investment
+            </h2>
+            <p class="mb-4 opacity-75">
+              Every vehicle from AutoWorld comes with comprehensive warranty coverage backed by authorized manufacturers. 
+              Drive with confidence knowing you're protected against unexpected repairs and costs.
+            </p>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center">
+                  <div class="display-6 fw-bold">3+</div>
+                  <div class="small opacity-75">Years Coverage</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <div class="display-6 fw-bold">100K</div>
+                  <div class="small opacity-75">Kilometers</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <div class="display-6 fw-bold">24/7</div>
+                  <div class="small opacity-75">Roadside Assist</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <button class="btn btn-light btn-lg me-2" id="calculateBtn">
+                <i class="bi bi-calculator me-2"></i>Calculate Warranty
+              </button>
+              <button class="btn btn-outline-light btn-lg" id="compareBtn">
+                <i class="bi bi-arrows-angle-expand me-2"></i>Compare Plans
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-body p-4">
+            <h5 class="fw-semibold mb-3">
+              <i class="bi bi-telephone-fill text-primary me-2"></i>
+              Warranty Support
+            </h5>
+            <div class="mb-3">
+              <div class="small text-muted">Helpline</div>
+              <div class="fw-semibold">+92-300-1234567</div>
+            </div>
+            <div class="mb-3">
+              <div class="small text-muted">Email</div>
+              <div class="fw-semibold">warranty@autoworld.com</div>
+            </div>
+            <div class="mb-3">
+              <div class="small text-muted">Available</div>
+              <div class="fw-semibold">24/7 Support</div>
+            </div>
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" id="liveChatBtn">
+                <i class="bi bi-chat-dots me-2"></i>Live Chat Support
+              </button>
+              <button class="btn btn-outline-primary" id="downloadBtn">
+                <i class="bi bi-download me-2"></i>Download Brochure
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand-wise Warranty Cards -->
+    <section class="mb-5">
+      <h3 class="fw-semibold mb-4">Brand Warranty Programs</h3>
+      <div class="row g-4">
+        <!-- Honda Warranty -->
+        <div class="col-lg-6">
+          <div class="card warranty-card">
+            <div class="brand-header honda-header">
+              <h4 class="fw-bold mb-1">
+                <i class="bi bi-star-fill me-2"></i>HONDA
+              </h4>
+              <p class="mb-0 opacity-75">Premium Warranty Coverage</p>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="warranty-badge badge-premium">Premium</span>
+                <span class="fw-bold text-primary">3 Years / 100,000 km</span>
+              </div>
+              
+              <h6 class="fw-semibold mb-3">Coverage Includes:</h6>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Engine & Transmission</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Electrical System</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Suspension & Steering</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Air Conditioning</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Braking System</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Battery (1 Year)</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-x-circle-fill coverage-excluded"></i>
+                <span>Tires & Wear Items</span>
+              </div>
+              
+              <div class="mt-4 pt-3 border-top">
+                <div class="small text-muted mb-2">Additional Benefits:</div>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Roadside Assist</span>
+                  <span class="badge bg-light text-dark">Free Service</span>
+                  <span class="badge bg-light text-dark">Original Parts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toyota Warranty -->
+        <div class="col-lg-6">
+          <div class="card warranty-card">
+            <div class="brand-header toyota-header">
+              <h4 class="fw-bold mb-1">
+                <i class="bi bi-star-fill me-2"></i>TOYOTA
+              </h4>
+              <p class="mb-0 opacity-75">Comprehensive Warranty</p>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="warranty-badge badge-premium">Premium</span>
+                <span class="fw-bold text-danger">3 Years / 100,000 km</span>
+              </div>
+              
+              <h6 class="fw-semibold mb-3">Coverage Includes:</h6>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Engine & Transmission</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Hybrid System</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Electrical Components</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Drive Train</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Entertainment System</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Battery (2 Years)</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-x-circle-fill coverage-excluded"></i>
+                <span>Body & Paint</span>
+              </div>
+              
+              <div class="mt-4 pt-3 border-top">
+                <div class="small text-muted mb-2">Additional Benefits:</div>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">24/7 Support</span>
+                  <span class="badge bg-light text-dark">Toyota Care</span>
+                  <span class="badge bg-light text-dark">Extended Option</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suzuki Warranty -->
+        <div class="col-lg-6">
+          <div class="card warranty-card">
+            <div class="brand-header suzuki-header">
+              <h4 class="fw-bold mb-1">
+                <i class="bi bi-star-fill me-2"></i>SUZUKI
+              </h4>
+              <p class="mb-0 opacity-75">Standard Warranty</p>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="warranty-badge badge-basic">Basic</span>
+                <span class="fw-bold text-success">2 Years / 60,000 km</span>
+              </div>
+              
+              <h6 class="fw-semibold mb-3">Coverage Includes:</h6>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Engine Assembly</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Transmission</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Electrical Parts</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Suspension</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Steering System</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-x-circle-fill coverage-excluded"></i>
+                <span>Accessories</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-x-circle-fill coverage-excluded"></i>
+                <span>Normal Wear & Tear</span>
+              </div>
+              
+              <div class="mt-4 pt-3 border-top">
+                <div class="small text-muted mb-2">Additional Benefits:</div>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Service Centers</span>
+                  <span class="badge bg-light text-dark">Genuine Parts</span>
+                  <span class="badge bg-light text-dark">Upgrade Available</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hyundai Warranty -->
+        <div class="col-lg-6">
+          <div class="card warranty-card">
+            <div class="brand-header hyundai-header">
+              <h4 class="fw-bold mb-1">
+                <i class="bi bi-star-fill me-2"></i>HYUNDAI
+              </h4>
+              <p class="mb-0 opacity-75">Extended Warranty</p>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="warranty-badge badge-extended">Extended</span>
+                <span class="fw-bold text-info">5 Years / 150,000 km</span>
+              </div>
+              
+              <h6 class="fw-semibold mb-3">Coverage Includes:</h6>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Powertrain</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Infotainment System</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Safety Features</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-included"></i>
+                <span>Airbags & Sensors</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Interior Electronics</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-check-circle-fill coverage-partial"></i>
+                <span>Battery (3 Years)</span>
+              </div>
+              <div class="coverage-item">
+                <i class="bi bi-x-circle-fill coverage-excluded"></i>
+                <span>Exterior Trim</span>
+              </div>
+              
+              <div class="mt-4 pt-3 border-top">
+                <div class="small text-muted mb-2">Additional Benefits:</div>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Hyundai Assurance</span>
+                  <span class="badge bg-light text-dark">Free Service</span>
+                  <span class="badge bg-light text-dark">Roadside Help</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Extended Warranty Plans -->
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-semibold mb-0">Extended Protection Plans</h3>
+        <button class="btn btn-outline-primary" id="viewAllPlansBtn">
+          <i class="bi bi-eye me-2"></i>View All Plans
+        </button>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 plan-card">
+            <div class="card-body p-4 text-center">
+              <div class="position-relative">
+                <i class="bi bi-shield feature-icon text-primary"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">Popular</span>
+              </div>
+              <h5 class="fw-semibold mb-3">Basic Shield</h5>
+              <div class="text-primary fw-bold fs-4 mb-2">PKR 25,000</div>
+              <div class="text-muted small mb-3">Additional 1 Year / 20,000 km</div>
+              <ul class="list-unstyled text-start small">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Engine Coverage</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Transmission</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Electrical System</li>
+                <li class="mb-2"><i class="bi bi-x-circle-fill text-danger me-2"></i>Roadside Assistance</li>
+                <li class="mb-2"><i class="bi bi-x-circle-fill text-danger me-2"></i>Concierge Service</li>
+              </ul>
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary select-plan-btn" data-plan="Basic Shield">Select Plan</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="showPlanDetails('basic')">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 plan-card border-primary">
+            <div class="card-body p-4 text-center">
+              <div class="position-relative">
+                <i class="bi bi-shield-plus feature-icon text-success"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-success">Best Value</span>
+              </div>
+              <h5 class="fw-semibold mb-3">Premium Guard</h5>
+              <div class="text-success fw-bold fs-4 mb-2">PKR 45,000</div>
+              <div class="text-muted small mb-3">Additional 2 Years / 40,000 km</div>
+              <ul class="list-unstyled text-start small">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Complete Powertrain</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Electrical System</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Air Conditioning</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Roadside Assistance</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Free Service</li>
+              </ul>
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary select-plan-btn" data-plan="Premium Guard">Select Plan</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="showPlanDetails('premium')">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 plan-card">
+            <div class="card-body p-4 text-center">
+              <div class="position-relative">
+                <i class="bi bi-shield-check feature-icon text-warning"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-warning text-dark">Premium</span>
+              </div>
+              <h5 class="fw-semibold mb-3">Ultimate Care</h5>
+              <div class="text-warning fw-bold fs-4 mb-2">PKR 75,000</div>
+              <div class="text-muted small mb-3">Additional 3 Years / 60,000 km</div>
+              <ul class="list-unstyled text-start small">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Everything in Premium</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Infotainment System</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Interior Electronics</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Concierge Service</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Priority Support</li>
+              </ul>
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-warning select-plan-btn" data-plan="Ultimate Care">Select Plan</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="showPlanDetails('ultimate')">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Plans (Initially Hidden) -->
+      <div class="row g-4 mt-3 d-none" id="additionalPlans">
+        <div class="col-md-4">
+          <div class="card h-100 plan-card">
+            <div class="card-body p-4 text-center">
+              <i class="bi bi-shield-exclamation feature-icon text-info"></i>
+              <h5 class="fw-semibold mb-3">Hybrid Protection</h5>
+              <div class="text-info fw-bold fs-4 mb-2">PKR 55,000</div>
+              <div class="text-muted small mb-3">Additional 2 Years / 35,000 km</div>
+              <ul class="list-unstyled text-start small">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Hybrid Components</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Battery System</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Electric Motor</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Green Support</li>
+              </ul>
+              <button class="btn btn-outline-info select-plan-btn" data-plan="Hybrid Protection">Select Plan</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 plan-card">
+            <div class="card-body p-4 text-center">
+              <i class="bi bi-shield-gear feature-icon text-secondary"></i>
+              <h5 class="fw-semibold mb-3">Commercial Guard</h5>
+              <div class="text-secondary fw-bold fs-4 mb-2">PKR 95,000</div>
+              <div class="text-muted small mb-3">Additional 4 Years / 80,000 km</div>
+              <ul class="list-unstyled text-start small">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Heavy Duty Coverage</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Business Support</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Fleet Management</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>24/7 Business Line</li>
+              </ul>
+              <button class="btn btn-outline-secondary select-plan-btn" data-plan="Commercial Guard">Select Plan</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 plan-card">
+            <div class="card-body p-4 text-center">
+              <i class="bi bi-shield-star feature-icon text-danger"></i>
+              <h5 class="fw-semibold mb-3">Luxury Shield</h5>
+              <div class="text-danger fw-bold fs-4 mb-2">PKR 125,000</div>
+              <div class="text-muted small mb-3">Additional 5 Years / 100,000 km</div>
+              <ul class="list-unstyled text-start small">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Premium Coverage</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>VIP Service</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Personal Assistant</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Exclusive Benefits</li>
+              </ul>
+              <button class="btn btn-outline-danger select-plan-btn" data-plan="Luxury Shield">Select Plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Warranty Process -->
+    <section class="row g-4 mb-5">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body p-4">
+            <h5 class="fw-semibold mb-4">
+              <i class="bi bi-gear text-primary me-2"></i>
+              Warranty Claim Process
+            </h5>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="fw-semibold">Step 1: Issue Identification</div>
+                <div class="small text-muted">Contact service center when issue arises</div>
+              </div>
+              <div class="timeline-item">
+                <div class="fw-semibold">Step 2: Inspection</div>
+                <div class="small text-muted">Authorized technician inspects the vehicle</div>
+              </div>
+              <div class="timeline-item">
+                <div class="fw-semibold">Step 3: Claim Approval</div>
+                <div class="small text-muted">Warranty coverage is verified and approved</div>
+              </div>
+              <div class="timeline-item">
+                <div class="fw-semibold">Step 4: Repair/Replacement</div>
+                <div class="small text-muted">Free repair or replacement under warranty</div>
+              </div>
+              <div class="timeline-item">
+                <div class="fw-semibold">Step 5: Completion</div>
+                <div class="small text-muted">Vehicle returned with warranty updated</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body p-4">
+            <h5 class="fw-semibold mb-4">
+              <i class="bi bi-info-circle text-primary me-2"></i>
+              Important Information
+            </h5>
+            <div class="alert alert-info">
+              <h6 class="fw-semibold mb-2">What's Covered:</h6>
+              <ul class="mb-0 small">
+                <li>Manufacturing defects</li>
+                <li>Mechanical failures</li>
+                <li>Electrical malfunctions</li>
+                <li>Corrosion perforation</li>
+              </ul>
+            </div>
+            <div class="alert alert-warning">
+              <h6 class="fw-semibold mb-2">What's Not Covered:</h6>
+              <ul class="mb-0 small">
+                <li>Normal wear and tear</li>
+                <li>Damage from accidents</li>
+                <li>Lack of maintenance</li>
+                <li>Unauthorized modifications</li>
+              </ul>
+            </div>
+            <div class="alert alert-success">
+              <h6 class="fw-semibold mb-2">Requirements:</h6>
+              <ul class="mb-0 small">
+                <li>Regular maintenance at authorized centers</li>
+                <li>Original parts only</li>
+                <li>Valid warranty card</li>
+                <li>Service history records</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="mb-5">
+      <h3 class="fw-semibold mb-4">Warranty Comparison</h3>
+      <div class="table-responsive">
+        <table class="table comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Honda</th>
+              <th>Toyota</th>
+              <th>Suzuki</th>
+              <th>Hyundai</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Standard Warranty</strong></td>
+              <td>3 Years / 100,000 km</td>
+              <td>3 Years / 100,000 km</td>
+              <td>2 Years / 60,000 km</td>
+              <td>5 Years / 150,000 km</td>
+            </tr>
+            <tr>
+              <td><strong>Engine Coverage</strong></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Transmission</strong></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Electrical System</strong></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-exclamation-circle-fill text-warning"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Roadside Assistance</strong></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Free Service</strong></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+              <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+              <td><i class="bi bi-check-circle-fill text-success"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Extended Warranty</strong></td>
+              <td>Available</td>
+              <td>Available</td>
+              <td>Available</td>
+              <td>Available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="card bg-gradient-primary text-white">
+      <div class="card-body p-5 text-center">
+        <h3 class="fw-semibold mb-3">Have Questions About Warranty?</h3>
+        <p class="mb-4 opacity-75">Our warranty experts are here to help you understand your coverage options</p>
+        <div class="d-flex flex-wrap gap-2 justify-content-center">
+          <a class="btn btn-light btn-lg" href="contact.html">
+            <i class="bi bi-telephone me-2"></i>Contact Warranty Team
+          </a>
+          <a class="btn btn-outline-light btn-lg" href="service-centres.html">
+            <i class="bi bi-geo-alt me-2"></i>Find Service Center
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Action Button -->
+  <button class="btn btn-primary floating-action-btn" id="floatingHelpBtn" title="Warranty Support">
+    <i class="bi bi-headset fs-4"></i>
+  </button>
+
+  <!-- Warranty Calculator Modal -->
+  <div class="modal fade" id="calculatorModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-calculator me-2"></i>Warranty Calculator
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="warrantyCalculatorForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Car Brand</label>
+                <select class="form-select" id="calcBrand">
+                  <option value="">Select Brand</option>
+                  <option value="honda">Honda</option>
+                  <option value="toyota">Toyota</option>
+                  <option value="suzuki">Suzuki</option>
+                  <option value="hyundai">Hyundai</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Car Price (PKR)</label>
+                <input type="number" class="form-control" id="calcPrice" placeholder="5000000">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Usage (Years)</label>
+                <input type="number" class="form-control" id="calcUsage" placeholder="3">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Mileage (km)</label>
+                <input type="number" class="form-control" id="calcMileage" placeholder="50000">
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-calculator me-2"></i>Calculate
+                </button>
+              </div>
+            </div>
+          </form>
+          <div id="calculationResult" class="mt-4 d-none">
+            <div class="alert alert-info">
+              <h6>Calculation Result:</h6>
+              <div id="resultContent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plan Details Modal -->
+  <div class="modal fade" id="planDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-info-circle me-2"></i>Plan Details
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="planDetailsContent">
+          <!-- Plan details will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('warranty');
+
+      // Add animation to warranty cards
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.warranty-card, .plan-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+      });
+
+      // Search functionality
+      const searchInput = document.getElementById('warrantySearch');
+      if(searchInput) {
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          filterWarrantyCards(searchTerm);
+        });
+      }
+
+      // Filter buttons
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          const filter = this.dataset.filter;
+          filterByCoverage(filter);
+        });
+      });
+
+      // View all plans button
+      const viewAllPlansBtn = document.getElementById('viewAllPlansBtn');
+      if(viewAllPlansBtn) {
+        viewAllPlansBtn.addEventListener('click', function() {
+          const additionalPlans = document.getElementById('additionalPlans');
+          if(additionalPlans) {
+            additionalPlans.classList.toggle('d-none');
+            this.innerHTML = additionalPlans.classList.contains('d-none') 
+              ? '<i class="bi bi-eye me-2"></i>View All Plans' 
+              : '<i class="bi bi-eye-slash me-2"></i>Show Less Plans';
+          }
+        });
+      }
+
+      // Plan selection buttons
+      const selectPlanBtns = document.querySelectorAll('.select-plan-btn');
+      selectPlanBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const planName = this.dataset.plan;
+          showPlanSelectionModal(planName);
+        });
+      });
+
+      // Calculator button
+      const calculateBtn = document.getElementById('calculateBtn');
+      if(calculateBtn) {
+        calculateBtn.addEventListener('click', function() {
+          const modal = new bootstrap.Modal(document.getElementById('calculatorModal'));
+          modal.show();
+        });
+      }
+
+      // Warranty calculator form
+      const calculatorForm = document.getElementById('warrantyCalculatorForm');
+      if(calculatorForm) {
+        calculatorForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          calculateWarranty();
+        });
+      }
+
+      // Compare button
+      const compareBtn = document.getElementById('compareBtn');
+      if(compareBtn) {
+        compareBtn.addEventListener('click', function() {
+          showComparisonModal();
+        });
+      }
+
+      // Live chat button
+      const liveChatBtn = document.getElementById('liveChatBtn');
+      if(liveChatBtn) {
+        liveChatBtn.addEventListener('click', function() {
+          showNotification('Live chat support is available 24/7. Opening chat window...', 'info');
+        });
+      }
+
+      // Download button
+      const downloadBtn = document.getElementById('downloadBtn');
+      if(downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+          showNotification('Downloading warranty brochure...', 'success');
+          // Mock download
+          setTimeout(() => {
+            showNotification('Brochure downloaded successfully!', 'success');
+          }, 2000);
+        });
+      }
+
+      // Floating help button
+      const floatingHelpBtn = document.getElementById('floatingHelpBtn');
+      if(floatingHelpBtn) {
+        floatingHelpBtn.addEventListener('click', function() {
+          showNotification('Warranty Support: +92-300-1234567 | Available 24/7', 'info');
+        });
+      }
+
+      // Interactive plan selection (legacy)
+      document.querySelectorAll('.btn').forEach(btn => {
+        if (btn.textContent.includes('Select Plan') && !btn.classList.contains('select-plan-btn')) {
+          btn.addEventListener('click', function() {
+            const planName = this.closest('.card-body').querySelector('h5').textContent;
+            showPlanSelectionModal(planName);
+          });
+        }
+      });
+    });
+
+    // Filter warranty cards by search term
+    function filterWarrantyCards(searchTerm) {
+      const cards = document.querySelectorAll('.warranty-card, .plan-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if(text.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Filter by coverage type
+    function filterByCoverage(filter) {
+      const cards = document.querySelectorAll('.warranty-card');
+      cards.forEach(card => {
+        if(filter === 'all') {
+          card.style.display = 'block';
+        } else {
+          const badge = card.querySelector('.warranty-badge');
+          if(badge && badge.classList.contains('badge-' + filter)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    // Show plan selection modal
+    function showPlanSelectionModal(planName) {
+      const modal = document.createElement('div');
+      modal.className = 'modal fade';
+      modal.innerHTML = `
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Plan Selection</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <p>You have selected the <strong>${planName}</strong> plan.</p>
+              <p>Our warranty team will contact you shortly to complete the process.</p>
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                You can also call us directly at +92-300-1234567 for immediate assistance.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="proceedWithPlan('${planName}')">Proceed</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      const bsModal = new bootstrap.Modal(modal);
+      bsModal.show();
+      
+      modal.addEventListener('hidden.bs.modal', function() {
+        document.body.removeChild(modal);
+      });
+    }
+
+    // Proceed with plan selection
+    function proceedWithPlan(planName) {
+      showNotification(`Processing ${planName} selection...`, 'success');
+      // Close all modals
+      document.querySelectorAll('.modal').forEach(modal => {
+        const bsModal = bootstrap.Modal.getInstance(modal);
+        if(bsModal) bsModal.hide();
+      });
+    }
+
+    // Calculate warranty
+    function calculateWarranty() {
+      const brand = document.getElementById('calcBrand').value;
+      const price = parseFloat(document.getElementById('calcPrice').value) || 0;
+      const usage = parseFloat(document.getElementById('calcUsage').value) || 0;
+      const mileage = parseFloat(document.getElementById('calcMileage').value) || 0;
+      
+      if(!brand || !price) {
+        showNotification('Please fill in all required fields', 'warning');
+        return;
+      }
+      
+      // Mock calculation
+      const baseWarranty = price * 0.03; // 3% of car price
+      const extendedCost = usage > 3 ? baseWarranty * 1.5 : baseWarranty;
+      const mileageAdjustment = mileage > 50000 ? extendedCost * 1.2 : extendedCost;
+      
+      const result = `
+        <div class="row g-3">
+          <div class="col-md-6">
+            <strong>Base Warranty:</strong> PKR ${baseWarranty.toLocaleString()}
+          </div>
+          <div class="col-md-6">
+            <strong>Extended Coverage:</strong> PKR ${extendedCost.toLocaleString()}
+          </div>
+          <div class="col-md-6">
+            <strong>Mileage Adjustment:</strong> ${mileage > 50000 ? '+20%' : 'Standard'}
+          </div>
+          <div class="col-md-6">
+            <strong>Final Cost:</strong> PKR ${Math.round(mileageAdjustment).toLocaleString()}
+          </div>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-primary btn-sm" onclick="selectCalculatedPlan('${brand}', ${Math.round(mileageAdjustment)})">
+            Select This Plan
+          </button>
+        </div>
+      `;
+      
+      document.getElementById('resultContent').innerHTML = result;
+      document.getElementById('calculationResult').classList.remove('d-none');
+      
+      showNotification('Calculation completed successfully!', 'success');
+    }
+
+    // Select calculated plan
+    function selectCalculatedPlan(brand, cost) {
+      showNotification(`Selected ${brand} warranty plan for PKR ${cost.toLocaleString()}`, 'success');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('calculatorModal'));
+      if(modal) modal.hide();
+    }
+
+    // Show comparison modal
+    function showComparisonModal() {
+      showNotification('Comparison feature coming soon!', 'info');
+    }
+
+    // Show plan details
+    function showPlanDetails(planType) {
+      const details = {
+        basic: {
+          title: 'Basic Shield Plan',
+          features: [
+            'Engine and Transmission Coverage',
+            'Electrical System Protection',
+            '1 Year Additional Coverage',
+            '20,000 km Additional Mileage',
+            'Standard Support'
+          ],
+          exclusions: [
+            'Roadside Assistance',
+            'Concierge Service',
+            'Cosmetic Issues'
+          ]
+        },
+        premium: {
+          title: 'Premium Guard Plan',
+          features: [
+            'Complete Powertrain Coverage',
+            'Electrical System Protection',
+            'Air Conditioning Coverage',
+            'Roadside Assistance',
+            '2 Years Additional Coverage',
+            '40,000 km Additional Mileage',
+            'Free Service Included'
+          ],
+          exclusions: [
+            'Cosmetic Issues',
+            'Wear and Tear'
+          ]
+        },
+        ultimate: {
+          title: 'Ultimate Care Plan',
+          features: [
+            'Everything in Premium Plan',
+            'Infotainment System Coverage',
+            'Interior Electronics Protection',
+            'Concierge Service',
+            'Priority Support',
+            '3 Years Additional Coverage',
+            '60,000 km Additional Mileage',
+            'VIP Treatment'
+          ],
+          exclusions: [
+            'Intentional Damage',
+            'Racing Use'
+          ]
+        }
+      };
+      
+      const plan = details[planType];
+      if(!plan) return;
+      
+      const content = `
+        <h6>${plan.title}</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-success">Included Features:</h6>
+            <ul class="list-unstyled">
+              ${plan.features.map(f => `<li><i class="bi bi-check-circle-fill text-success me-2"></i>${f}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-danger">Exclusions:</h6>
+            <ul class="list-unstyled">
+              ${plan.exclusions.map(e => `<li><i class="bi bi-x-circle-fill text-danger me-2"></i>${e}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('planDetailsContent').innerHTML = content;
+      const modal = new bootstrap.Modal(document.getElementById('planDetailsModal'));
+      modal.show();
+    }
+
+    // Show notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} position-fixed top-0 start-50 translate-middle-x mt-3`;
+      notification.style.zIndex = '9999';
+      notification.innerHTML = `<i class="bi bi-info-circle me-2"></i>${message}`;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

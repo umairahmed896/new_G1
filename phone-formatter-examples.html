@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Formatter Examples</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/css/phone-formatter.css" rel="stylesheet">
+    <style>
+        .example-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #dee2e6;
+        }
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+        .highlight { color: #68d391; }
+        .string { color: #fbb6ce; }
+        .comment { color: #a0aec0; }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-5">
+            <i class="bi bi-telephone-fill me-2"></i>
+            Country-Specific Phone Number Formatter
+        </h1>
+
+        <!-- Overview Section -->
+        <div class="example-section">
+            <h2 class="mb-4">📱 Implementation Overview</h2>
+            <p class="lead">A comprehensive phone number formatting system that automatically formats phone numbers based on selected country, with validation and country code support.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="text-center p-3">
+                        <i class="bi bi-globe2 display-4 text-primary mb-3"></i>
+                        <h5>Multi-Country Support</h5>
+                        <p>Supports 10+ countries with specific formatting rules</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-3">
+                        <i class="bi bi-check-circle display-4 text-success mb-3"></i>
+                        <h5>Real-time Validation</h5>
+                        <p>Instant validation with country-specific rules</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-3">
+                        <i class="bi bi-phone display-4 text-info mb-3"></i>
+                        <h5>Auto-formatting</h5>
+                        <p>Automatic formatting as user types</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Example -->
+        <div class="example-section">
+            <h2 class="mb-4">🎯 Live Demo</h2>
+            <p>Try the phone formatter below to see how it works with different countries:</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        <i class="bi bi-telephone me-2"></i>
+                        Phone Number
+                    </label>
+                    <div data-phone-formatter data-default-country="PK" id="demo-phone"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        <i class="bi bi-gear me-2"></i>
+                        Get Formatted Value
+                    </label>
+                    <button class="btn btn-primary mb-2" onclick="getDemoValue()">
+                        <i class="bi bi-code-slash me-2"></i>
+                        Get Formatted Number
+                    </button>
+                    <div id="demo-output" class="alert alert-info" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HTML Implementation -->
+        <div class="example-section">
+            <h2 class="mb-4">📝 HTML Implementation</h2>
+            
+            <h5 class="mb-3">Step 1: Include CSS and JavaScript</h5>
+            <div class="code-example mb-4">
+                <span class="comment">&lt;!-- Include CSS --&gt;</span><br>
+                <span class="highlight">&lt;link</span> <span class="string">rel="stylesheet"</span> <span class="string">href="assets/css/phone-formatter.css"</span><span class="highlight">&gt;</span><br><br>
+                <span class="comment">&lt;!-- Include JavaScript --&gt;</span><br>
+                <span class="highlight">&lt;script</span> <span class="string">src="assets/js/phone-formatter.js"</span><span class="highlight">&gt;&lt;/script&gt;</span>
+            </div>
+
+            <h5 class="mb-3">Step 2: Create HTML Container</h5>
+            <div class="code-example mb-4">
+                <span class="comment">&lt;!-- Basic Usage --&gt;</span><br>
+                <span class="highlight">&lt;div</span> <span class="string">data-phone-formatter</span> <span class="string">data-default-country="PK"</span><span class="highlight">&gt;&lt;/div&gt;</span><br><br>
+                <span class="comment">&lt;!-- With Custom ID --&gt;</span><br>
+                <span class="highlight">&lt;div</span> <span class="string">id="customer-phone"</span> <span class="string">data-phone-formatter</span> <span class="string">data-default-country="US"</span><span class="highlight">&gt;&lt;/div&gt;</span>
+            </div>
+
+            <h5 class="mb-3">Step 3: Initialize (Optional)</h5>
+            <div class="code-example">
+                <span class="comment">&lt;!-- Auto-initializes on DOM ready --&gt;</span><br>
+                <span class="highlight">&lt;script&gt;</span><br>
+                <span class="comment">// Manual initialization (optional)</span><br>
+                <span class="highlight">window</span>.AutoWorldPhoneFormatter.init();<br>
+                <span class="highlight">&lt;/script&gt;</span>
+            </div>
+        </div>
+
+        <!-- Supported Countries -->
+        <div class="example-section">
+            <h2 class="mb-4">🌍 Supported Countries</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Code</th>
+                            <th>Format Example</th>
+                            <th>Validation Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🇵🇰 Pakistan</td>
+                            <td>+92</td>
+                            <td>300-1234567</td>
+                            <td>10-11 digits, starts with 3</td>
+                        </tr>
+                        <tr>
+                            <td>🇺🇸 United States</td>
+                            <td>+1</td>
+                            <td>(555) 123-4567</td>
+                            <td>10 digits, valid area code</td>
+                        </tr>
+                        <tr>
+                            <td>🇬🇧 United Kingdom</td>
+                            <td>+44</td>
+                            <td>07123 456 789</td>
+                            <td>10-11 digits, starts with 07</td>
+                        </tr>
+                        <tr>
+                            <td>🇨🇦 Canada</td>
+                            <td>+1</td>
+                            <td>(416) 123-4567</td>
+                            <td>10 digits, valid area code</td>
+                        </tr>
+                        <tr>
+                            <td>🇦🇺 Australia</td>
+                            <td>+61</td>
+                            <td>4 1234 5678</td>
+                            <td>9 digits, starts with 4</td>
+                        </tr>
+                        <tr>
+                            <td>🇮🇳 India</td>
+                            <td>+91</td>
+                            <td>98765 43210</td>
+                            <td>10 digits, starts with 6-9</td>
+                        </tr>
+                        <tr>
+                            <td>🇸🇦 Saudi Arabia</td>
+                            <td>+966</td>
+                            <td>50 1234567</td>
+                            <td>9-10 digits, starts with 5</td>
+                        </tr>
+                        <tr>
+                            <td>🇦🇪 UAE</td>
+                            <td>+971</td>
+                            <td>50 1234567</td>
+                            <td>9 digits, starts with 5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- JavaScript API -->
+        <div class="example-section">
+            <h2 class="mb-4">⚡ JavaScript API</h2>
+            
+            <h5 class="mb-3">Get Formatted Phone Number</h5>
+            <div class="code-example mb-4">
+                <span class="highlight">const</span> phoneData = window.AutoWorldPhoneFormatter.getFormattedNumber(<span class="string">'customer-phone'</span>);<br><br>
+                <span class="comment">// Returns object with:</span><br>
+                <span class="highlight">console</span>.log(phoneData);<br>
+                <span class="comment">// {</span><br>
+                <span class="comment">//   countryCode: "+92",</span><br>
+                <span class="comment">//   country: "Pakistan",</span><br>
+                <span class="comment">//   formatted: "+92 300-1234567",</span><br>
+                <span class="comment">//   raw: "3001234567",</span><br>
+                <span class="comment">//   international: "+923001234567"</span><br>
+                <span class="comment">// }</span>
+            </div>
+
+            <h5 class="mb-3">Set Country Programmatically</h5>
+            <div class="code-example mb-4">
+                window.AutoWorldPhoneFormatter.setCountry(<span class="string">'customer-phone'</span>, <span class="string">'US'</span>);
+            </div>
+
+            <h5 class="mb-3">Create Phone Formatter Manually</h5>
+            <div class="code-example">
+                <span class="highlight">const</span> container = document.getElementById(<span class="string">'phone-container'</span>);<br>
+                window.AutoWorldPhoneFormatter.createPhoneFormatter(container);
+            </div>
+        </div>
+
+        <!-- Form Integration Examples -->
+        <div class="example-section">
+            <h2 class="mb-4">📋 Form Integration Examples</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Customer Registration Form</h5>
+                    <div class="code-example mb-4">
+                        <span class="highlight">&lt;form</span> <span class="string">id="registration-form"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">class="mb-3"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;label</span> <span class="string">class="form-label"</span><span class="highlight">&gt;</span>Phone Number<span class="highlight">&lt;/label&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">data-phone-formatter</span> <span class="string">data-default-country="PK"</span><span class="highlight">&gt;&lt;/div&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;/div&gt;</span><br>
+                        <span class="highlight">&lt;/form&gt;</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Checkout Form</h5>
+                    <div class="code-example mb-4">
+                        <span class="highlight">&lt;form</span> <span class="string">id="checkout-form"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">class="mb-3"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;label</span> <span class="string">class="form-label"</span><span class="highlight">&gt;</span>Contact Phone<span class="highlight">&lt;/label&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">id="checkout-phone"</span> <span class="string">data-phone-formatter</span> <span class="highlight">&gt;&lt;/div&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;/div&gt;</span><br>
+                        <span class="highlight">&lt;/form&gt;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSS Customization -->
+        <div class="example-section">
+            <h2 class="mb-4">🎨 CSS Customization</h2>
+            
+            <h5 class="mb-3">Override Styles</h5>
+            <div class="code-example mb-4">
+                <span class="highlight">.phone-country-selector</span> {<br>
+                &nbsp;&nbsp;<span class="string">border-color:</span> #007bff;<br>
+                &nbsp;&nbsp;<span class="string">border-radius:</span> 8px;<br>
+                }<br><br>
+                <span class="highlight">.country-select</span> {<br>
+                &nbsp;&nbsp;<span class="string">background-color:</span> #f8f9fa;<br>
+                &nbsp;&nbsp;<span class="string">font-weight:</span> 600;<br>
+                }<br><br>
+                <span class="highlight">.phone-validation-message.valid</span> {<br>
+                &nbsp;&nbsp;<span class="string">background-color:</span> #d1f2eb;<br>
+                &nbsp;&nbsp;<span class="string">color:</span> #0f5132;<br>
+                }
+            </div>
+
+            <h5 class="mb-3">Dark Mode Support</h5>
+            <div class="code-example">
+                <span class="highlight">@media</span> (prefers-color-scheme: dark) {<br>
+                &nbsp;&nbsp;<span class="highlight">.country-select</span>, <span class="highlight">.country-code</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">background:</span> #2d3748;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">color:</span> #e2e8f0;<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/phone-formatter.js"></script>
+    <script>
+        function getDemoValue() {
+            const phoneData = window.AutoWorldPhoneFormatter.getFormattedNumber('demo-phone');
+            const output = document.getElementById('demo-output');
+            
+            if (phoneData) {
+                output.innerHTML = `
+                    <h6>Formatted Phone Data:</h6>
+                    <pre>${JSON.stringify(phoneData, null, 2)}</pre>
+                `;
+                output.className = 'alert alert-success';
+            } else {
+                output.innerHTML = `
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Please enter a valid phone number first.
+                `;
+                output.className = 'alert alert-warning';
+            }
+            output.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

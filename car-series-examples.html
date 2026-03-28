@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Series Selector Examples</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/css/car-series-selector.css" rel="stylesheet">
+    <style>
+        .example-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #dee2e6;
+        }
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+        .highlight { color: #68d391; }
+        .string { color: #fbb6ce; }
+        .comment { color: #a0aec0; }
+        .car-showcase {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-5">
+            <i class="bi bi-layers me-2"></i>
+            Car Series Selector System
+        </h1>
+
+        <!-- Overview Section -->
+        <div class="example-section">
+            <h2 class="mb-4">🚗 Series Selection System</h2>
+            <p class="lead">A comprehensive car series/variant selector that allows users to choose different trim levels with detailed information, pricing, and specifications.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="text-center p-3">
+                        <i class="bi bi-list-ul display-4 text-primary mb-3"></i>
+                        <h5>Multiple Variants</h5>
+                        <p>Support for multiple series/variants per car model</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-3">
+                        <i class="bi bi-info-circle display-4 text-success mb-3"></i>
+                        <h5>Detailed Info</h5>
+                        <p>Complete specifications and features for each variant</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-3">
+                        <i class="bi bi-currency-dollar display-4 text-info mb-3"></i>
+                        <h5>Dynamic Pricing</h5>
+                        <p>Price updates based on selected series</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Demo -->
+        <div class="car-showcase">
+            <h2 class="text-center mb-4">🎯 Try Different Car Series</h2>
+            <p class="text-center">Select different cars and their series below to see how it works:</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Honda Civic Series</h5>
+                    <div data-car-series-selector="honda-civic" data-default-series="civic-vti"></div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Toyota Corolla Series</h5>
+                    <div data-car-series-selector="toyota-corolla" data-default-series="corolla-gli"></div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Suzuki Swift Series</h5>
+                    <div data-car-series-selector="suzuki-swift" data-default-series="swift-vxl"></div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Hyundai Elantra Series</h5>
+                    <div data-car-series-selector="hyundai-elantra" data-default-series="elantra-s-plus"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HTML Implementation -->
+        <div class="example-section">
+            <h2 class="mb-4">📝 HTML Implementation</h2>
+            
+            <h5 class="mb-3">Step 1: Include CSS and JavaScript</h5>
+            <div class="code-example mb-4">
+                <span class="comment">&lt;!-- Include CSS --&gt;</span><br>
+                <span class="highlight">&lt;link</span> <span class="string">rel="stylesheet"</span> <span class="string">href="assets/css/car-series-selector.css"</span><span class="highlight">&gt;</span><br><br>
+                <span class="comment">&lt;!-- Include JavaScript --&gt;</span><br>
+                <span class="highlight">&lt;script</span> <span class="string">src="assets/js/car-series-selector.js"</span><span class="highlight">&gt;&lt;/script&gt;</span>
+            </div>
+
+            <h5 class="mb-3">Step 2: Create HTML Container</h5>
+            <div class="code-example mb-4">
+                <span class="comment">&lt;!-- Basic Usage --&gt;</span><br>
+                <span class="highlight">&lt;div</span> <span class="string">data-car-series-selector="honda-civic"</span><span class="highlight">&gt;&lt;/div&gt;</span><br><br>
+                <span class="comment">&lt;!-- With Default Series --&gt;</span><br>
+                <span class="highlight">&lt;div</span> <span class="string">data-car-series-selector="toyota-corolla"</span> <span class="string">data-default-series="corolla-gli"</span><span class="highlight">&gt;&lt;/div&gt;</span><br><br>
+                <span class="comment">&lt;!-- With Custom ID --&gt;</span><br>
+                <span class="highlight">&lt;div</span> <span class="string">id="car-series"</span> <span class="string">data-car-series-selector="honda-civic"</span><span class="highlight">&gt;&lt;/div&gt;</span>
+            </div>
+
+            <h5 class="mb-3">Step 3: Initialize (Optional)</h5>
+            <div class="code-example">
+                <span class="comment">&lt;!-- Auto-initializes on DOM ready --&gt;</span><br>
+                <span class="highlight">&lt;script&gt;</span><br>
+                <span class="comment">// Manual initialization (optional)</span><br>
+                <span class="highlight">window</span>.AutoWorldCarSeries.init();<br>
+                <span class="highlight">&lt;/script&gt;</span>
+            </div>
+        </div>
+
+        <!-- Supported Cars -->
+        <div class="example-section">
+            <h2 class="mb-4">🚙 Available Car Models</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Car Model</th>
+                            <th>Available Series</th>
+                            <th>Price Range</th>
+                            <th>Special Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🚗 Honda Civic</td>
+                            <td>Standard, VTi, RS Turbo, Touring</td>
+                            <td>4.5M - 6.5M PKR</td>
+                            <td>Turbo engines, Sport variants</td>
+                        </tr>
+                        <tr>
+                            <td>🚙 Toyota Corolla</td>
+                            <td>XL, GLi, Altis, Altis GR</td>
+                            <td>4.2M - 6.2M PKR</td>
+                            <td>GR Sport, Premium variants</td>
+                        </tr>
+                        <tr>
+                            <td>🏎️ Suzuki Swift</td>
+                            <td>VX, VXL, Sport</td>
+                            <td>2.8M - 3.8M PKR</td>
+                            <td>Sport mode, Boosterjet engine</td>
+                        </tr>
+                        <tr>
+                            <td>🚘 Hyundai Elantra</td>
+                            <td>S, S Plus, Sport, Ultimate</td>
+                            <td>4.2M - 6.2M PKR</td>
+                            <td>Turbo variants, Premium features</td>
+                        </tr>
+                        <tr>
+                            <td>🚗 Kia Picanto</td>
+                            <td>M, H, X-Line</td>
+                            <td>2.2M - 2.9M PKR</td>
+                            <td>SUV styling, Limited edition</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- JavaScript API -->
+        <div class="example-section">
+            <h2 class="mb-4">⚡ JavaScript API</h2>
+            
+            <h5 class="mb-3">Get Selected Series</h5>
+            <div class="code-example mb-4">
+                <span class="highlight">const</span> selectedSeries = window.AutoWorldCarSeries.getSelectedSeries(<span class="string">'honda-civic'</span>);<br>
+                <span class="highlight">console</span>.log(selectedSeries); <span class="comment">// "civic-vti"</span>
+            </div>
+
+            <h5 class="mb-3">Get Series Data</h5>
+            <div class="code-example mb-4">
+                <span class="highlight">const</span> seriesData = window.AutoWorldCarSeries.getCarSeriesData(<span class="string">'honda-civic'</span>);<br>
+                <span class="highlight">console</span>.log(seriesData); <span class="comment">// Full car data object</span>
+            </div>
+
+            <h5 class="mb-3">Set Series Programmatically</h5>
+            <div class="code-example mb-4">
+                window.AutoWorldCarSeries.setSelectedSeries(<span class="string">'honda-civic'</span>, <span class="string">'civic-rs'</span>);
+            </div>
+
+            <h5 class="mb-3">Listen for Series Changes</h5>
+            <div class="code-example mb-4">
+                <span class="highlight">const</span> container = document.getElementById(<span class="string">'car-series'</span>);<br>
+                container.addEventListener(<span class="string">'seriesChanged'</span>, <span class="highlight">function</span>(event) {<br>
+                &nbsp;&nbsp;<span class="highlight">const</span> { carId, seriesId, seriesData } = event.detail;<br>
+                &nbsp;&nbsp;<span class="highlight">console</span>.log(<span class="string">'Series changed to:'</span>, seriesData.name);<br>
+                });
+            </div>
+        </div>
+
+        <!-- Integration Examples -->
+        <div class="example-section">
+            <h2 class="mb-4">📋 Integration Examples</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Car Detail Page</h5>
+                    <div class="code-example mb-4">
+                        <span class="highlight">&lt;div</span> <span class="string">class="car-detail-section"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;h3&gt;</span>Choose Your Variant<span class="highlight">&lt;/h3&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">data-car-series-selector="honda-civic"</span><span class="highlight">&gt;&lt;/div&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">class="price-display"</span> <span class="string">data-price-for="honda-civic"</span><span class="highlight">&gt;&lt;/div&gt;</span><br>
+                        <span class="highlight">&lt;/div&gt;</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Booking Form</h5>
+                    <div class="code-example mb-4">
+                        <span class="highlight">&lt;form</span> <span class="string">id="booking-form"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">class="mb-3"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;label&gt;</span>Car Series<span class="highlight">&lt;/label&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;div</span> <span class="string">data-car-series-selector="toyota-corolla"</span><span class="highlight">&gt;&lt;/div&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">&lt;input</span> <span class="string">type="hidden"</span> <span class="string">name="car_series"</span> <span class="string">data-car="toyota-corolla"</span><span class="highlight">&gt;</span><br>
+                        &nbsp;&nbsp;<span class="highlight">&lt;/div&gt;</span><br>
+                        <span class="highlight">&lt;/form&gt;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customization -->
+        <div class="example-section">
+            <h2 class="mb-4">🎨 Customization Options</h2>
+            
+            <h5 class="mb-3">Add New Car Models</h5>
+            <div class="code-example mb-4">
+                <span class="highlight">const</span> newCarData = {<br>
+                &nbsp;&nbsp;name: <span class="string">'New Car Model'</span>,<br>
+                &nbsp;&nbsp;series: [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id: <span class="string">'base'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: <span class="string">'Base'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price: 3000000,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;features: [<span class="string">'Feature 1'</span>, <span class="string">'Feature 2'</span>],<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specs: { power: <span class="string">'100 HP'</span>, torque: <span class="string">'150 Nm'</span> }<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;]<br>
+                };<br>
+                window.AutoWorldCarSeries.addCarSeries(<span class="string">'new-car'</span>, newCarData);
+            </div>
+
+            <h5 class="mb-3">CSS Customization</h5>
+            <div class="code-example">
+                <span class="highlight">.series-dropdown</span> {<br>
+                &nbsp;&nbsp;<span class="string">border-color:</span> #007bff;<br>
+                &nbsp;&nbsp;<span class="string">border-radius:</span> 15px;<br>
+                &nbsp;&nbsp;<span class="string">font-size:</span> 1.1rem;<br>
+                }<br><br>
+                <span class="highlight">.series-info-card</span> {<br>
+                &nbsp;&nbsp;<span class="string">background:</span> linear-gradient(135deg, #ff6b6b, #4ecdc4);<br>
+                &nbsp;&nbsp;<span class="string">border-radius:</span> 20px;<br>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/car-series-selector.js"></script>
+    <script>
+        // Listen for series changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('[data-car-series-selector]');
+            containers.forEach(container => {
+                container.addEventListener('seriesChanged', function(event) {
+                    console.log('Series changed:', event.detail);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

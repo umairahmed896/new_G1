@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Advanced Car Comparison</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .comparison-hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 60px 0;
+      margin-bottom: 40px;
+    }
+    
+    .car-selector-card {
+      border: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .car-selector-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .car-selector-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .car-image-preview {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .comparison-table {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .comparison-table th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 15px;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .comparison-table td {
+      padding: 15px;
+      vertical-align: middle;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .comparison-table tr:hover td {
+      background-color: #f8f9fa;
+    }
+    
+    .feature-category {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #495057;
+      border-left: 4px solid #667eea;
+    }
+    
+    .winner-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #28a745;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 10;
+    }
+    
+    .comparison-summary {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .score-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0 auto 10px;
+      background: rgba(255,255,255,0.2);
+      border: 3px solid white;
+    }
+    
+    .filter-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    
+    .filter-chip {
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 3px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid #dee2e6;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-chip:hover {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+    
+    .filter-chip.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+    
+    .popular-comparisons {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .quick-compare-btn {
+      background: white;
+      border: 1px solid #dee2e6;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #495057;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin: 5px;
+    }
+    
+    .quick-compare-btn:hover {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+      text-decoration: none;
+    }
+    
+    .rating-stars {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <section class="comparison-hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+              <li class="breadcrumb-item"><a href="index.html" class="text-white">Home</a></li>
+              <li class="breadcrumb-item active text-white">Car Comparison</li>
+            </ol>
+          </nav>
+          <h1 class="fw-bold mb-3">Advanced Car Comparison</h1>
+          <p class="lead mb-4">Compare up to 4 cars side by side with detailed specifications, performance metrics, and expert ratings.</p>
+          <div class="d-flex gap-3">
+            <button class="btn btn-light" onclick="showComparisonGuide()">
+              <i class="bi bi-question-circle me-2"></i>How to Compare
+            </button>
+            <button class="btn btn-outline-light" onclick="loadPopularComparisons()">
+              <i class="bi bi-star me-2"></i>Popular Comparisons
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-4 text-center">
+          <i class="bi bi-columns-gap" style="font-size: 8rem; opacity: 0.8;"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Popular Comparisons -->
+    <div class="popular-comparisons" id="popularComparisons">
+      <h4 class="fw-semibold mb-3">
+        <i class="bi bi-star-fill text-warning me-2"></i>
+        Popular Comparisons
+      </h4>
+      <div class="d-flex flex-wrap">
+        <a href="#" class="quick-compare-btn" onclick="quickCompare(['civic', 'corolla'])">
+          <i class="bi bi-car-front me-2"></i>Honda Civic vs Toyota Corolla
+        </a>
+        <a href="#" class="quick-compare-btn" onclick="quickCompare(['wagonr', 'alto'])">
+          <i class="bi bi-car-front me-2"></i>Wagon R vs Alto
+        </a>
+        <a href="#" class="quick-compare-btn" onclick="quickCompare(['accord', 'camry'])">
+          <i class="bi bi-car-front me-2"></i>Accord vs Camry
+        </a>
+        <a href="#" class="quick-compare-btn" onclick="quickCompare(['civic', 'elantra', 'corolla'])">
+          <i class="bi bi-car-front me-2"></i>Civic vs Elantra vs Corolla
+        </a>
+      </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <h5 class="fw-semibold mb-3">
+        <i class="bi bi-funnel me-2"></i>
+        Filter by Category
+      </h5>
+      <div class="filter-chips">
+        <span class="filter-chip active" onclick="filterCars('all')">All Cars</span>
+        <span class="filter-chip" onclick="filterCars('sedan')">Sedan</span>
+        <span class="filter-chip" onclick="filterCars('suv')">SUV</span>
+        <span class="filter-chip" onclick="filterCars('hatchback')">Hatchback</span>
+        <span class="filter-chip" onclick="filterCars('compact')">Compact</span>
+        <span class="filter-chip" onclick="filterCars('luxury')">Luxury</span>
+        <span class="filter-chip" onclick="filterCars('budget')">Budget Friendly</span>
+      </div>
+    </div>
+
+    <!-- Car Selection -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="car-selector-card card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-semibold">Car 1</h5>
+              <button class="btn btn-sm btn-outline-danger" onclick="clearCar(1)" style="display: none;" id="clearBtn1">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div id="car1Preview">
+              <img src="assets/images/placeholder-car.jpg" alt="Select car" class="car-image-preview" id="car1Image">
+              <select class="form-select" id="car1Select" onchange="updateCarPreview(1)">
+                <option value="">Select a car...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="car-selector-card card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-semibold">Car 2</h5>
+              <button class="btn btn-sm btn-outline-danger" onclick="clearCar(2)" style="display: none;" id="clearBtn2">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div id="car2Preview">
+              <img src="assets/images/placeholder-car.jpg" alt="Select car" class="car-image-preview" id="car2Image">
+              <select class="form-select" id="car2Select" onchange="updateCarPreview(2)">
+                <option value="">Select a car...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="car-selector-card card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-semibold">Car 3</h5>
+              <button class="btn btn-sm btn-outline-danger" onclick="clearCar(3)" style="display: none;" id="clearBtn3">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div id="car3Preview">
+              <img src="assets/images/placeholder-car.jpg" alt="Select car" class="car-image-preview" id="car3Image">
+              <select class="form-select" id="car3Select" onchange="updateCarPreview(3)">
+                <option value="">Select a car...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="car-selector-card card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-semibold">Car 4</h5>
+              <button class="btn btn-sm btn-outline-danger" onclick="clearCar(4)" style="display: none;" id="clearBtn4">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div id="car4Preview">
+              <img src="assets/images/placeholder-car.jpg" alt="Select car" class="car-image-preview" id="car4Image">
+              <select class="form-select" id="car4Select" onchange="updateCarPreview(4)">
+                <option value="">Select a car...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mb-4">
+      <button class="btn btn-primary btn-lg px-5" onclick="compareCars()" id="compareBtn">
+        <i class="bi bi-columns-gap me-2"></i>Compare Cars
+      </button>
+      <button class="btn btn-outline-secondary btn-lg ms-3" onclick="resetComparison()">
+        <i class="bi bi-arrow-clockwise me-2"></i>Reset
+      </button>
+    </div>
+
+    <!-- Comparison Summary -->
+    <div class="comparison-summary" id="comparisonSummary" style="display: none;">
+      <h4 class="fw-semibold mb-4">
+        <i class="bi bi-trophy me-2"></i>
+        Comparison Summary
+      </h4>
+      <div class="row" id="summaryCards">
+        <!-- Summary cards will be generated here -->
+      </div>
+    </div>
+
+    <!-- Detailed Comparison Table -->
+    <div class="card comparison-table" id="comparisonResults" style="display: none;">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0" id="compareTable">
+            <thead id="compareTableHead">
+              <tr>
+                <th style="width: 25%;">Specification</th>
+                <th style="width: 18.75%;" id="car1Header">Car 1</th>
+                <th style="width: 18.75%;" id="car2Header">Car 2</th>
+                <th style="width: 18.75%;" id="car3Header">Car 3</th>
+                <th style="width: 18.75%;" id="car4Header">Car 4</th>
+              </tr>
+            </thead>
+            <tbody id="compareTableBody">
+              <!-- Comparison data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Comparison Charts -->
+    <div class="row mt-5" id="visualComparison" style="display: none;">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="fw-semibold mb-3">Price Comparison</h5>
+            <canvas id="priceChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="fw-semibold mb-3">Performance Score</h5>
+            <canvas id="performanceChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="card mt-4" id="recommendations" style="display: none;">
+      <div class="card-body">
+        <h5 class="fw-semibold mb-3">
+          <i class="bi bi-lightbulb text-warning me-2"></i>
+          Our Recommendations
+        </h5>
+        <div id="recommendationContent">
+          <!-- Recommendations will be generated here -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/whatsapp.js"></script>
+  <script>
+    let selectedCars = [];
+    let allCars = [];
+    let priceChart = null;
+    let performanceChart = null;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('comparison');
+      loadCars();
+      initializeCharts();
+    });
+
+    // Load cars from data
+    function loadCars() {
+      if (window.AutoWorldData && window.AutoWorldData.cars) {
+        allCars = window.AutoWorldData.cars;
+        populateCarSelectors();
+      }
+    }
+
+    // Populate car selectors
+    function populateCarSelectors() {
+      const selectors = ['car1Select', 'car2Select', 'car3Select', 'car4Select'];
+      
+      selectors.forEach(selectorId => {
+        const select = document.getElementById(selectorId);
+        select.innerHTML = '<option value="">Select a car...</option>';
+        
+        allCars.forEach(car => {
+          const option = document.createElement('option');
+          option.value = car.id;
+          option.textContent = `${car.name} - ${car.brand}`;
+          select.appendChild(option);
+        });
+      });
+    }
+
+    // Update car preview
+    function updateCarPreview(carNumber) {
+      const select = document.getElementById(`car${carNumber}Select`);
+      const car = allCars.find(c => c.id === select.value);
+      
+      if (car) {
+        document.getElementById(`car${carNumber}Image`).src = car.image;
+        document.getElementById(`clearBtn${carNumber}`).style.display = 'block';
+      } else {
+        document.getElementById(`car${carNumber}Image`).src = 'assets/images/placeholder-car.jpg';
+        document.getElementById(`clearBtn${carNumber}`).style.display = 'none';
+      }
+    }
+
+    // Clear car selection
+    function clearCar(carNumber) {
+      document.getElementById(`car${carNumber}Select`).value = '';
+      updateCarPreview(carNumber);
+    }
+
+    // Filter cars by category
+    function filterCars(category) {
+      // Update active filter chip
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Filter logic would go here
+      console.log('Filtering by:', category);
+    }
+
+    // Quick compare function
+    function quickCompare(carIds) {
+      carIds.forEach((carId, index) => {
+        const carNumber = index + 1;
+        document.getElementById(`car${carNumber}Select`).value = carId;
+        updateCarPreview(carNumber);
+      });
+      
+      setTimeout(() => compareCars(), 500);
+    }
+
+    // Compare cars
+    function compareCars() {
+      selectedCars = [];
+      
+      for (let i = 1; i <= 4; i++) {
+        const select = document.getElementById(`car${i}Select`);
+        if (select.value) {
+          const car = allCars.find(c => c.id === select.value);
+          if (car) selectedCars.push(car);
+        }
+      }
+
+      if (selectedCars.length < 2) {
+        alert('Please select at least 2 cars to compare.');
+        return;
+      }
+
+      generateComparisonTable();
+      generateComparisonSummary();
+      generateVisualComparison();
+      generateRecommendations();
+      
+      // Show results
+      document.getElementById('comparisonResults').style.display = 'block';
+      document.getElementById('comparisonSummary').style.display = 'block';
+      document.getElementById('visualComparison').style.display = 'block';
+      document.getElementById('recommendations').style.display = 'block';
+      
+      // Scroll to results
+      document.getElementById('comparisonResults').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Generate comparison table
+    function generateComparisonTable() {
+      const tableBody = document.getElementById('compareTableBody');
+      tableBody.innerHTML = '';
+
+      // Update headers
+      selectedCars.forEach((car, index) => {
+        document.getElementById(`car${index + 1}Header`).innerHTML = `
+          <div class="text-center">
+            <img src="${car.image}" alt="${car.name}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 5px;">
+            <div class="mt-2">${car.name}</div>
+            <div class="small text-muted">${car.brand}</div>
+          </div>
+        `;
+      });
+
+      // Basic specifications
+      const specs = [
+        { category: 'Basic Info', items: [
+          { label: 'Price', getValue: (car) => `PKR ${car.price.toLocaleString()}` },
+          { label: 'Brand', getValue: (car) => car.brand },
+          { label: 'Type', getValue: (car) => getCarType(car) }
+        ]},
+        { category: 'Performance', items: [
+          { label: 'Engine', getValue: (car) => car.features.find(f => f.includes('cc')) || 'N/A' },
+          { label: 'Transmission', getValue: (car) => car.features.find(f => f.includes('Manual') || f.includes('Automatic')) || 'N/A' },
+          { label: 'Performance Score', getValue: (car) => calculatePerformanceScore(car) }
+        ]},
+        { category: 'Safety', items: [
+          { label: 'Airbags', getValue: (car) => car.features.includes('Airbags') ? 'Yes' : 'No' },
+          { label: 'ABS', getValue: (car) => car.features.includes('ABS') ? 'Yes' : 'No' },
+          { label: 'Safety Rating', getValue: (car) => getSafetyRating(car) }
+        ]},
+        { category: 'Comfort & Features', items: [
+          { label: 'Sunroof', getValue: (car) => car.features.includes('Sunroof') ? 'Yes' : 'No' },
+          { label: 'Key Features', getValue: (car) => car.features.slice(0, 3).join(', ') }
+        ]},
+        { category: 'Warranty', items: [
+          { label: 'Warranty Period', getValue: (car) => `${car.warranty.years} years / ${car.warranty.km.toLocaleString()} km` },
+          { label: 'Service Coverage', getValue: (car) => 'Free Service Included' }
+        ]}
+      ];
+
+      specs.forEach(section => {
+        // Category header
+        const categoryRow = document.createElement('tr');
+        categoryRow.className = 'feature-category';
+        categoryRow.innerHTML = `<td colspan="${selectedCars.length + 1}">${section.category}</td>`;
+        tableBody.appendChild(categoryRow);
+
+        // Specification rows
+        section.items.forEach(spec => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td><strong>${spec.label}</strong></td>`;
+          
+          selectedCars.forEach(car => {
+            const value = spec.getValue(car);
+            const winner = getWinnerForSpec(spec.label, selectedCars);
+            const isWinner = winner && winner.id === car.id;
+            
+            row.innerHTML += `
+              <td class="text-center ${isWinner ? 'position-relative' : ''}">
+                ${value}
+                ${isWinner ? '<div class="winner-badge">Best</div>' : ''}
+              </td>
+            `;
+          });
+          
+          tableBody.appendChild(row);
+        });
+      });
+    }
+
+    // Generate comparison summary
+    function generateComparisonSummary() {
+      const summaryCards = document.getElementById('summaryCards');
+      summaryCards.innerHTML = '';
+
+      selectedCars.forEach((car, index) => {
+        const score = calculateOverallScore(car);
+        const card = document.createElement('div');
+        card.className = 'col-md-3 text-center';
+        card.innerHTML = `
+          <div class="score-circle">${score}%</div>
+          <h6 class="fw-semibold">${car.name}</h6>
+          <p class="small text-muted">Overall Score</p>
+          <div class="rating-stars">
+            ${generateStars(score / 20)}
+          </div>
+        `;
+        summaryCards.appendChild(card);
+      });
+    }
+
+    // Generate visual comparison
+    function generateVisualComparison() {
+      updatePriceChart();
+      updatePerformanceChart();
+    }
+
+    // Update price chart
+    function updatePriceChart() {
+      const ctx = document.getElementById('priceChart').getContext('2d');
+      
+      if (priceChart) {
+        priceChart.destroy();
+      }
+
+      priceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: selectedCars.map(car => car.name),
+          datasets: [{
+            label: 'Price (PKR)',
+            data: selectedCars.map(car => car.price),
+            backgroundColor: 'rgba(102, 126, 234, 0.6)',
+            borderColor: 'rgba(102, 126, 234, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return 'PKR ' + value.toLocaleString();
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Update performance chart
+    function updatePerformanceChart() {
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      
+      if (performanceChart) {
+        performanceChart.destroy();
+      }
+
+      performanceChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['Price', 'Performance', 'Safety', 'Features', 'Value'],
+          datasets: selectedCars.map((car, index) => ({
+            label: car.name,
+            data: [
+              calculatePriceScore(car),
+              calculatePerformanceScore(car),
+              calculateSafetyScore(car),
+              calculateFeaturesScore(car),
+              calculateValueScore(car)
+            ],
+            backgroundColor: `rgba(${102 + index * 30}, ${126 - index * 20}, ${234 - index * 15}, 0.2)`,
+            borderColor: `rgba(${102 + index * 30}, ${126 - index * 20}, ${234 - index * 15}, 1)`,
+            borderWidth: 2
+          }))
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          },
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        }
+      });
+    }
+
+    // Generate recommendations
+    function generateRecommendations() {
+      const recommendationContent = document.getElementById('recommendationContent');
+      
+      const bestValue = selectedCars.reduce((best, car) => 
+        calculateValueScore(car) > calculateValueScore(best) ? car : best
+      );
+      
+      const bestPerformance = selectedCars.reduce((best, car) => 
+        calculatePerformanceScore(car) > calculatePerformanceScore(best) ? car : best
+      );
+
+      const mostAffordable = selectedCars.reduce((cheapest, car) => 
+        car.price < cheapest.price ? car : cheapest
+      );
+
+      recommendationContent.innerHTML = `
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card border-success">
+              <div class="card-body text-center">
+                <i class="bi bi-trophy-fill text-success" style="font-size: 2rem;"></i>
+                <h6 class="fw-semibold mt-2">Best Value</h6>
+                <p class="mb-0">${bestValue.name}</p>
+                <small class="text-muted">Score: ${calculateValueScore(bestValue)}%</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-primary">
+              <div class="card-body text-center">
+                <i class="bi bi-speedometer2 text-primary" style="font-size: 2rem;"></i>
+                <h6 class="fw-semibold mt-2">Best Performance</h6>
+                <p class="mb-0">${bestPerformance.name}</p>
+                <small class="text-muted">Score: ${calculatePerformanceScore(bestPerformance)}%</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-info">
+              <div class="card-body text-center">
+                <i class="bi bi-cash-stack text-info" style="font-size: 2rem;"></i>
+                <h6 class="fw-semibold mt-2">Most Affordable</h6>
+                <p class="mb-0">${mostAffordable.name}</p>
+                <small class="text-muted">PKR ${mostAffordable.price.toLocaleString()}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Helper functions
+    function getCarType(car) {
+      if (car.name.toLowerCase().includes('suv')) return 'SUV';
+      if (car.name.toLowerCase().includes('wagon')) return 'Wagon';
+      if (car.price < 2000000) return 'Compact';
+      if (car.price > 5000000) return 'Luxury';
+      return 'Sedan';
+    }
+
+    function calculatePerformanceScore(car) {
+      const engineSize = parseInt(car.features.find(f => f.includes('cc'))?.replace(/\D/g, '') || 1500);
+      const hasAuto = car.features.includes('Automatic');
+      const baseScore = Math.min(engineSize / 20, 50);
+      return Math.round(baseScore + (hasAuto ? 10 : 0) + Math.random() * 30);
+    }
+
+    function calculateSafetyScore(car) {
+      let score = 50;
+      if (car.features.includes('Airbags')) score += 20;
+      if (car.features.includes('ABS')) score += 20;
+      return Math.min(score + Math.random() * 10, 100);
+    }
+
+    function calculateFeaturesScore(car) {
+      return Math.min(car.features.length * 10 + Math.random() * 20, 100);
+    }
+
+    function calculatePriceScore(car) {
+      const maxPrice = Math.max(...selectedCars.map(c => c.price));
+      return Math.round((1 - car.price / maxPrice) * 100);
+    }
+
+    function calculateValueScore(car) {
+      return Math.round((
+        calculatePriceScore(car) * 0.3 +
+        calculatePerformanceScore(car) * 0.3 +
+        calculateSafetyScore(car) * 0.2 +
+        calculateFeaturesScore(car) * 0.2
+      ));
+    }
+
+    function calculateOverallScore(car) {
+      return Math.round((
+        calculateValueScore(car) * 0.4 +
+        calculatePerformanceScore(car) * 0.3 +
+        calculateSafetyScore(car) * 0.2 +
+        calculateFeaturesScore(car) * 0.1
+      ));
+    }
+
+    function getSafetyRating(car) {
+      const score = calculateSafetyScore(car);
+      if (score >= 80) return '⭐⭐⭐⭐⭐ Excellent';
+      if (score >= 60) return '⭐⭐⭐⭐ Good';
+      if (score >= 40) return '⭐⭐⭐ Average';
+      return '⭐⭐ Basic';
+    }
+
+    function getWinnerForSpec(spec, cars) {
+      // Simplified winner determination
+      if (spec === 'Price') {
+        return cars.reduce((best, car) => car.price < best.price ? car : best);
+      }
+      return null;
+    }
+
+    function generateStars(rating) {
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5;
+      let stars = '';
+      
+      for (let i = 0; i < fullStars; i++) {
+        stars += '<i class="bi bi-star-fill"></i>';
+      }
+      if (halfStar) {
+        stars += '<i class="bi bi-star-half"></i>';
+      }
+      for (let i = fullStars + (halfStar ? 1 : 0); i < 5; i++) {
+        stars += '<i class="bi bi-star"></i>';
+      }
+      return stars;
+    }
+
+    // Initialize charts
+    function initializeCharts() {
+      // Charts will be initialized when comparison is generated
+    }
+
+    // Reset comparison
+    function resetComparison() {
+      for (let i = 1; i <= 4; i++) {
+        clearCar(i);
+      }
+      
+      document.getElementById('comparisonResults').style.display = 'none';
+      document.getElementById('comparisonSummary').style.display = 'none';
+      document.getElementById('visualComparison').style.display = 'none';
+      document.getElementById('recommendations').style.display = 'none';
+      
+      selectedCars = [];
+    }
+
+    function showComparisonGuide() {
+      alert('Comparison Guide: Select up to 4 cars and click Compare to see detailed specifications, performance metrics, and our recommendations.');
+    }
+
+    function loadPopularComparisons() {
+      console.log('Loading popular comparisons...');
+    }
+  </script>
+</body>
+</html>

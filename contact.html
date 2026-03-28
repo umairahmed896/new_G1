@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Contact Us</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .contact-hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 60px 0;
+      margin-bottom: 40px;
+    }
+    
+    .contact-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .contact-icon.phone {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+    }
+    
+    .contact-icon.email {
+      background: linear-gradient(135deg, #007bff, #6610f2);
+      color: white;
+    }
+    
+    .contact-icon.location {
+      background: linear-gradient(135deg, #fd7e14, #e83e8c);
+      color: white;
+    }
+    
+    .contact-icon.whatsapp {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+    }
+    
+    .contact-icon.time {
+      background: linear-gradient(135deg, #6f42c1, #e83e8c);
+      color: white;
+    }
+    
+    .contact-form {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 30px;
+    }
+    
+    .form-control, .form-select {
+      border-radius: 10px;
+      border: 1px solid #dee2e6;
+      padding: 12px 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .map-container {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      height: 400px;
+      position: relative;
+    }
+    
+    .map-overlay {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    
+    .faq-section {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 30px;
+      margin-top: 40px;
+    }
+    
+    .faq-item {
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .faq-question {
+      padding: 20px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-question:hover {
+      background: #f8f9fa;
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-answer.show {
+      padding: 0 20px 20px;
+      max-height: 500px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      transform: translateY(-3px);
+      color: white;
+    }
+    
+    .social-link.facebook { background: #1877f2; }
+    .social-link.twitter { background: #1da1f2; }
+    .social-link.instagram { background: #e4405f; }
+    .social-link.youtube { background: #ff0000; }
+    .social-link.linkedin { background: #0077b5; }
+    
+    .team-member {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .team-member img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #667eea;
+    }
+    
+    .quick-contact {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .quick-contact-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .quick-contact-btn:hover {
+      transform: scale(1.1);
+      color: white;
+    }
+    
+    .quick-contact-btn.whatsapp { background: #25d366; }
+    .quick-contact-btn.phone { background: #28a745; }
+    .quick-contact-btn.email { background: #007bff; }
+    
+    .stats-card {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .stats-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .success-animation {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+    
+    .success-animation.show {
+      display: block;
+    }
+    
+    .success-checkmark {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #28a745;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 20px;
+      animation: scaleIn 0.5s ease;
+    }
+    
+    @keyframes scaleIn {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <section class="contact-hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+              <li class="breadcrumb-item"><a href="index.html" class="text-white">Home</a></li>
+              <li class="breadcrumb-item active text-white">Contact Us</li>
+            </ol>
+          </nav>
+          <h1 class="fw-bold mb-3">Get in Touch</h1>
+          <p class="lead mb-4">We're here to help you find your perfect car. Reach out to us through any of the channels below.</p>
+          <div class="d-flex gap-3">
+            <button class="btn btn-light" onclick="scrollToForm()">
+              <i class="bi bi-envelope me-2"></i>Send Message
+            </button>
+            <button class="btn btn-outline-light" onclick="scrollToMap()">
+              <i class="bi bi-map me-2"></i>Find Us
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-4 text-center">
+          <i class="bi bi-telephone-forward" style="font-size: 8rem; opacity: 0.8;"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Statistics Section -->
+    <div class="row mb-5">
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number" data-target="1000">0</div>
+          <div>Happy Customers</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number" data-target="50">0</div>
+          <div>Car Models</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number" data-target="10">0</div>
+          <div>Years Experience</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stats-card">
+          <div class="stats-number" data-target="24">0</div>
+          <div>Hour Support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="row g-4 mb-5">
+      <div class="col-lg-4">
+        <div class="contact-card card h-100">
+          <div class="card-body p-4">
+            <div class="contact-icon phone">
+              <i class="bi bi-telephone-fill"></i>
+            </div>
+            <h5 class="fw-semibold">Phone Support</h5>
+            <p class="text-muted">Call us for immediate assistance</p>
+            <div class="mb-2">
+              <strong>Main:</strong> +92-300-1234567
+            </div>
+            <div class="mb-3">
+              <strong>Toll-Free:</strong> 0800-AUTOWORLD
+            </div>
+            <button class="btn btn-success btn-sm w-100" onclick="makeCall()">
+              <i class="bi bi-telephone me-2"></i>Call Now
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="contact-card card h-100">
+          <div class="card-body p-4">
+            <div class="contact-icon whatsapp">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <h5 class="fw-semibold">WhatsApp Support</h5>
+            <p class="text-muted">Chat with us on WhatsApp</p>
+            <div class="mb-2">
+              <strong>Personal:</strong> +92-303-8790348
+            </div>
+            <div class="mb-3">
+              <strong>Business:</strong> +92-300-1234567
+            </div>
+            <button class="btn btn-success btn-sm w-100" onclick="openWhatsApp()">
+              <i class="bi bi-whatsapp me-2"></i>Chat on WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="contact-card card h-100">
+          <div class="card-body p-4">
+            <div class="contact-icon email">
+              <i class="bi bi-envelope-fill"></i>
+            </div>
+            <h5 class="fw-semibold">Email Support</h5>
+            <p class="text-muted">Send us an email anytime</p>
+            <div class="mb-2">
+              <strong>General:</strong> info@autoworld.com
+            </div>
+            <div class="mb-3">
+              <strong>Support:</strong> support@autoworld.com
+            </div>
+            <button class="btn btn-primary btn-sm w-100" onclick="openEmail()">
+              <i class="bi bi-envelope me-2"></i>Send Email
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form and Map Section -->
+    <div class="row g-4 mb-5">
+      <div class="col-lg-6">
+        <div class="contact-form">
+          <h4 class="fw-semibold mb-4">
+            <i class="bi bi-envelope-paper me-2"></i>
+            Send Us a Message
+          </h4>
+          <form id="contactForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="name" name="name" required placeholder="John Doe">
+                <div class="invalid-feedback">Please enter your name</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email Address *</label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="john@example.com">
+                <div class="invalid-feedback">Please enter a valid email</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="+92-300-1234567">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Subject *</label>
+                <select class="form-select" id="subject" name="subject" required>
+                  <option value="">Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="sales">Sales Question</option>
+                  <option value="finance">Finance Information</option>
+                  <option value="service">Service & Maintenance</option>
+                  <option value="complaint">Complaint</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="partnership">Partnership</option>
+                </select>
+                <div class="invalid-feedback">Please select a subject</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message *</label>
+                <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Please describe your inquiry in detail..."></textarea>
+                <div class="invalid-feedback">Please enter your message</div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                  <label class="form-check-label" for="newsletter">
+                    Subscribe to our newsletter for latest updates and offers
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-submit btn-lg w-100">
+                  <span id="submitText">Send Message</span>
+                  <div class="loading-spinner" id="submitSpinner"></div>
+                </button>
+              </div>
+            </div>
+          </form>
+          
+          <!-- Success Message -->
+          <div class="success-animation" id="successMessage">
+            <div class="success-checkmark">
+              <i class="bi bi-check-lg"></i>
+            </div>
+            <h4 class="text-success">Message Sent Successfully!</h4>
+            <p class="text-muted">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+            <button class="btn btn-primary mt-3" onclick="resetForm()">Send Another Message</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="card contact-card">
+          <div class="card-body p-0">
+            <h5 class="fw-semibold p-4 pb-2">
+              <i class="bi bi-geo-alt me-2"></i>
+              Our Location
+            </h5>
+            <div class="map-container">
+              <div class="map-overlay">
+                <small class="text-muted">AutoWorld Showroom</small><br>
+                <strong>City Center, Lahore</strong>
+              </div>
+              <!-- Placeholder for actual map -->
+              <div style="width: 100%; height: 100%; background: url('https://via.placeholder.com/600x400/667eea/ffffff?text=Interactive+Map') center/cover;">
+                <div class="d-flex align-items-center justify-content-center h-100">
+                  <div class="text-center text-white">
+                    <i class="bi bi-map" style="font-size: 3rem;"></i>
+                    <p class="mt-2">Interactive Map</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="contact-icon location mb-3">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <h6 class="fw-semibold">Address</h6>
+              <p class="text-muted mb-3">
+                AutoWorld Showroom<br>
+                Main Boulevard, City Center<br>
+                Lahore, Punjab 54000<br>
+                Pakistan
+              </p>
+              
+              <div class="contact-icon time mb-3">
+                <i class="bi bi-clock-fill"></i>
+              </div>
+              <h6 class="fw-semibold">Working Hours</h6>
+              <div class="text-muted">
+                <div class="d-flex justify-content-between">
+                  <span>Monday - Friday:</span>
+                  <span>9:00 AM - 8:00 PM</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span>Saturday:</span>
+                  <span>10:00 AM - 6:00 PM</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span>Sunday:</span>
+                  <span>11:00 AM - 4:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="row mb-5">
+      <div class="col-12">
+        <h4 class="fw-semibold mb-4 text-center">Our Dedicated Team</h4>
+      </div>
+      <div class="col-md-3">
+        <div class="team-member">
+          <img src="images/sales manager.avif" alt="John Doe">
+          <h6 class="fw-semibold">JohnSon</h6>
+          <p class="text-muted small">Sales Manager</p>
+          <div class="social-links justify-content-center">
+            <a href="#" class="social-link email btn-sm">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="team-member">
+          <img src="images/Jane Smith.jfif" alt="Jane Smith">
+          <h6 class="fw-semibold">Jane Smith</h6>
+          <p class="text-muted small">Customer Support</p>
+          <div class="social-links justify-content-center">
+            <a href="#" class="social-link email btn-sm">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="team-member">
+          <img src="images/Daniel.jfif" alt="Mike Johnson">
+          <h6 class="fw-semibold">Daniel</h6>
+          <p class="text-muted small">Finance Advisor</p>
+          <div class="social-links justify-content-center">
+            <a href="#" class="social-link email btn-sm">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="team-member">
+          <img src="images/Sarah Brown.jfif" alt="Sarah Brown">
+          <h6 class="fw-semibold">Sarah Brown</h6>
+          <p class="text-muted small">Service Manager</p>
+          <div class="social-links justify-content-center">
+            <a href="#" class="social-link email btn-sm">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promo Codes Section -->
+    <div class="faq-section">
+      <h4 class="fw-semibold mb-4">
+        <i class="bi bi-ticket-perforated me-2"></i>
+        Promo Codes & Discounts
+      </h4>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon phone">
+                <i class="bi bi-gift"></i>
+              </div>
+              <h5 class="fw-semibold">Welcome Discount</h5>
+              <p class="text-muted">First-time customer special</p>
+              <div class="mb-2">
+                <strong>Code:</strong> <span class="badge bg-success fs-6">WELCOME10</span>
+              </div>
+              <div class="mb-3">
+                <strong>Discount:</strong> 10% OFF on any car booking
+              </div>
+              <button class="btn btn-success btn-sm w-100" onclick="copyToClipboard('WELCOME10', 'Promo Code')">
+                <i class="bi bi-clipboard me-2"></i>Copy Promo Code
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon email">
+                <i class="bi bi-percent"></i>
+              </div>
+              <h5 class="fw-semibold">Special Offer</h5>
+              <p class="text-muted">Limited time deal</p>
+              <div class="mb-2">
+                <strong>Code:</strong> <span class="badge bg-warning fs-6">SPECIAL20</span>
+              </div>
+              <div class="mb-3">
+                <strong>Discount:</strong> 20% OFF on selected models
+              </div>
+              <button class="btn btn-warning btn-sm w-100" onclick="copyToClipboard('SPECIAL20', 'Promo Code')">
+                <i class="bi bi-clipboard me-2"></i>Copy Promo Code
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row g-4 mt-2">
+        <div class="col-md-4">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon location">
+                <i class="bi bi-star"></i>
+              </div>
+              <h5 class="fw-semibold">Student Discount</h5>
+              <p class="text-muted">For students only</p>
+              <div class="mb-2">
+                <strong>Code:</strong> <span class="badge bg-primary fs-6">STUDENT15</span>
+              </div>
+              <div class="mb-3">
+                <strong>Discount:</strong> 15% OFF with valid ID
+              </div>
+              <button class="btn btn-primary btn-sm w-100" onclick="copyToClipboard('STUDENT15', 'Promo Code')">
+                <i class="bi bi-clipboard me-2"></i>Copy Promo Code
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon time">
+                <i class="bi bi-lightning"></i>
+              </div>
+              <h5 class="fw-semibold">Flash Sale</h5>
+              <p class="text-muted">Today only</p>
+              <div class="mb-2">
+                <strong>Code:</strong> <span class="badge bg-danger fs-6">FLASH25</span>
+              </div>
+              <div class="mb-3">
+                <strong>Discount:</strong> 25% OFF on Honda & Toyota
+              </div>
+              <button class="btn btn-danger btn-sm w-100" onclick="copyToClipboard('FLASH25', 'Promo Code')">
+                <i class="bi bi-clipboard me-2"></i>Copy Promo Code
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon whatsapp">
+                <i class="bi bi-heart"></i>
+              </div>
+              <h5 class="fw-semibold">Loyalty Bonus</h5>
+              <p class="text-muted">Returning customers</p>
+              <div class="mb-2">
+                <strong>Code:</strong> <span class="badge bg-info fs-6">LOYALTY5</span>
+              </div>
+              <div class="mb-3">
+                <strong>Discount:</strong> 5% OFF on all purchases
+              </div>
+              <button class="btn btn-info btn-sm w-100" onclick="copyToClipboard('LOYALTY5', 'Promo Code')">
+                <i class="bi bi-clipboard me-2"></i>Copy Promo Code
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Methods Section -->
+    <div class="faq-section">
+      <h4 class="fw-semibold mb-4">
+        <i class="bi bi-credit-card me-2"></i>
+        Payment Methods
+      </h4>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon phone">
+                <i class="bi bi-phone"></i>
+              </div>
+              <h5 class="fw-semibold">JazzCash</h5>
+              <p class="text-muted">Mobile Account</p>
+              <div class="mb-2">
+                <strong>Account:</strong> 0303-8790348
+              </div>
+              <div class="mb-3">
+                <strong>Name:</strong> Uzair Ahmed Bhatti
+              </div>
+              <button class="btn btn-success btn-sm w-100" onclick="copyToClipboard('0303-8790348', 'JazzCash')">
+                <i class="bi bi-clipboard me-2"></i>Copy Number
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon email">
+                <i class="bi bi-phone"></i>
+              </div>
+              <h5 class="fw-semibold">EasyPaisa</h5>
+              <p class="text-muted">Mobile Account</p>
+              <div class="mb-2">
+                <strong>Account:</strong> 0303-8790348
+              </div>
+              <div class="mb-3">
+                <strong>Name:</strong> Uzair Ahmed Bhatti
+              </div>
+              <button class="btn btn-primary btn-sm w-100" onclick="copyToClipboard('0303-8790348', 'EasyPaisa')">
+                <i class="bi bi-clipboard me-2"></i>Copy Number
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="contact-card card h-100">
+            <div class="card-body p-4">
+              <div class="contact-icon location">
+                <i class="bi bi-bank"></i>
+              </div>
+              <h5 class="fw-semibold">Bank Account</h5>
+              <p class="text-muted">JS Bank</p>
+              <div class="mb-2">
+                <strong>Account:</strong> 031822-65262
+              </div>
+              <div class="mb-3">
+                <strong>Bank:</strong> JS Bank
+              </div>
+              <button class="btn btn-warning btn-sm w-100" onclick="copyToClipboard('031822-65262', 'Bank Account')">
+                <i class="bi bi-clipboard me-2"></i>Copy Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h4 class="fw-semibold mb-4">
+        <i class="bi bi-question-circle me-2"></i>
+        Frequently Asked Questions
+      </h4>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span>What are your working hours?</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We are open Monday to Friday from 9:00 AM to 8:00 PM, Saturday from 10:00 AM to 6:00 PM, and Sunday from 11:00 AM to 4:00 PM. Our online support is available 24/7.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span>Do you offer test drives?</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, we offer test drives for all our vehicles. You can schedule a test drive by calling us or using our booking system. We recommend booking in advance to ensure availability.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span>What financing options are available?</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We offer various financing options through partner banks including lease-to-own, conventional loans, and balloon financing. Our finance advisors can help you choose the best option based on your requirements.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span>Do you provide after-sales service?</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, we provide comprehensive after-sales service including maintenance, repairs, and genuine spare parts. All our vehicles come with warranty coverage and free service packages.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          <span>Can I trade in my old car?</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Absolutely! We offer trade-in facilities for your old vehicle. Our experts will evaluate your car and offer you the best possible price that can be adjusted against your new purchase.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Quick Contact Buttons -->
+  <div class="quick-contact">
+    <a href="tel:+923001234567" class="quick-contact-btn phone" title="Call Us">
+      <i class="bi bi-telephone-fill"></i>
+    </a>
+    <a href="https://wa.me/923038790348" target="_blank" class="quick-contact-btn whatsapp" title="WhatsApp">
+      <i class="bi bi-whatsapp"></i>
+    </a>
+    <a href="mailto:info@autoworld.com" class="quick-contact-btn email" title="Email">
+      <i class="bi bi-envelope-fill"></i>
+    </a>
+  </div>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/whatsapp.js"></script>
+  <script>
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('contact');
+      initializeContactForm();
+      animateStats();
+    });
+
+    // Initialize contact form
+    function initializeContactForm() {
+      const form = document.getElementById('contactForm');
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (validateForm()) {
+          submitForm();
+        }
+      });
+    }
+
+    // Validate form
+    function validateForm() {
+      const form = document.getElementById('contactForm');
+      const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+      let isValid = true;
+      
+      inputs.forEach(input => {
+        if (!input.value.trim()) {
+          input.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          input.classList.remove('is-invalid');
+        }
+        
+        // Email validation
+        if (input.type === 'email' && input.value) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(input.value)) {
+            input.classList.add('is-invalid');
+            isValid = false;
+          }
+        }
+      });
+      
+      return isValid;
+    }
+
+    // Submit form
+    function submitForm() {
+      const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+      const submitText = document.getElementById('submitText');
+      const submitSpinner = document.getElementById('submitSpinner');
+      const successMessage = document.getElementById('successMessage');
+      const form = document.getElementById('contactForm');
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.style.display = 'none';
+      submitSpinner.style.display = 'inline-block';
+      
+      // Simulate form submission
+      setTimeout(() => {
+        // Hide form and show success message
+        form.style.display = 'none';
+        successMessage.classList.add('show');
+        
+        // Store form data (for demo purposes)
+        const formData = new FormData(form);
+        console.log('Form submitted with data:', Object.fromEntries(formData));
+        
+        // Reset button state
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitSpinner.style.display = 'none';
+      }, 2000);
+    }
+
+    // Reset form
+    function resetForm() {
+      const form = document.getElementById('contactForm');
+      const successMessage = document.getElementById('successMessage');
+      
+      form.reset();
+      form.style.display = 'block';
+      successMessage.classList.remove('show');
+      
+      // Clear any validation states
+      form.querySelectorAll('.is-invalid').forEach(input => {
+        input.classList.remove('is-invalid');
+      });
+    }
+
+    // Toggle FAQ
+    function toggleFAQ(button) {
+      const answer = button.nextElementSibling;
+      const icon = button.querySelector('i');
+      
+      // Close other FAQs
+      document.querySelectorAll('.faq-answer.show').forEach(otherAnswer => {
+        if (otherAnswer !== answer) {
+          otherAnswer.classList.remove('show');
+          otherAnswer.previousElementSibling.querySelector('i').classList.remove('bi-chevron-up');
+          otherAnswer.previousElementSibling.querySelector('i').classList.add('bi-chevron-down');
+        }
+      });
+      
+      // Toggle current FAQ
+      answer.classList.toggle('show');
+      icon.classList.toggle('bi-chevron-down');
+      icon.classList.toggle('bi-chevron-up');
+    }
+
+    // Animate statistics
+    function animateStats() {
+      const stats = document.querySelectorAll('.stats-number');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = parseInt(entry.target.getAttribute('data-target'));
+            let current = 0;
+            const increment = target / 50;
+            
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                current = target;
+                clearInterval(timer);
+              }
+              entry.target.textContent = Math.floor(current).toLocaleString();
+            }, 30);
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      });
+      
+      stats.forEach(stat => observer.observe(stat));
+    }
+
+    // Contact functions
+    function makeCall() {
+      window.open('tel:+923001234567', '_self');
+    }
+
+    function openWhatsApp() {
+      window.open('https://wa.me/923038790348?text=Hi! I\'m interested in learning more about AutoWorld.', '_blank');
+    }
+
+    function openEmail() {
+      window.open('mailto:info@autoworld.com?subject=Inquiry from AutoWorld Website', '_blank');
+    }
+
+    function scrollToForm() {
+      document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToMap() {
+      document.querySelector('.map-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Copy to clipboard function
+    function copyToClipboard(text, type) {
+      navigator.clipboard.writeText(text).then(function() {
+        // Show success message
+        showNotification('Copied to clipboard: ' + type + ' - ' + text, 'success');
+      }).catch(function(err) {
+        // Fallback for older browsers
+        var textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('Copied to clipboard: ' + type + ' - ' + text, 'success');
+      });
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+      // Create notification element
+      var notification = document.createElement('div');
+      notification.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+      notification.style.zIndex = '9999';
+      notification.style.minWidth = '300px';
+      notification.innerHTML = `
+        <i class="bi bi-check-circle me-2"></i>${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto remove after 3 seconds
+      setTimeout(function() {
+        if(notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 3000);
+    }
+
+    // Remove validation on input
+    document.addEventListener('input', function(e) {
+      if (e.target.classList.contains('is-invalid')) {
+        e.target.classList.remove('is-invalid');
+      }
+    });
+
+    // Form validation for contact form
+    document.addEventListener('DOMContentLoaded', function() {
+      const contactForm = document.getElementById('contactForm');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+
+      function validateName() {
+        const name = nameInput.value.trim();
+        const nameRegex = /^[A-Za-z\s]+$/;
+        
+        if (name === '') {
+          nameInput.classList.add('is-invalid');
+          nameInput.nextElementSibling.textContent = 'Name is required';
+          return false;
+        } else if (!nameRegex.test(name)) {
+          nameInput.classList.add('is-invalid');
+          nameInput.nextElementSibling.textContent = 'Name should contain only letters';
+          return false;
+        } else if (name.length < 2) {
+          nameInput.classList.add('is-invalid');
+          nameInput.nextElementSibling.textContent = 'Name must be at least 2 characters long';
+          return false;
+        } else {
+          nameInput.classList.remove('is-invalid');
+          return true;
+        }
+      }
+
+      function validateEmail() {
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (email === '') {
+          emailInput.classList.add('is-invalid');
+          emailInput.nextElementSibling.textContent = 'Email is required';
+          return false;
+        } else if (!emailRegex.test(email)) {
+          emailInput.classList.add('is-invalid');
+          emailInput.nextElementSibling.textContent = 'Please enter a valid email address';
+          return false;
+        } else {
+          emailInput.classList.remove('is-invalid');
+          return true;
+        }
+      }
+
+      // Real-time validation
+      nameInput.addEventListener('blur', validateName);
+      emailInput.addEventListener('blur', validateEmail);
+
+      // Form submission
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        
+        if (isNameValid && isEmailValid) {
+          // Form is valid - show success message
+          showNotification('Message sent successfully! We will get back to you soon.', 'success');
+          
+          // Log form data
+          const formData = {
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            subject: document.getElementById('subject').value.trim(),
+            message: document.getElementById('message').value.trim()
+          };
+          
+          console.log('Contact form submitted:', formData);
+          
+          // Reset form after successful submission
+          setTimeout(() => {
+            contactForm.reset();
+          }, 2000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

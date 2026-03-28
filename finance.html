@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Finance & EMI Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .finance-card {
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .finance-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    
+    .result-highlight {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+      padding: 20px;
+    }
+    
+    .emi-display {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+    
+    .loan-option {
+      border: 2px solid #dee2e6;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .loan-option:hover {
+      border-color: #007bff;
+      background: #f8f9fa;
+    }
+    .loan-option.selected {
+      border-color: #007bff;
+      background: #e3f2fd;
+    }
+    
+    .amortization-table {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    
+    .bank-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      margin-right: 10px;
+    }
+    
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .slider-container {
+      position: relative;
+    }
+    .slider-value {
+      position: absolute;
+      top: -25px;
+      transform: translateX(-50%);
+      background: #007bff;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <section class="aw-pagebar py-4">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-2">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Finance Calculator</li>
+        </ol>
+      </nav>
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2">
+        <div>
+          <h1 class="fw-semibold mb-1">Finance & EMI Calculator</h1>
+          <div class="opacity-75">Calculate your car loan EMI with our advanced finance calculator</div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-outline-light" href="finance-banks.html">
+            <i class="bi bi-bank me-2"></i>Partner Banks
+          </a>
+          <a class="btn btn-outline-light" href="contact.html">
+            <i class="bi bi-headset me-2"></i>Finance Support
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container my-5">
+    <!-- Hero Section -->
+    <section class="row g-4 mb-5">
+      <div class="col-lg-8">
+        <div class="card bg-gradient-primary text-white">
+          <div class="card-body p-4">
+            <h2 class="fw-semibold mb-3">
+              <i class="bi bi-calculator me-2"></i>
+              Smart Financing for Your Dream Car
+            </h2>
+            <p class="mb-4 opacity-75">
+              Get instant EMI calculations, compare loan options from multiple banks, and find the best financing solution 
+              tailored to your budget. Our calculator provides accurate estimates with transparent breakdowns.
+            </p>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center">
+                  <i class="bi bi-percent display-6 mb-2"></i>
+                  <div class="fw-semibold">Competitive Rates</div>
+                  <div class="small opacity-75">Starting from 12% APR</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <i class="bi bi-clock-history display-6 mb-2"></i>
+                  <div class="fw-semibold">Flexible Tenure</div>
+                  <div class="small opacity-75">Up to 7 years</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <i class="bi bi-shield-check display-6 mb-2"></i>
+                  <div class="fw-semibold">Quick Approval</div>
+                  <div class="small opacity-75">24-48 hours</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-body p-4">
+            <h5 class="fw-semibold mb-3">
+              <i class="bi bi-telephone-fill text-primary me-2"></i>
+              Finance Assistance
+            </h5>
+            <div class="mb-3">
+              <div class="small text-muted">Helpline</div>
+              <div class="fw-semibold">+92-300-1234567</div>
+            </div>
+            <div class="mb-3">
+              <div class="small text-muted">Email</div>
+              <div class="fw-semibold">finance@autoworld.com</div>
+            </div>
+            <div class="mb-3">
+              <div class="small text-muted">Available</div>
+              <div class="fw-semibold">Mon-Sat, 9AM-7PM</div>
+            </div>
+            <button class="btn btn-primary w-100">
+              <i class="bi bi-person-plus me-2"></i>Apply for Pre-Approval
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Calculator Section -->
+    <div class="row g-4">
+      <!-- Calculator Input -->
+      <div class="col-lg-6">
+        <div class="card finance-card">
+          <div class="card-body p-4">
+            <h5 class="fw-semibold mb-4">
+              <i class="bi bi-calculator text-primary me-2"></i>
+              EMI Calculator
+            </h5>
+
+            <!-- Car Selection -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-car-front text-primary me-1"></i>
+                Select Car
+              </label>
+              <select class="form-select form-select-lg" id="carSelect" name="car" required>
+                <option value="">Choose your car...</option>
+              </select>
+              <div class="form-text mt-1">
+                <i class="bi bi-info-circle me-1"></i>
+                You can also open a car detail page and click "Check Finance / EMI"
+              </div>
+            </div>
+
+            <!-- Down Payment Slider -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-piggy-bank text-primary me-1"></i>
+                Down Payment: <span id="downPaymentPercent" class="text-primary">40%</span>
+              </label>
+              <div class="slider-container">
+                <input type="range" class="form-range" id="downPaymentSlider" min="20" max="60" value="40" step="5">
+                <div class="slider-value" id="sliderValue">40%</div>
+              </div>
+              <div class="d-flex justify-content-between small text-muted">
+                <span>20%</span>
+                <span>60%</span>
+              </div>
+            </div>
+
+            <!-- Bank Selection -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  <i class="bi bi-bank text-primary me-1"></i>
+                  Bank
+                </label>
+                <select class="form-select" id="bankSelect" name="bank" required>
+                  <option value="">Select bank...</option>
+                </select>
+                <div class="form-text mt-1">Markup rate varies by bank</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  <i class="bi bi-calendar text-primary me-1"></i>
+                  Tenure
+                </label>
+                <select class="form-select" id="tenureSelect" name="tenure" required>
+                  <option value="12">1 Year</option>
+                  <option value="24">2 Years</option>
+                  <option value="36" selected>3 Years</option>
+                  <option value="48">4 Years</option>
+                  <option value="60">5 Years</option>
+                  <option value="72">6 Years</option>
+                  <option value="84">7 Years</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Additional Options -->
+            <div class="card bg-light mb-4">
+              <div class="card-body p-3">
+                <h6 class="fw-semibold mb-3">Additional Options</h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Insurance (Monthly)</label>
+                    <input type="number" class="form-control" id="insuranceInput" name="insurance" placeholder="0" value="0" data-validation-rules="number">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Processing Fee</label>
+                    <input type="number" class="form-control" id="processingFeeInput" name="processingFee" placeholder="0" value="0" data-validation-rules="number">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary btn-lg" id="calcBtn" type="button">
+                <i class="bi bi-calculator me-2"></i>Calculate EMI
+              </button>
+              <button class="btn btn-outline-secondary" id="compareBtn" type="button">
+                <i class="bi bi-arrow-left-right me-2"></i>Compare Banks
+              </button>
+            </div>
+
+            <div class="alert alert-info mt-3 mb-0" role="alert">
+              <i class="bi bi-info-circle me-2"></i>
+              <strong>Note:</strong> EMI calculations are approximate. Final rates depend on bank approval and your credit profile.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="col-lg-6">
+        <div class="card finance-card h-100">
+          <div class="card-body p-4">
+            <h5 class="fw-semibold mb-4">
+              <i class="bi bi-graph-up text-primary me-2"></i>
+              Calculation Results
+            </h5>
+
+            <!-- EMI Display -->
+            <div class="result-highlight text-center mb-4">
+              <div class="small opacity-75 mb-2">Monthly EMI</div>
+              <div class="emi-display" id="rEmi">—</div>
+              <div class="small opacity-75 mt-2" id="totalInterest">Total Interest: —</div>
+            </div>
+
+            <!-- Breakdown -->
+            <div class="row g-3 mb-4">
+              <div class="col-6">
+                <div class="small text-muted">Car Price</div>
+                <div class="fw-semibold" id="rPrice">—</div>
+              </div>
+              <div class="col-6">
+                <div class="small text-muted">Loan Amount</div>
+                <div class="fw-semibold text-primary" id="rLoan">—</div>
+              </div>
+              <div class="col-6">
+                <div class="small text-muted">Down Payment</div>
+                <div class="fw-semibold text-success" id="rDown">—</div>
+              </div>
+              <div class="col-6">
+                <div class="small text-muted">Tenure</div>
+                <div class="fw-semibold" id="rTenure">—</div>
+              </div>
+              <div class="col-6">
+                <div class="small text-muted">Interest Rate</div>
+                <div class="fw-semibold" id="rRate">—</div>
+              </div>
+              <div class="col-6">
+                <div class="small text-muted">Total Payment</div>
+                <div class="fw-semibold text-warning" id="rTotal">—</div>
+              </div>
+            </div>
+
+            <!-- Loan Breakdown Chart -->
+            <div class="text-center mb-4">
+              <svg width="150" height="150" class="progress-ring mb-3">
+                <circle class="progress-ring-circle" stroke="#e9ecef" stroke-width="10" fill="transparent" r="65" cx="75" cy="75"></circle>
+                <circle id="loanCircle" stroke="#007bff" stroke-width="10" fill="transparent" r="65" cx="75" cy="75" 
+                        stroke-dasharray="408.41" stroke-dashoffset="204.205"></circle>
+                <circle id="interestCircle" stroke="#ffc107" stroke-width="10" fill="transparent" r="65" cx="75" cy="75"
+                        stroke-dasharray="408.41" stroke-dashoffset="367.569" stroke-dashoffset="0"></circle>
+              </svg>
+              <div class="small text-muted">
+                <span class="badge bg-primary me-2">Loan Amount</span>
+                <span class="badge bg-warning">Interest</span>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-outline-primary" id="scheduleBtn">
+                <i class="bi bi-table me-2"></i>View Amortization Schedule
+              </button>
+              <button class="btn btn-outline-success" id="applyBtn">
+                <i class="bi bi-check-circle me-2"></i>Apply for This Loan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bank Comparison Section (Initially Hidden) -->
+    <div class="card finance-card mt-4 d-none" id="comparisonCard">
+      <div class="card-body p-4">
+        <h5 class="fw-semibold mb-4">
+          <i class="bi bi-arrow-left-right text-primary me-2"></i>
+          Bank Comparison
+        </h5>
+        <div class="row g-3" id="comparisonResults">
+          <!-- Comparison results will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Amortization Schedule (Initially Hidden) -->
+    <div class="card finance-card mt-4 d-none" id="scheduleCard">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-semibold mb-0">
+            <i class="bi bi-table text-primary me-2"></i>
+            Amortization Schedule
+          </h5>
+          <button class="btn btn-outline-secondary btn-sm" id="exportBtn">
+            <i class="bi bi-download me-1"></i>Export
+          </button>
+        </div>
+        <div class="table-responsive amortization-table">
+          <table class="table table-hover" id="scheduleTable">
+            <thead class="table-light">
+              <tr>
+                <th>Month</th>
+                <th>EMI</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Schedule will be generated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="row g-4 mt-4">
+      <div class="col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body p-3">
+            <i class="bi bi-lightning-charge feature-icon text-warning"></i>
+            <h6 class="fw-semibold">Quick Approval</h6>
+            <p class="small text-muted">Get loan approval within 24-48 hours</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body p-3">
+            <i class="bi bi-percent feature-icon text-success"></i>
+            <h6 class="fw-semibold">Best Rates</h6>
+            <p class="small text-muted">Competitive interest rates from partner banks</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body p-3">
+            <i class="bi bi-file-earmark-text feature-icon text-primary"></i>
+            <h6 class="fw-semibold">Minimal Docs</h6>
+            <p class="small text-muted">Simple documentation process</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body p-3">
+            <i class="bi bi-shield-check feature-icon text-info"></i>
+            <h6 class="fw-semibold">Secure Process</h6>
+            <p class="small text-muted">100% secure and confidential</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/whatsapp.js"></script>
+  <script src="assets/js/sticky-header.js"></script>
+  <script src="assets/js/finance.js"></script>
+  <script>
+    // Enhanced finance functionality
+    let currentCalculation = null;
+
+    // Initialize enhanced features
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('finance');
+      window.AutoWorldFinance.init();
+
+      // Down payment slider
+      const slider = document.getElementById('downPaymentSlider');
+      const sliderValue = document.getElementById('sliderValue');
+      const percentDisplay = document.getElementById('downPaymentPercent');
+      
+      slider.addEventListener('input', function() {
+        const value = this.value;
+        sliderValue.textContent = value + '%';
+        sliderValue.style.left = ((value - 20) / 40 * 100) + '%';
+        percentDisplay.textContent = value + '%';
+        calculate();
+      });
+
+      // Compare banks button
+      document.getElementById('compareBtn').addEventListener('click', function() {
+        showBankComparison();
+      });
+
+      // Amortization schedule button
+      document.getElementById('scheduleBtn').addEventListener('click', function() {
+        showAmortizationSchedule();
+      });
+
+      // Export button
+      document.getElementById('exportBtn').addEventListener('click', function() {
+        exportSchedule();
+      });
+
+      // Apply button
+      document.getElementById('applyBtn').addEventListener('click', function() {
+        if (currentCalculation) {
+          alert('Thank you for your interest! Our finance team will contact you within 24 hours to complete your loan application.');
+        }
+      });
+    });
+
+    function showBankComparison() {
+      const carId = document.getElementById('carSelect').value;
+      const months = parseInt(document.getElementById('tenureSelect').value, 10);
+      const downPaymentPercent = parseInt(document.getElementById('downPaymentSlider').value, 10);
+      
+      if (!carId) {
+        alert('Please select a car first.');
+        return;
+      }
+
+      const car = window.AutoWorldData.cars.find(c => c.id === carId);
+      if (!car) return;
+
+      const comparisons = window.AutoWorldData.banks.map((bank, idx) => {
+        const loanAmount = car.price * (1 - downPaymentPercent / 100);
+        const monthlyEmi = window.AutoWorldFinance.emi(loanAmount, bank.markupRate, months);
+        const totalPayment = monthlyEmi * months;
+        const totalInterest = totalPayment - loanAmount;
+
+        return {
+          bank: bank,
+          emi: monthlyEmi,
+          totalInterest: totalInterest,
+          totalPayment: totalPayment
+        };
+      });
+
+      // Sort by EMI (lowest first)
+      comparisons.sort((a, b) => a.emi - b.emi);
+
+      const comparisonHTML = comparisons.map((comp, index) => {
+        const isBest = index === 0;
+        return `
+          <div class="col-md-6 col-lg-4">
+            <div class="loan-option ${isBest ? 'selected' : ''}">
+              <div class="d-flex align-items-center mb-3">
+                <div class="bank-logo" style="background: ${isBest ? '#28a745' : '#6c757d'}">
+                  ${comp.bank.name.charAt(0)}
+                </div>
+                <div>
+                  <div class="fw-semibold">${comp.bank.name}</div>
+                  <div class="small text-muted">${(comp.bank.markupRate * 100).toFixed(1)}% APR</div>
+                </div>
+                ${isBest ? '<span class="badge bg-success ms-auto">Best Rate</span>' : ''}
+              </div>
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="small text-muted">Monthly EMI</div>
+                  <div class="fw-semibold">${window.AutoWorldData.formatPKR(comp.emi)}</div>
+                </div>
+                <div class="col-6">
+                  <div class="small text-muted">Total Interest</div>
+                  <div class="fw-semibold">${window.AutoWorldData.formatPKR(comp.totalInterest)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('comparisonResults').innerHTML = comparisonHTML;
+      document.getElementById('comparisonCard').classList.remove('d-none');
+      document.getElementById('comparisonCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showAmortizationSchedule() {
+      if (!currentCalculation) {
+        alert('Please calculate EMI first.');
+        return;
+      }
+
+      const { car, bank, months, loanAmount, monthlyEmi, annualRate } = currentCalculation;
+      const monthlyRate = annualRate / 12;
+      
+      let balance = loanAmount;
+      let scheduleHTML = '';
+
+      for (let month = 1; month <= months; month++) {
+        const interestPayment = balance * monthlyRate;
+        const principalPayment = monthlyEmi - interestPayment;
+        balance -= principalPayment;
+
+        scheduleHTML += `
+          <tr>
+            <td>${month}</td>
+            <td>${window.AutoWorldData.formatPKR(monthlyEmi)}</td>
+            <td>${window.AutoWorldData.formatPKR(principalPayment)}</td>
+            <td>${window.AutoWorldData.formatPKR(interestPayment)}</td>
+            <td>${window.AutoWorldData.formatPKR(Math.max(0, balance))}</td>
+          </tr>
+        `;
+      }
+
+      document.querySelector('#scheduleTable tbody').innerHTML = scheduleHTML;
+      document.getElementById('scheduleCard').classList.remove('d-none');
+      document.getElementById('scheduleCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function exportSchedule() {
+      const table = document.getElementById('scheduleTable');
+      let csv = 'Month,EMI,Principal,Interest,Balance\n';
+      
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const rowData = Array.from(cells).map(cell => cell.textContent.replace(/,/g, ''));
+        csv += rowData.join(',') + '\n';
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'amortization-schedule.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Override the calculate function to store results
+    const originalCalculate = window.AutoWorldFinance.calculate;
+    window.AutoWorldFinance.calculate = function() {
+      originalCalculate.call(this);
+      
+      // Store current calculation for later use
+      const carId = document.getElementById('carSelect').value;
+      const bankIdx = parseInt(document.getElementById('bankSelect').value, 10);
+      const months = parseInt(document.getElementById('tenureSelect').value, 10);
+      const downPaymentPercent = parseInt(document.getElementById('downPaymentSlider').value, 10);
+      
+      if (carId && !isNaN(bankIdx) && months) {
+        const car = window.AutoWorldData.cars.find(c => c.id === carId);
+        const bank = window.AutoWorldData.banks[bankIdx];
+        
+        if (car && bank) {
+          const price = car.price;
+          const loanAmount = price * (1 - downPaymentPercent / 100);
+          const downPayment = price * (downPaymentPercent / 100);
+          const monthlyEmi = this.emi(loanAmount, bank.markupRate, months);
+          const totalPayment = monthlyEmi * months;
+          const totalInterest = totalPayment - loanAmount;
+          
+          currentCalculation = {
+            car, bank, months, loanAmount, monthlyEmi, 
+            annualRate: bank.markupRate, downPayment, totalInterest, totalPayment
+          };
+          
+          // Update additional result fields
+          document.getElementById('rRate').textContent = (bank.markupRate * 100).toFixed(1) + '%';
+          document.getElementById('rTotal').textContent = window.AutoWorldData.formatPKR(totalPayment);
+          document.getElementById('totalInterest').textContent = 'Total Interest: ' + window.AutoWorldData.formatPKR(totalInterest);
+          
+          // Update progress circles
+          updateProgressCircles(loanAmount, totalInterest);
+        }
+      }
+    };
+
+    function updateProgressCircles(loanAmount, totalInterest) {
+      const total = loanAmount + totalInterest;
+      const loanPercentage = (loanAmount / total) * 100;
+      const interestPercentage = (totalInterest / total) * 100;
+      
+      const circumference = 2 * Math.PI * 65;
+      const loanOffset = circumference - (loanPercentage / 100) * circumference;
+      const interestOffset = circumference - (interestPercentage / 100) * circumference;
+      
+      const loanCircle = document.getElementById('loanCircle');
+      const interestCircle = document.getElementById('interestCircle');
+      
+      if (loanCircle) {
+        loanCircle.style.strokeDashoffset = loanOffset;
+      }
+      if (interestCircle) {
+        interestCircle.style.strokeDashoffset = interestOffset;
+      }
+    }
+  </script>
+</body>
+</html>

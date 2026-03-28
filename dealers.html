@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Authorized Dealers</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .dealer-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .dealer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .brand-header {
+      padding: 20px;
+      border-radius: 10px 10px 0 0;
+      color: white;
+    }
+    .honda-header { background: linear-gradient(135deg, #007bff, #0056b3); }
+    .toyota-header { background: linear-gradient(135deg, #dc3545, #c82333); }
+    .suzuki-header { background: linear-gradient(135deg, #28a745, #1e7e34); }
+    .hyundai-header { background: linear-gradient(135deg, #17a2b8, #138496); }
+    .kia-header { background: linear-gradient(135deg, #ffc107, #e0a800); color: #212529; }
+    .ford-header { background: linear-gradient(135deg, #6c757d, #5a6268); }
+    .daihatsu-header { background: linear-gradient(135deg, #343a40, #23272b); }
+    
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 10px 0;
+    }
+    .contact-info i {
+      width: 20px;
+      text-align: center;
+    }
+    .rating {
+      color: #ffc107;
+    }
+    .service-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin: 2px;
+    }
+    .map-container {
+      height: 200px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+    }
+    .search-box {
+      background: white;
+      border-radius: 50px;
+      padding: 15px 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin: -30px auto 30px;
+      position: relative;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <section class="aw-pagebar py-4">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-2">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Authorized Dealers</li>
+        </ol>
+      </nav>
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2">
+        <div>
+          <h1 class="fw-semibold mb-1">Authorized Dealers Network</h1>
+          <div class="opacity-75">50+ authorized dealers across Pakistan with genuine warranty and after-sales service</div>
+        </div>
+        <a class="btn btn-outline-light" href="service-centres.html">
+          <i class="bi bi-tools me-2"></i>Service Centres
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container my-5">
+    <!-- Search and Filter Section -->
+    <div class="search-box">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control border-start-0" id="searchInput" placeholder="Search dealers by name or location...">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="cityFilter">
+            <option value="">All Cities</option>
+            <option value="lahore">Lahore</option>
+            <option value="karachi">Karachi</option>
+            <option value="islamabad">Islamabad</option>
+            <option value="rawalpindi">Rawalpindi</option>
+            <option value="peshawar">Peshawar</option>
+            <option value="multan">Multan</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="brandFilter">
+            <option value="">All Brands</option>
+            <option value="honda">Honda</option>
+            <option value="toyota">Toyota</option>
+            <option value="suzuki">Suzuki</option>
+            <option value="hyundai">Hyundai</option>
+            <option value="kia">Kia</option>
+            <option value="ford">Ford</option>
+            <option value="daihatsu">Daihatsu</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary w-100" onclick="filterDealers()">
+            <i class="bi bi-funnel me-1"></i>Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <section class="mb-5">
+      <div class="row g-4 text-center">
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-primary fw-bold display-6">50+</div>
+            <div class="stat-text text-muted">Authorized Dealers</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-success fw-bold display-6">15+</div>
+            <div class="stat-text text-muted">Major Cities</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-warning fw-bold display-6">7</div>
+            <div class="stat-text text-muted">Premium Brands</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-info fw-bold display-6">24/7</div>
+            <div class="stat-text text-muted">Support Available</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dealers Grid -->
+    <div class="row g-4" id="dealersContainer">
+      <!-- Honda Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="honda" data-city="lahore">
+        <div class="card dealer-card h-100">
+          <div class="brand-header honda-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>HONDA
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">2 Dealers</div>
+                <div class="small opacity-75">in Lahore</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Honda City Motors</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>City Center, Main Boulevard, Lahore</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-42-111-001-122</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>lahore@hondacitymotors.com</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <small class="text-muted">(4.5/5 - 234 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-warning text-dark">Insurance</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer 2 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Honda Prime Autos</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Airport Road, Showroom Block, Lahore</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-42-111-002-133</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 10:00 AM - 7:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>airport@hondaprimeautos.com</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <small class="text-muted">(4.0/5 - 189 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-info text-white">Service Center</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-primary flex-fill" onclick="showDealerDetails('honda-city-motors')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-primary flex-fill" onclick="getDirections('honda-city-motors')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toyota Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="toyota" data-city="karachi">
+        <div class="card dealer-card h-100">
+          <div class="brand-header toyota-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>TOYOTA
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">3 Dealers</div>
+                <div class="small opacity-75">in Karachi</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Toyota Central</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Shaheed-e-Millat Road, Karachi</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-21-111-009-786</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>central@toyota.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <small class="text-muted">(5.0/5 - 412 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-danger text-white">24/7 Service</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer 2 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Toyota Clifton</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Clifton Block-5, Karachi</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-21-111-009-787</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 10:00 AM - 7:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>clifton@toyota.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <small class="text-muted">(4.7/5 - 298 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-warning text-dark">Exchange</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer 3 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Toyota Defense</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Defense Phase-5, Karachi</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-21-111-009-788</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>defense@toyota.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <small class="text-muted">(4.2/5 - 167 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-info text-white">Service Center</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-danger flex-fill" onclick="showDealerDetails('toyota-central')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-danger flex-fill" onclick="getDirections('toyota-central')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suzuki Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="suzuki" data-city="islamabad">
+        <div class="card dealer-card h-100">
+          <div class="brand-header suzuki-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>SUZUKI
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">2 Dealers</div>
+                <div class="small opacity-75">in Islamabad</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Suzuki Motors Islamabad</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>F-10 Markaz, Islamabad</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-51-111-788-255</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>islamabad@suzuki.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <small class="text-muted">(4.3/5 - 201 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer 2 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Suzuki Blue Area</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Blue Area, Jinnah Avenue, Islamabad</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-51-111-788-256</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 10:00 AM - 7:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>bluearea@suzuki.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <small class="text-muted">(4.0/5 - 156 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-warning text-dark">Exchange</span>
+                  <span class="service-badge bg-info text-white">Service Center</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-success flex-fill" onclick="showDealerDetails('suzuki-islamabad')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-success flex-fill" onclick="getDirections('suzuki-islamabad')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hyundai Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="hyundai" data-city="lahore">
+        <div class="card dealer-card h-100">
+          <div class="brand-header hyundai-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>HYUNDAI
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">2 Dealers</div>
+                <div class="small opacity-75">in Lahore</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Hyundai Gulberg</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Gulberg Main Boulevard, Lahore</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-42-111-003-300</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>gulberg@hyundai.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <small class="text-muted">(4.6/5 - 223 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-info text-white">Service Center</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer 2 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Hyundai DHA</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>DHA Y-Block, Lahore</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-42-111-003-301</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 10:00 AM - 7:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>dha@hyundai.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <small class="text-muted">(4.1/5 - 178 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-warning text-dark">Exchange</span>
+                  <span class="service-badge bg-danger text-white">24/7 Service</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-info flex-fill" onclick="showDealerDetails('hyundai-gulberg')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-info flex-fill" onclick="getDirections('hyundai-gulberg')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kia Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="kia" data-city="karachi">
+        <div class="card dealer-card h-100">
+          <div class="brand-header kia-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>KIA
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">2 Dealers</div>
+                <div class="small opacity-75">in Karachi</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Kia Motors Karachi</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Korangi Creek Road, Karachi</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-21-111-004-400</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>karachi@kia.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <small class="text-muted">(4.4/5 - 267 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-warning text-dark">Exchange</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dealer 2 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Kia Clifton</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>Clifton Beach Avenue, Karachi</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-21-111-004-401</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 10:00 AM - 7:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>clifton@kia.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <small class="text-muted">(4.2/5 - 198 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive Drive</span>
+                  <span class="service-badge bg-info text-white">Service Center</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-warning flex-fill" onclick="showDealerDetails('kia-karachi')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-warning flex-fill" onclick="getDirections('kia-karachi')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ford Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="ford" data-city="rawalpindi">
+        <div class="card dealer-card h-100">
+          <div class="brand-header ford-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>FORD
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">1 Dealer</div>
+                <div class="small opacity-75">in Rawalpindi</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Ford Pakistan Rawalpindi</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>GT Road, Workshop Area, Rawalpindi</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-51-111-005-600</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 8:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>rawalpindi@ford.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <small class="text-muted">(4.5/5 - 145 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-info text-white">Import Specialist</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-secondary flex-fill" onclick="showDealerDetails('ford-rawalpindi')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-secondary flex-fill" onclick="getDirections('ford-rawalpindi')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daihatsu Dealers -->
+      <div class="col-lg-6 dealer-item" data-brand="daihatsu" data-city="peshawar">
+        <div class="card dealer-card h-100">
+          <div class="brand-header daihatsu-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h3 class="fw-bold mb-1">
+                  <i class="bi bi-star-fill me-2"></i>DAIHATSU
+                </h3>
+                <p class="mb-0 opacity-75">Premium Authorized Dealers</p>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">1 Dealer</div>
+                <div class="small opacity-75">in Peshawar</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Dealer 1 -->
+            <div class="dealer-info mb-4 p-3 bg-light rounded">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="fw-semibold mb-0">Daihatsu Peshawar</h5>
+                <span class="badge bg-success">Authorized</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-geo-alt-fill text-primary"></i>
+                <span>University Road, Service Lane, Peshawar</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-telephone-fill text-success"></i>
+                <span>+92-91-111-001-234</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-clock-fill text-warning"></i>
+                <span>Mon-Sat: 9:00 AM - 7:00 PM</span>
+              </div>
+              <div class="contact-info text-muted small">
+                <i class="bi bi-envelope-fill text-info"></i>
+                <span>peshawar@daihatsu.com.pk</span>
+              </div>
+              <div class="mt-2">
+                <div class="rating mb-1">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <small class="text-muted">(4.0/5 - 89 reviews)</small>
+                </div>
+                <div class="service-badges">
+                  <span class="service-badge bg-primary text-white">Test Drive</span>
+                  <span class="service-badge bg-success text-white">Financing</span>
+                  <span class="service-badge bg-warning text-dark">Kei Car Expert</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <i class="bi bi-map display-4 text-muted"></i>
+              <div class="text-center">
+                <small class="text-muted">Interactive Map</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex">
+              <button class="btn btn-dark flex-fill" onclick="showDealerDetails('daihatsu-peshawar')">
+                <i class="bi bi-info-circle me-1"></i>View Details
+              </button>
+              <button class="btn btn-outline-dark flex-fill" onclick="getDirections('daihatsu-peshawar')">
+                <i class="bi bi-map me-1"></i>Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="text-center py-5" id="noResults" style="display: none;">
+      <i class="bi bi-search display-1 text-muted"></i>
+      <h4 class="fw-semibold text-muted mt-3">No Dealers Found</h4>
+      <p class="text-muted">Try adjusting your search criteria or filters.</p>
+      <button class="btn btn-primary mt-3" onclick="resetFilters()">Reset Filters</button>
+    </div>
+
+    <!-- Information Cards -->
+    <section class="mt-5">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card aw-card">
+            <div class="card-body p-4">
+              <h5 class="fw-semibold mb-3">
+                <i class="bi bi-shield-check text-success me-2"></i>
+                Why Choose Authorized Dealers?
+              </h5>
+              <ul class="mb-0">
+                <li class="mb-2">✅ Genuine warranty coverage</li>
+                <li class="mb-2">✅ Manufacturer-trained technicians</li>
+                <li class="mb-2">✅ Original spare parts</li>
+                <li class="mb-2">✅ After-sales service support</li>
+                <li class="mb-2">✅ Software updates & recalls</li>
+                <li class="mb-0">✅ Resale value maintenance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card aw-card">
+            <div class="card-body p-4">
+              <h5 class="fw-semibold mb-3">
+                <i class="bi bi-info-circle text-primary me-2"></i>
+                Dealer Services
+              </h5>
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-car-front text-primary me-2"></i>
+                    <span>New Car Sales</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-arrow-repeat text-success me-2"></i>
+                    <span>Car Exchange</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-currency-dollar text-warning me-2"></i>
+                    <span>Financing</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-shield text-info me-2"></i>
+                    <span>Insurance</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-tools text-danger me-2"></i>
+                    <span>Service & Repair</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-box text-secondary me-2"></i>
+                    <span>Genuine Parts</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="mt-5">
+      <div class="card aw-card bg-gradient-primary text-white">
+        <div class="card-body p-5 text-center">
+          <h3 class="fw-semibold mb-3">Need Help Finding a Dealer?</h3>
+          <p class="mb-4 opacity-75">Our customer service team is available to help you locate the perfect dealer for your needs</p>
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <a class="btn btn-light btn-lg" href="contact.html">
+              <i class="bi bi-telephone me-2"></i>Contact Support
+            </a>
+            <a class="btn btn-outline-light btn-lg" href="tel:+92-300-1234567">
+              <i class="bi bi-phone me-2"></i>Call Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    // Filter dealers functionality
+    function filterDealers() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const cityFilter = document.getElementById('cityFilter').value;
+      const brandFilter = document.getElementById('brandFilter').value;
+      const dealers = document.querySelectorAll('.dealer-item');
+      let hasResults = false;
+
+      dealers.forEach(dealer => {
+        const dealerName = dealer.textContent.toLowerCase();
+        const dealerCity = dealer.getAttribute('data-city');
+        const dealerBrand = dealer.getAttribute('data-brand');
+
+        const matchesSearch = !searchTerm || dealerName.includes(searchTerm);
+        const matchesCity = !cityFilter || dealerCity === cityFilter;
+        const matchesBrand = !brandFilter || dealerBrand === brandFilter;
+
+        if (matchesSearch && matchesCity && matchesBrand) {
+          dealer.style.display = 'block';
+          hasResults = true;
+        } else {
+          dealer.style.display = 'none';
+        }
+      });
+
+      // Show/hide no results message
+      document.getElementById('noResults').style.display = hasResults ? 'none' : 'block';
+    }
+
+    // Reset filters
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('cityFilter').value = '';
+      document.getElementById('brandFilter').value = '';
+      filterDealers();
+    }
+
+    // Show dealer details (demo function)
+    function showDealerDetails(dealerId) {
+      alert('Dealer details page would open here for: ' + dealerId + '\n\nThis would show complete dealer information, available cars, special offers, and booking system.');
+    }
+
+    // Get directions (demo function)
+    function getDirections(dealerId) {
+      alert('Google Maps would open here with directions to: ' + dealerId + '\n\nThis would integrate with Google Maps API to show exact location and route planning.');
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('dealers');
+
+      // Add search on Enter key
+      document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          filterDealers();
+        }
+      });
+
+      // Add real-time search
+      document.getElementById('searchInput').addEventListener('input', filterDealers);
+
+      // Add animation to dealer cards
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.dealer-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+      });
+    });
+  </script>
+</body>
+</html>

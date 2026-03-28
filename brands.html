@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Brands</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <header class="aw-hero py-5">
+    <div class="container">
+      <div class="text-center">
+        <h1 class="fw-semibold display-5">Premium Automotive Brands</h1>
+        <p class="lead mt-2">Discover Pakistan's most trusted car brands with detailed specifications, pricing, and dealer information</p>
+        <div class="d-flex flex-wrap gap-2 justify-content-center mt-4">
+          <button class="btn btn-primary" onclick="filterBrands('all')">All Brands</button>
+          <button class="btn btn-outline-light" onclick="filterBrands('japanese')">Japanese</button>
+          <button class="btn btn-outline-light" onclick="filterBrands('american')">American</button>
+          <button class="btn btn-outline-light" onclick="filterBrands('korean')">Korean</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <!-- Brand Statistics -->
+    <section class="mb-5">
+      <div class="row g-4 text-center">
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-primary fw-bold display-6">15+</div>
+            <div class="stat-text text-muted">Premium Brands</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-success fw-bold display-6">100+</div>
+            <div class="stat-text text-muted">Car Models</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-warning fw-bold display-6">50+</div>
+            <div class="stat-text text-muted">Authorized Dealers</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-info fw-bold display-6">24/7</div>
+            <div class="stat-text text-muted">Customer Support</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Brands -->
+    <section class="mb-5">
+      <div class="text-center mb-4">
+        <h2 class="fw-semibold">Featured Automotive Brands</h2>
+        <p class="text-muted">Click on any brand to explore detailed information</p>
+      </div>
+
+      <div class="row g-4" id="brandsContainer">
+        <!-- Honda -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="japanese">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-primary text-white text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>HONDA
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                  H
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">Reliability Meets Performance</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇯🇵 Japan</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1948</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Civic</span>
+                  <span class="badge bg-light text-dark">City</span>
+                  <span class="badge bg-light text-dark">Accord</span>
+                  <span class="badge bg-light text-dark">HR-V</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-primary fw-bold">PKR 3.8M - 8.5M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Excellent Resale Value</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Fuel Efficient</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Advanced Safety Features</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-primary" href="catalogue.html?brand=honda">
+                  <i class="bi bi-car-front me-2"></i>View Honda Cars
+                </a>
+                <a class="btn btn-outline-primary" href="dealers.html?brand=honda">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toyota -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="japanese">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-danger text-white text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>TOYOTA
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                  T
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">The Quality Standard</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇯🇵 Japan</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1937</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Corolla</span>
+                  <span class="badge bg-light text-dark">Yaris</span>
+                  <span class="badge bg-light text-dark">Fortuner</span>
+                  <span class="badge bg-light text-dark">Corolla Cross</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-danger fw-bold">PKR 3.4M - 15M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Unmatched Durability</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Low Maintenance Cost</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Wide Service Network</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-danger" href="catalogue.html?brand=toyota">
+                  <i class="bi bi-car-front me-2"></i>View Toyota Cars
+                </a>
+                <a class="btn btn-outline-danger" href="dealers.html?brand=toyota">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suzuki -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="japanese">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-success text-white text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>SUZUKI
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                  S
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">Value for Money</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇯🇵 Japan</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1909</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Wagon R</span>
+                  <span class="badge bg-light text-dark">Alto</span>
+                  <span class="badge bg-light text-dark">Cultus</span>
+                  <span class="badge bg-light text-dark">Swift</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-success fw-bold">PKR 1.9M - 3.2M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Budget Friendly</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Easy to Maintain</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Excellent Fuel Economy</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-success" href="catalogue.html?brand=suzuki">
+                  <i class="bi bi-car-front me-2"></i>View Suzuki Cars
+                </a>
+                <a class="btn btn-outline-success" href="dealers.html?brand=suzuki">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hyundai -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="korean">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-info text-white text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>HYUNDAI
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 1.5rem; font-weight: bold;">
+                  HY
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">Modern Innovation</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇰🇷 Korea</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1967</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Elantra</span>
+                  <span class="badge bg-light text-dark">Sonata</span>
+                  <span class="badge bg-light text-dark">Tucson</span>
+                  <span class="badge bg-light text-dark">Santro</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-info fw-bold">PKR 2.8M - 9.2M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Modern Design</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Advanced Technology</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Great Warranty</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-info" href="catalogue.html?brand=hyundai">
+                  <i class="bi bi-car-front me-2"></i>View Hyundai Cars
+                </a>
+                <a class="btn btn-outline-info" href="dealers.html?brand=hyundai">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kia -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="korean">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-warning text-dark text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>KIA
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-warning text-dark rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                  K
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">The Power to Surprise</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇰🇷 Korea</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1944</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Sportage</span>
+                  <span class="badge bg-light text-dark">Cerato</span>
+                  <span class="badge bg-light text-dark">Picanto</span>
+                  <span class="badge bg-light text-dark">Stonic</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-warning fw-bold">PKR 2.5M - 8.5M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Stylish Design</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Feature Rich</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Competitive Pricing</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-warning text-dark" href="catalogue.html?brand=kia">
+                  <i class="bi bi-car-front me-2"></i>View Kia Cars
+                </a>
+                <a class="btn btn-outline-warning text-dark" href="dealers.html?brand=kia">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ford -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="american">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-secondary text-white text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>FORD
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                  F
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">American Excellence</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇺🇸 USA</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1903</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Mustang</span>
+                  <span class="badge bg-light text-dark">Focus</span>
+                  <span class="badge bg-light text-dark">Ranger</span>
+                  <span class="badge bg-light text-dark">Fiesta</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-secondary fw-bold">PKR 2.6M - 12M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Powerful Performance</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Iconic Models</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Imported Quality</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" href="catalogue.html?brand=ford">
+                  <i class="bi bi-car-front me-2"></i>View Ford Cars
+                </a>
+                <a class="btn btn-outline-secondary" href="dealers.html?brand=ford">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daihatsu -->
+        <div class="col-lg-6 col-xl-4 brand-item" data-brand-type="japanese">
+          <div class="card aw-card h-100 brand-card">
+            <div class="card-header bg-dark text-white text-center py-3">
+              <h4 class="fw-semibold mb-0">
+                <i class="bi bi-star-fill me-2"></i>DAIHATSU
+              </h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-center mb-3">
+                <div class="brand-logo bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 1.5rem; font-weight: bold;">
+                  D
+                </div>
+              </div>
+              
+              <h5 class="fw-semibold text-center mb-3">Compact Efficiency</h5>
+              
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Country</div>
+                    <div class="fw-semibold">🇯🇵 Japan</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center p-2 bg-light rounded">
+                    <div class="small text-muted">Established</div>
+                    <div class="fw-semibold">1951</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Popular Models:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  <span class="badge bg-light text-dark">Mira</span>
+                  <span class="badge bg-light text-dark">Mira ES</span>
+                  <span class="badge bg-light text-dark">Move</span>
+                  <span class="badge bg-light text-dark">Hijet</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="fw-semibold mb-2">Price Range:</h6>
+                <div class="text-dark fw-bold">PKR 1.6M - 2.2M</div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Kei Car Specialist</span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Extreme Fuel Economy</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span class="small">Easy to Park</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a class="btn btn-dark" href="catalogue.html?brand=daihatsu">
+                  <i class="bi bi-car-front me-2"></i>View Daihatsu Cars
+                </a>
+                <a class="btn btn-outline-dark" href="dealers.html?brand=daihatsu">
+                  <i class="bi bi-geo-alt me-2"></i>Find Dealers
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Comparison Tool -->
+    <section class="mb-5">
+      <div class="card aw-card bg-gradient-primary text-white">
+        <div class="card-body p-5 text-center">
+          <h3 class="fw-semibold mb-3">Can't Decide Which Brand?</h3>
+          <p class="mb-4 opacity-75">Use our advanced comparison tool to compare brands side by side</p>
+          <a class="btn btn-light btn-lg" href="comparison.html">
+            <i class="bi bi-columns-gap me-2"></i>Compare Brands Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Info -->
+    <section class="mb-5">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card aw-card">
+            <div class="card-body p-4">
+              <h5 class="fw-semibold mb-3">
+                <i class="bi bi-shield-check text-success me-2"></i>
+                Why Choose AutoWorld?
+              </h5>
+              <ul class="mb-0">
+                <li class="mb-2">Authorized dealer partnerships</li>
+                <li class="mb-2">Genuine warranty & after-sales service</li>
+                <li class="mb-2">Transparent pricing with no hidden charges</li>
+                <li class="mb-2">Expert advice and consultation</li>
+                <li class="mb-0">Financing options for all brands</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card aw-card">
+            <div class="card-body p-4">
+              <h5 class="fw-semibold mb-3">
+                <i class="bi bi-telephone-fill text-primary me-2"></i>
+                Need Help Choosing?
+              </h5>
+              <p class="mb-3">Our car experts are available to help you select the perfect brand and model based on your needs and budget.</p>
+              <div class="d-grid gap-2 d-md-flex">
+                <a class="btn btn-primary" href="contact.html">
+                  <i class="bi bi-chat-left-text me-2"></i>Contact Experts
+                </a>
+                <a class="btn btn-outline-primary" href="tel:+92-300-1234567">
+                  <i class="bi bi-telephone me-2"></i>Call Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    // Brand filtering functionality
+    function filterBrands(type) {
+      const allBrands = document.querySelectorAll('.brand-item');
+      
+      allBrands.forEach(brand => {
+        if (type === 'all') {
+          brand.style.display = 'block';
+        } else {
+          const brandType = brand.getAttribute('data-brand-type');
+          if (brandType === type) {
+            brand.style.display = 'block';
+          } else {
+            brand.style.display = 'none';
+          }
+        }
+      });
+
+      // Update button states
+      const buttons = document.querySelectorAll('button[onclick^="filterBrands"]');
+      buttons.forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline-light');
+      });
+      
+      // Set active button
+      event.target.classList.remove('btn-outline-light');
+      event.target.classList.add('btn-primary');
+    }
+
+    // Add hover effects to brand cards
+    document.addEventListener('DOMContentLoaded', function() {
+      window.AutoWorldLayout.render('brands');
+
+      // Add animation to brand cards on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe all brand cards
+      document.querySelectorAll('.brand-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+      });
+
+      // Add click tracking for analytics (demo)
+      document.querySelectorAll('.brand-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          if (!e.target.closest('a')) {
+            const brandName = this.querySelector('.card-header h4').textContent.trim();
+            console.log('Brand clicked:', brandName);
+            // In real implementation, this would send to analytics
+          }
+        });
+      });
+
+      // Add smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

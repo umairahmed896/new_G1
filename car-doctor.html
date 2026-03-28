@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AutoWorld | Car Doctor AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <style>
+    .typing-indicator {
+      display: none;
+      padding: 15px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 15px;
+      margin: 10px 0;
+      border: 1px solid #dee2e6;
+    }
+    .typing-indicator.active {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .typing-dots {
+      display: flex;
+      align-items: center;
+    }
+    .typing-dots span {
+      height: 10px;
+      width: 10px;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 3px;
+      animation: typing 1.4s infinite;
+      box-shadow: 0 2px 5px rgba(0,123,255,0.3);
+    }
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+      }
+      30% {
+        transform: translateY(-15px);
+        opacity: 1;
+      }
+    }
+    .message {
+      margin: 15px 0;
+      padding: 18px;
+      border-radius: 15px;
+      animation: messageSlide 0.4s ease;
+      position: relative;
+    }
+    @keyframes messageSlide {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .user-message {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: white;
+      margin-left: 25%;
+      box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    }
+    .ai-message {
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
+      border: 1px solid #dee2e6;
+      margin-right: 25%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .severity-badge {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .severity-low {
+      background: linear-gradient(135deg, #d4edda, #c3e6cb);
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .severity-medium {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+    .severity-high {
+      background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .cost-estimate {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border-left: 4px solid #2196f3;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(33,150,243,0.2);
+    }
+    .problem-card {
+      border: 2px solid #dee2e6;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .problem-card:hover {
+      border-color: #007bff;
+      background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.2);
+    }
+    .ai-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .diagnosis-header {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .feature-highlight {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px 0;
+      text-align: center;
+    }
+    .quick-action-btn {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .quick-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+      border-color: #007bff;
+    }
+    .chat-container {
+      background: linear-gradient(135deg, #fafafa, #ffffff);
+      border: 2px solid #e9ecef;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .input-group-lg .form-control {
+      border-radius: 10px 0 0 10px;
+      border: 2px solid #dee2e6;
+    }
+    .input-group-lg .btn {
+      border-radius: 0 10px 10px 0;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border: none;
+    }
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .confidence-meter {
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .confidence-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #28a745, #20c997);
+      transition: width 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="aw-header"></div>
+
+  <main class="container my-5">
+    <!-- Enhanced Header -->
+    <div class="diagnosis-header mb-5">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="fw-semibold display-5 mb-3">
+            <i class="bi bi-cpu me-3"></i>
+            Car Doctor AI
+          </h1>
+          <p class="lead mb-0">Advanced AI-powered car diagnostics with instant analysis and cost estimates</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <div class="d-flex flex-column align-items-md-end">
+            <div class="badge bg-success text-white p-2 mb-2">
+              <i class="bi bi-check-circle me-1"></i>
+              95% Accuracy Rate
+            </div>
+            <div class="badge bg-info text-white p-2">
+              <i class="bi bi-clock me-1"></i>
+              Instant Results
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="feature-highlight">
+          <i class="bi bi-cpu display-6 mb-2"></i>
+          <div class="fw-semibold">AI Powered</div>
+          <small>Advanced machine learning</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-highlight">
+          <i class="bi bi-lightning-charge display-6 mb-2"></i>
+          <div class="fw-semibold">Instant Analysis</div>
+          <small>Real-time diagnostics</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-highlight">
+          <i class="bi bi-currency-dollar display-6 mb-2"></i>
+          <div class="fw-semibold">Cost Estimates</div>
+          <small>Transparent pricing</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-highlight">
+          <i class="bi bi-shield-check display-6 mb-2"></i>
+          <div class="fw-semibold">Reliable</div>
+          <small>Expert recommendations</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Quick Problems -->
+    <div class="card aw-card mb-4 border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h5 class="fw-semibold mb-4">
+          <i class="bi bi-lightning text-warning me-2"></i>
+          Common Problems (Click for instant diagnosis)
+        </h5>
+        <div class="row g-2">
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Engine se awaz aa rahi hai')">
+              <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+              <strong>Engine Noise</strong>
+              <div class="small text-muted">Tak tak awaz</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Car start nahi ho raha')">
+              <i class="bi bi-x-circle text-danger me-2"></i>
+              <strong>Won't Start</strong>
+              <div class="small text-muted">Start issue</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('AC kaam nahi kar raha')">
+              <i class="bi bi-snow text-info me-2"></i>
+              <strong>AC Not Working</strong>
+              <div class="small text-muted">Cooling issue</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Brakes weak hain')">
+              <i class="bi bi-shield-exclamation text-danger me-2"></i>
+              <strong>Brake Issues</strong>
+              <div class="small text-muted">Weak brakes</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Car overheating ho rahi hai')">
+              <i class="bi bi-thermometer-high text-danger me-2"></i>
+              <strong>Overheating</strong>
+              <div class="small text-muted">Temperature high</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Fuel average kam hai')">
+              <i class="bi bi-fuel-pump text-warning me-2"></i>
+              <strong>Poor Mileage</strong>
+              <div class="small text-muted">Fuel consumption</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Steering tight hai')">
+              <i class="bi bi-arrow-repeat text-info me-2"></i>
+              <strong>Steering Issues</strong>
+              <div class="small text-muted">Hard steering</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="problem-card quick-action-btn" onclick="selectProblem('Tyre puncture')">
+              <i class="bi bi-exclamation-octagon text-warning me-2"></i>
+              <strong>Tyre Issues</strong>
+              <div class="small text-muted">Puncture/flat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Chat Interface -->
+    <div class="card aw-card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-semibold mb-0">
+            <div class="d-flex align-items-center">
+              <div class="ai-avatar me-3">
+                <i class="bi bi-robot"></i>
+              </div>
+              <div>
+                <div>AI Diagnostic Chat</div>
+                <small class="text-muted">Powered by Advanced Machine Learning</small>
+              </div>
+            </div>
+          </h5>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary btn-sm" onclick="clearChat()">
+              <i class="bi bi-trash me-1"></i>Clear
+            </button>
+            <button class="btn btn-outline-primary btn-sm" onclick="exportChat()">
+              <i class="bi bi-download me-1"></i>Export
+            </button>
+          </div>
+        </div>
+        
+        <div id="chatContainer" class="chat-container p-3" style="height: 500px; overflow-y: auto;">
+          <!-- Enhanced Welcome Message -->
+          <div class="message ai-message">
+            <div class="d-flex align-items-center mb-2">
+              <div class="ai-avatar">
+                <i class="bi bi-robot"></i>
+              </div>
+              <div>
+                <strong>Car Doctor AI</strong>
+                <div class="small text-muted">Online • Ready to help</div>
+              </div>
+            </div>
+            <p class="mb-2">Assalam-o-Alaikum! <i class="bi bi-car-front me-1"></i> I'm your advanced AI car diagnostic assistant.</p>
+            <p class="mb-2">I can help you identify:</p>
+            <ul class="mb-0">
+              <li><i class="bi bi-tools me-2"></i>Engine and mechanical issues</li>
+              <li><i class="bi bi-snow me-2"></i>Air conditioning problems</li>
+              <li><i class="bi bi-shield-exclamation me-2"></i>Brake and safety concerns</li>
+              <li><i class="bi bi-lightning me-2"></i>Electrical system faults</li>
+              <li><i class="bi bi-currency-dollar me-2"></i>Estimated repair costs</li>
+            </ul>
+            <div class="mt-3">
+              <div class="confidence-meter">
+                <div class="confidence-fill" style="width: 95%;"></div>
+              </div>
+              <small class="text-muted">AI Confidence: 95%</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enhanced Input Area -->
+        <div class="mt-3">
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control" id="problemInput" placeholder="Describe your car problem in detail (e.g., 'Meri Honda Civic engine se tak tak awaz aa rahi hai start karte waqt')..." />
+            <button class="btn btn-primary" type="button" id="sendBtn">
+              <i class="bi bi-send-fill me-1"></i>
+              Analyze
+            </button>
+          </div>
+          <div class="mt-2 d-flex justify-content-between">
+            <small class="text-muted">
+              <i class="bi bi-info-circle me-1"></i>
+              Be specific for better results (mention car model, symptoms, when it happens)
+            </small>
+            <button class="btn btn-link btn-sm text-decoration-none" onclick="voiceInput()">
+              <i class="bi bi-mic me-1"></i>Voice Input
+            </button>
+          </div>
+        </div>
+
+        <!-- Enhanced Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="d-flex align-items-center">
+            <div class="ai-avatar me-3">
+              <i class="bi bi-robot"></i>
+            </div>
+            <div>
+              <div class="typing-dots mb-2">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <small class="text-muted">AI analyzing your problem with advanced algorithms...</small>
+              <div class="progress mt-2" style="height: 4px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Disclaimer -->
+    <div class="alert alert-warning mt-4 border-0" style="background: linear-gradient(135deg, #fff3cd, #ffeaa7);">
+      <div class="d-flex align-items-start">
+        <i class="bi bi-exclamation-triangle-fill text-warning me-3 fs-4"></i>
+        <div>
+          <strong>⚠️ Important Disclaimer:</strong>
+          <p class="mb-2">This AI diagnostic tool provides estimates based on common symptoms and should not replace professional mechanical diagnosis.</p>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle text-success me-2"></i>
+                <span>Always consult a certified mechanic</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle text-success me-2"></i>
+                <span>Costs may vary based on location</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle text-success me-2"></i>
+                <span>Regular maintenance prevents issues</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle text-success me-2"></i>
+                <span>Keep your car service records</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="aw-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    // Enhanced AI Diagnosis Database with more detailed information
+    const diagnosisDB = {
+      'engine awaz': {
+        issues: [
+          { name: 'Engine Oil Low/Dirty', severity: 'medium', cost: 'PKR 2,000-5,000', solution: 'Engine oil change/filter replacement', time: '30-45 mins', urgency: 'Moderate' },
+          { name: 'Tappet Adjustment Required', severity: 'low', cost: 'PKR 1,500-3,000', solution: 'Valve tappet adjustment', time: '1-2 hours', urgency: 'Low' },
+          { name: 'Timing Chain Issue', severity: 'high', cost: 'PKR 15,000-25,000', solution: 'Timing chain replacement', time: '4-6 hours', urgency: 'High' },
+          { name: 'Engine Mounting Loose', severity: 'medium', cost: 'PKR 3,000-8,000', solution: 'Engine mounting replacement', time: '2-3 hours', urgency: 'Moderate' }
+        ],
+        confidence: 92
+      },
+      'start nahi': {
+        issues: [
+          { name: 'Battery Dead', severity: 'low', cost: 'PKR 8,000-15,000', solution: 'Battery replacement', time: '15-30 mins', urgency: 'High' },
+          { name: 'Starter Motor Fault', severity: 'medium', cost: 'PKR 12,000-20,000', solution: 'Starter motor repair/replacement', time: '2-3 hours', urgency: 'High' },
+          { name: 'Fuel Pump Issue', severity: 'medium', cost: 'PKR 10,000-18,000', solution: 'Fuel pump replacement', time: '2-4 hours', urgency: 'High' },
+          { name: 'Spark Plugs Faulty', severity: 'low', cost: 'PKR 2,000-4,000', solution: 'Spark plugs replacement', time: '30-45 mins', urgency: 'Moderate' }
+        ],
+        confidence: 88
+      },
+      'ac nahi': {
+        issues: [
+          { name: 'AC Gas Low', severity: 'low', cost: 'PKR 2,500-4,000', solution: 'AC gas refilling', time: '30-45 mins', urgency: 'Low' },
+          { name: 'AC Compressor Fault', severity: 'high', cost: 'PKR 25,000-40,000', solution: 'AC compressor replacement', time: '3-4 hours', urgency: 'Moderate' },
+          { name: 'AC Condenser Leak', severity: 'medium', cost: 'PKR 8,000-15,000', solution: 'Condenser repair/replacement', time: '2-3 hours', urgency: 'Moderate' },
+          { name: 'AC Filter Clogged', severity: 'low', cost: 'PKR 1,000-2,000', solution: 'Cabin filter replacement', time: '15-20 mins', urgency: 'Low' }
+        ],
+        confidence: 90
+      },
+      'brakes weak': {
+        issues: [
+          { name: 'Brake Pads Worn Out', severity: 'medium', cost: 'PKR 6,000-12,000', solution: 'Brake pads replacement', time: '1-2 hours', urgency: 'High' },
+          { name: 'Brake Fluid Low', severity: 'low', cost: 'PKR 1,500-3,000', solution: 'Brake fluid top-up', time: '15-30 mins', urgency: 'High' },
+          { name: 'Brake Disc Warped', severity: 'medium', cost: 'PKR 8,000-15,000', solution: 'Brake discs replacement', time: '2-3 hours', urgency: 'Moderate' },
+          { name: 'Master Cylinder Issue', severity: 'high', cost: 'PKR 10,000-18,000', solution: 'Master cylinder replacement', time: '2-4 hours', urgency: 'High' }
+        ],
+        confidence: 94
+      },
+      'overheating': {
+        issues: [
+          { name: 'Coolant Low', severity: 'low', cost: 'PKR 1,000-2,000', solution: 'Coolant top-up', time: '15-20 mins', urgency: 'High' },
+          { name: 'Radiator Leak', severity: 'medium', cost: 'PKR 8,000-20,000', solution: 'Radiator repair/replacement', time: '2-4 hours', urgency: 'High' },
+          { name: 'Thermostat Stuck', severity: 'medium', cost: 'PKR 3,000-6,000', solution: 'Thermostat replacement', time: '1-2 hours', urgency: 'Moderate' },
+          { name: 'Water Pump Failure', severity: 'high', cost: 'PKR 12,000-25,000', solution: 'Water pump replacement', time: '3-5 hours', urgency: 'High' }
+        ],
+        confidence: 91
+      },
+      'fuel average': {
+        issues: [
+          { name: 'Air Filter Clogged', severity: 'low', cost: 'PKR 1,000-2,000', solution: 'Air filter replacement', time: '15-20 mins', urgency: 'Low' },
+          { name: 'Fuel Filter Dirty', severity: 'low', cost: 'PKR 2,000-3,500', solution: 'Fuel filter replacement', time: '30-45 mins', urgency: 'Low' },
+          { name: 'Tire Pressure Low', severity: 'low', cost: 'PKR 100-500', solution: 'Tire pressure adjustment', time: '10-15 mins', urgency: 'Low' },
+          { name: 'Oxygen Sensor Fault', severity: 'medium', cost: 'PKR 8,000-15,000', solution: 'O2 sensor replacement', time: '1-2 hours', urgency: 'Moderate' }
+        ],
+        confidence: 87
+      },
+      'steering tight': {
+        issues: [
+          { name: 'Power Steering Fluid Low', severity: 'low', cost: 'PKR 1,500-3,000', solution: 'Power steering fluid top-up', time: '15-20 mins', urgency: 'Moderate' },
+          { name: 'Power Steering Pump', severity: 'high', cost: 'PKR 15,000-25,000', solution: 'Power steering pump replacement', time: '3-4 hours', urgency: 'Moderate' },
+          { name: 'Tie Rod End Worn', severity: 'medium', cost: 'PKR 4,000-8,000', solution: 'Tie rod end replacement', time: '1-2 hours', urgency: 'Moderate' },
+          { name: 'Wheel Alignment Needed', severity: 'low', cost: 'PKR 1,000-2,000', solution: 'Wheel alignment', time: '30-45 mins', urgency: 'Low' }
+        ],
+        confidence: 89
+      },
+      'tyre puncture': {
+        issues: [
+          { name: 'Tire Puncture Repair', severity: 'low', cost: 'PKR 200-500', solution: 'Tire puncture repair', time: '20-30 mins', urgency: 'Moderate' },
+          { name: 'Tire Replacement', severity: 'medium', cost: 'PKR 8,000-15,000', solution: 'New tire (per piece)', time: '30-45 mins', urgency: 'Moderate' },
+          { name: 'Valve Stem Leak', severity: 'low', cost: 'PKR 300-800', solution: 'Valve stem replacement', time: '15-20 mins', urgency: 'Low' }
+        ],
+        confidence: 95
+      }
+    };
+
+    // Chat history for export functionality
+    let chatHistory = [];
+
+    function selectProblem(problem) {
+      document.getElementById('problemInput').value = problem;
+      sendProblem();
+    }
+
+    function clearChat() {
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.innerHTML = `
+        <div class="message ai-message">
+          <div class="d-flex align-items-center mb-2">
+            <div class="ai-avatar">
+              <i class="bi bi-robot"></i>
+            </div>
+            <div>
+              <strong>Car Doctor AI</strong>
+              <div class="small text-muted">Online • Ready to help</div>
+            </div>
+          </div>
+          <p class="mb-0">Chat cleared! How can I help you with your car today?</p>
+        </div>
+      `;
+      chatHistory = [];
+    }
+
+    function exportChat() {
+      if (chatHistory.length === 0) {
+        alert('No chat history to export');
+        return;
+      }
+      
+      let chatText = 'Car Doctor AI - Diagnostic Report\n';
+      chatText += 'Generated: ' + new Date().toLocaleString() + '\n';
+      chatText += '=' .repeat(50) + '\n\n';
+      
+      chatHistory.forEach(msg => {
+        chatText += `${msg.type === 'user' ? 'USER' : 'AI DOCTOR'}: ${msg.message}\n\n`;
+      });
+      
+      // Create download link
+      const blob = new Blob([chatText], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'car-doctor-diagnosis-' + Date.now() + '.txt';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    function voiceInput() {
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        recognition.onstart = function() {
+          document.getElementById('problemInput').placeholder = 'Listening... Speak clearly';
+        };
+        
+        recognition.onresult = function(event) {
+          const transcript = event.results[0][0].transcript;
+          document.getElementById('problemInput').value = transcript;
+          document.getElementById('problemInput').placeholder = 'Describe your car problem in detail...';
+        };
+        
+        recognition.onerror = function() {
+          document.getElementById('problemInput').placeholder = 'Voice input not available. Type your problem...';
+        };
+        
+        recognition.start();
+      } else {
+        alert('Voice input is not supported in your browser. Please type your problem.');
+      }
+    }
+
+    function sendProblem() {
+      const input = document.getElementById('problemInput');
+      const problem = input.value.trim();
+      
+      if (!problem) {
+        showNotification('Please describe your car problem', 'warning');
+        return;
+      }
+
+      // Add user message to chat
+      addUserMessage(problem);
+      
+      // Clear input
+      input.value = '';
+      
+      // Show typing indicator
+      showTypingIndicator();
+      
+      // Simulate AI processing
+      setTimeout(() => {
+        hideTypingIndicator();
+        generateAIResponse(problem);
+      }, 2000 + Math.random() * 1000);
+    }
+
+    function addUserMessage(message) {
+      const chatContainer = document.getElementById('chatContainer');
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user-message';
+      userMessage.innerHTML = `
+        <div class="d-flex align-items-center mb-2">
+          <i class="bi bi-person-circle me-2"></i>
+          <strong>You</strong>
+        </div>
+        <p class="mb-0">${message}</p>
+      `;
+      chatContainer.appendChild(userMessage);
+      chatHistory.push({ type: 'user', message: message });
+      scrollToBottom();
+    }
+
+    function showTypingIndicator() {
+      document.getElementById('typingIndicator').classList.add('active');
+      scrollToBottom();
+    }
+
+    function hideTypingIndicator() {
+      document.getElementById('typingIndicator').classList.remove('active');
+    }
+
+    function scrollToBottom() {
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function generateAIResponse(problem) {
+      const chatContainer = document.getElementById('chatContainer');
+      let found = false;
+      
+      // Search for matching diagnosis
+      for (const [key, data] of Object.entries(diagnosisDB)) {
+        if (problem.toLowerCase().includes(key)) {
+          found = true;
+          const aiResponse = createDetailedResponse(data, problem);
+          chatContainer.appendChild(aiResponse);
+          chatHistory.push({ type: 'ai', message: aiResponse.textContent });
+          break;
+        }
+      }
+      
+      if (!found) {
+        // Generic response for unknown problems
+        const genericResponse = createGenericResponse(problem);
+        chatContainer.appendChild(genericResponse);
+        chatHistory.push({ type: 'ai', message: genericResponse.textContent });
+      }
+      
+      scrollToBottom();
+    }
+
+    function createDetailedResponse(data, problem) {
+      const response = document.createElement('div');
+      response.className = 'message ai-message';
+      
+      let issuesHtml = data.issues.map((issue, index) => `
+        <div class="problem-card mb-3 p-3">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h6 class="mb-0">${issue.name}</h6>
+            <span class="severity-badge severity-${issue.severity}">
+              ${issue.severity === 'high' ? '<i class="bi bi-circle-fill text-danger me-1"></i>' : issue.severity === 'medium' ? '<i class="bi bi-circle-fill text-warning me-1"></i>' : '<i class="bi bi-circle-fill text-success me-1"></i>'} 
+              ${issue.severity.toUpperCase()}
+            </span>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <small class="text-muted"><i class="bi bi-currency-dollar me-1"></i>Cost: ${issue.cost}</small>
+            </div>
+            <div class="col-md-6">
+              <small class="text-muted"><i class="bi bi-clock me-1"></i>Time: ${issue.time}</small>
+            </div>
+            <div class="col-md-6">
+              <small class="text-muted"><i class="bi bi-tools me-1"></i>Solution: ${issue.solution}</small>
+            </div>
+            <div class="col-md-6">
+              <small class="text-muted"><i class="bi bi-exclamation-triangle me-1"></i>Urgency: ${issue.urgency}</small>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      response.innerHTML = `
+        <div class="d-flex align-items-center mb-3">
+          <div class="ai-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div>
+            <strong>Car Doctor AI</strong>
+            <div class="small text-muted">Analysis Complete</div>
+          </div>
+        </div>
+        <p class="mb-3">Based on your description "${problem}", I've identified the following possible issues:</p>
+        ${issuesHtml}
+        <div class="cost-estimate">
+          <h6>💡 AI Recommendation:</h6>
+          <p class="mb-2">Start with the lowest severity issue first. If the problem persists, proceed to higher severity diagnostics.</p>
+          <div class="confidence-meter">
+            <div class="confidence-fill" style="width: ${data.confidence}%;"></div>
+          </div>
+          <small class="text-muted">AI Confidence: ${data.confidence}% based on symptom analysis</small>
+        </div>
+      `;
+      
+      return response;
+    }
+
+    function createGenericResponse(problem) {
+      const response = document.createElement('div');
+      response.className = 'message ai-message';
+      
+      response.innerHTML = `
+        <div class="d-flex align-items-center mb-3">
+          <div class="ai-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div>
+            <strong>Car Doctor AI</strong>
+            <div class="small text-muted">Analysis Complete</div>
+          </div>
+        </div>
+        <p class="mb-3">I've analyzed your problem "${problem}". This appears to be a less common issue.</p>
+        <div class="alert alert-info">
+          <h6><i class="bi bi-search me-2"></i>Recommended Actions:</h6>
+          <ul class="mb-0">
+            <li>Check if the problem is consistent or intermittent</li>
+            <li>Note any warning lights on the dashboard</li>
+            <li>Check fluid levels (oil, coolant, brake fluid)</li>
+            <li>Visit a certified mechanic for proper diagnosis</li>
+          </ul>
+        </div>
+        <div class="cost-estimate">
+          <h6><i class="bi bi-currency-dollar me-2"></i>Estimated Diagnostic Cost:</h6>
+          <p class="mb-2">PKR 500-1,500 for professional diagnostic scan</p>
+          <div class="confidence-meter">
+            <div class="confidence-fill" style="width: 65%;"></div>
+          </div>
+          <small class="text-muted">AI Confidence: 65% - Professional inspection recommended</small>
+        </div>
+      `;
+      
+      return response;
+    }
+
+    function showNotification(message, type) {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+      notification.style.zIndex = '9999';
+      notification.style.minWidth = '300px';
+      notification.innerHTML = `
+        <i class="bi bi-info-circle me-2"></i>${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 3000);
+    }
+
+    // Event listeners
+    document.getElementById('sendBtn').addEventListener('click', sendProblem);
+    document.getElementById('problemInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendProblem();
+      }
+    });
+
+    // Initialize page
+    window.AutoWorldLayout.render();
+  </script>
+</body>
+</html>
